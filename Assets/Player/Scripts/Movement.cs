@@ -11,16 +11,19 @@ public class Movement : MonoBehaviour
 
     private Rigidbody2D player_body;
     private bool isOnGround = false;
+    private PlayerColliders groundCollider;
 
     // Start is called before the first frame update
     void Start()
     {
         player_body = GetComponent<Rigidbody2D>();
+        groundCollider = transform.Find("GroundCollider").GetComponent<PlayerColliders>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        CheckIfOnGround();
         MovementManagement();
         JumpManagement();
 
@@ -36,6 +39,7 @@ public class Movement : MonoBehaviour
         // Check which horizontal movement direction key is pressed
         float inputXAxis = Input.GetAxis("Horizontal") * movementSpeed;
 
+        // Handle inputs and asset flipping
         if (inputXAxis < 0)
         {
             GetComponent<SpriteRenderer>().flipX = true;
@@ -45,6 +49,7 @@ public class Movement : MonoBehaviour
             GetComponent<SpriteRenderer>().flipX = false;
         }
 
+        // Moves player accordingly
         player_body.velocity = new Vector2(inputXAxis, player_body.velocity.y);
     }
 
@@ -54,18 +59,23 @@ public class Movement : MonoBehaviour
         if (Input.GetKeyDown("space") && isOnGround)
         {
             player_body.velocity = new Vector2(player_body.velocity.x, jumpForce);
+            isOnGround = false;
         }
     }
 
-    // Collision detection 
-    void OnCollisionEnter2D(Collision2D collision)
+    // Checks if player is on the ground or falling
+    private void CheckIfOnGround()
     {
-        isOnGround = true;
-    }
+        if (!isOnGround && groundCollider.IsEnabledAndColliding())
+        {
+            isOnGround = true;
+        }
 
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        isOnGround = false;
+        if (isOnGround && !groundCollider.IsEnabledAndColliding())
+        {
+            isOnGround = false;
+        }
+
     }
 
 }
