@@ -148,6 +148,10 @@ PrefabInstance:
       value: 0.687
       objectReference: {fileID: 0}
     - target: {fileID: -4603480411648691464, guid: a777c49928dae93469fb4140c70aa05d, type: 3}
+      propertyPath: runSpeed
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -4603480411648691464, guid: a777c49928dae93469fb4140c70aa05d, type: 3}
       propertyPath: jumpForce
       value: 8
       objectReference: {fileID: 0}
@@ -858,6 +862,53 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.44, y: 0.21}
   m_EdgeRadius: 0
+--- !u!1 &736731655
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 736731657}
+  - component: {fileID: 736731656}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &736731656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 736731655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f26c46f2a5e316e44a3acaaf0fb260a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stamina: 100
+  health: 100
+  damage: 10
+--- !u!4 &736731657
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 736731655}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.21644229, y: 1.205068, z: 4717.952}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1256256390
 GameObject:
   m_ObjectHideFlags: 0
@@ -1301,11 +1352,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2d2dea30a2c3854fafb10139db0d38e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackAnimationSpeed: 2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1256256393}
+  - {fileID: 736731657}
   - {fileID: 86791201}
   - {fileID: 482929326}

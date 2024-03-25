@@ -6,13 +6,14 @@ public class Movement : MonoBehaviour
 {
 
     [SerializeField] float walkSpeed = 3.0f;
-    [SerializeField] float runSpeed = 10.0f;
+    [SerializeField] float runSpeed = 8.0f;
     [SerializeField] float jumpForce = 8.0f;
 
     private Rigidbody2D player_body;
     private bool isOnGround = false;
     private PlayerColliders groundCollider;
     private Attacking attacking;
+    private Animator playerAnimator;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +21,7 @@ public class Movement : MonoBehaviour
         player_body = GetComponent<Rigidbody2D>();
         groundCollider = transform.Find("GroundCollider").GetComponent<PlayerColliders>();
         attacking = GetComponent<Attacking>();
+        playerAnimator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -40,6 +42,25 @@ public class Movement : MonoBehaviour
         float movementSpeed = isRunning && isOnGround && !attacking.IsAttacking ? runSpeed : walkSpeed;
         // Check which horizontal movement direction key is pressed
         float inputXAxis = Input.GetAxis("Horizontal") * movementSpeed;
+
+        // Checks for slight movement on X axis to start walk animation
+        if (Mathf.Abs(inputXAxis) > Mathf.Epsilon)
+        {
+            // Starts the walking animation
+            if (isRunning)
+            {
+                playerAnimator.SetInteger("Anim_State", 2);
+            }
+            else
+            {
+                playerAnimator.SetInteger("Anim_State", 1);
+            }
+        }
+        else
+        {
+            // Stops the walking animation
+            playerAnimator.SetInteger("Anim_State", 0);
+        }
 
         // Handle inputs and asset flipping
         if (inputXAxis < 0)
@@ -79,5 +100,4 @@ public class Movement : MonoBehaviour
         }
 
     }
-
 }

@@ -10,7 +10,8 @@ public class PlayerManager : MonoBehaviour
 
     [SerializeField] private float stamina = 100.0f; // Players stamina
     [SerializeField] private float health = 100.0f; // Players health
-    [SerializeField] private float damage = 10.0f; // Players attack damage
+    [SerializeField] private float attackDamage = 10.0f; // Players attack damage
+    [SerializeField] private float damagePlayer = 0.0f;
 
     // Called when instance is loaded and ensures there is only one instance of PlayerManager
     private void Awake()
@@ -49,13 +50,20 @@ public class PlayerManager : MonoBehaviour
     }
 
     // get and set player damage
-    public float Damage
+    public float AttackDamage
     {
-        get { return damage; }
+        get { return attackDamage; }
         set
         {
-            damage = value;
+            attackDamage = value;
         }
     }
+
+    // Apply damage to player and reduce health
+    public void DamagePlayer(float damageAmount)
+    {
+        Health -= damageAmount;
+    }
+
 
 }
