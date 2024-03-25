@@ -12,12 +12,14 @@ public class Movement : MonoBehaviour
     private Rigidbody2D player_body;
     private bool isOnGround = false;
     private PlayerColliders groundCollider;
+    private Attacking attacking;
 
     // Start is called before the first frame update
     void Start()
     {
         player_body = GetComponent<Rigidbody2D>();
         groundCollider = transform.Find("GroundCollider").GetComponent<PlayerColliders>();
+        attacking = GetComponent<Attacking>();
     }
 
     // Update is called once per frame
@@ -35,7 +37,7 @@ public class Movement : MonoBehaviour
         // Check if player is running
         bool isRunning = Input.GetKey(KeyCode.LeftShift);
         // Set movement speed to running speed if player is running
-        float movementSpeed = isRunning ? runSpeed : walkSpeed;
+        float movementSpeed = isRunning && isOnGround && !attacking.IsAttacking ? runSpeed : walkSpeed;
         // Check which horizontal movement direction key is pressed
         float inputXAxis = Input.GetAxis("Horizontal") * movementSpeed;
 
