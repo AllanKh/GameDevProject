@@ -155,6 +155,14 @@ PrefabInstance:
       propertyPath: jumpForce
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: -4603480411648691464, guid: a777c49928dae93469fb4140c70aa05d, type: 3}
+      propertyPath: dodgeSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4603480411648691464, guid: a777c49928dae93469fb4140c70aa05d, type: 3}
+      propertyPath: dodgeLength
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: -1184876829903254255, guid: a777c49928dae93469fb4140c70aa05d, type: 3}
       propertyPath: m_Controller
       value: 

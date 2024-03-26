@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-
+    // Walk/Run variables
     [SerializeField] float walkSpeed = 3.0f;
     [SerializeField] float runSpeed = 8.0f;
+
+    // Jump vairables
     [SerializeField] float jumpForce = 7.0f;
+    private bool isOnGround = false;
+
+    // Dodge variables
+    [SerializeField] float dodgeSpeed = 5.0f;
+    private float dodgeLength;
+    private bool isDodging = false;
 
     private Rigidbody2D player_body;
-    private bool isOnGround = false;
     private PlayerColliders groundCollider;
     private Attacking attacking;
     private Animator playerAnimator;
@@ -28,8 +35,12 @@ public class Movement : MonoBehaviour
     void Update()
     {
         CheckIfOnGround();
-        MovementManagement();
-        JumpManagement();
+        if (!isDodging) // Prevent movement and jumping while dodging
+        {
+            MovementManagement();
+            JumpManagement();
+        }
+        DodgeManagement();
 
     }
 
@@ -85,6 +96,40 @@ public class Movement : MonoBehaviour
             isOnGround = false;
         }
     }
+
+    // Handle dodging
+    private void DodgeManagement()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftControl) && !isDodging && isOnGround)
+        {
+            // Starts the coroutine
+            StartCoroutine(TriggerDodge());
+        }
+    }
+
+    // Coroutine to handle handle dodge mechanic
+    private IEnumerator TriggerDodge()
+    {
+        isDodging = true;
+        // Determine dodge direction based on where the sprite is facing
+        float dodgeDirection = GetComponent<SpriteRenderer>().flipX ? -1 : 1;
+
+        playerAnimator.SetTrigger("Player_Dodge");
+        dodgeLength = playerAnimator.GetCurrentAnimatorStateInfo(0).length;
+        PlayerManager.Instance.Invincible = true;
+        player_body.velocity = new Vector2(dodgeSpeed * dodgeDirection, player_body.velocity.y);
+
+
+        // Pausing the coroutine by waiting for duration of dodgeLength before moving to next line
+        yield return new WaitForSeconds(dodgeLength);
+
+        PlayerManager.Instance.Invincible = false;
+        isDodging = false;
+    }
+
+
+
+
 
     // Checks if player is on the ground or falling
     private void CheckIfOnGround()
