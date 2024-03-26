@@ -18,7 +18,15 @@ public class PlayerColliders : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         colliderCount++;
+
+        // Check if AttackCollider is touching an enemy and register a hit
+        if (gameObject.CompareTag("AttackCollider") && other.CompareTag("Enemy"))
+        {
+            Debug.Log("Enemy Hit");
+        }
+
     }
+
 
     private void OnTriggerExit2D(Collider2D other)
     {

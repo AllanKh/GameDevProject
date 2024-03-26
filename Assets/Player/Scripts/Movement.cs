@@ -19,6 +19,7 @@ public class Movement : MonoBehaviour
 
     private Rigidbody2D player_body;
     private PlayerColliders groundCollider;
+    private GameObject attackColliderObject;
     private Attacking attacking;
     private Animator playerAnimator;
 
@@ -27,6 +28,7 @@ public class Movement : MonoBehaviour
     {
         player_body = GetComponent<Rigidbody2D>();
         groundCollider = transform.Find("GroundCollider").GetComponent<PlayerColliders>();
+        attackColliderObject = transform.Find("AttackCollider").gameObject;
         attacking = GetComponent<Attacking>();
         playerAnimator = GetComponent<Animator>();
     }
@@ -77,10 +79,12 @@ public class Movement : MonoBehaviour
         if (inputXAxis < 0)
         {
             GetComponent<SpriteRenderer>().flipX = true;
+            FlipAttackCollider(true);
         }
         else if (inputXAxis > 0)
         {
             GetComponent<SpriteRenderer>().flipX = false;
+            FlipAttackCollider(false);
         }
 
         // Moves player accordingly
@@ -128,10 +132,6 @@ public class Movement : MonoBehaviour
         isDodging = false;
     }
 
-
-
-
-
     // Checks if player is on the ground or falling
     private void CheckIfOnGround()
     {
@@ -145,5 +145,11 @@ public class Movement : MonoBehaviour
             isOnGround = false;
         }
 
+    }
+
+    // Method to flip the attack collider when changing directions
+    private void FlipAttackCollider(bool flip)
+    {
+        attackColliderObject.transform.localPosition = new Vector2(flip ? -1 : 1 , 1);
     }
 }
