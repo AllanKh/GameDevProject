@@ -115,6 +115,7 @@ public class Movement : MonoBehaviour
         float dodgeDirection = GetComponent<SpriteRenderer>().flipX ? -1 : 1;
 
         playerAnimator.SetTrigger("Player_Dodge");
+        // Sets dodgeLength to length of the dodge animation
         dodgeLength = playerAnimator.GetCurrentAnimatorStateInfo(0).length;
         PlayerManager.Instance.Invincible = true;
         player_body.velocity = new Vector2(dodgeSpeed * dodgeDirection, player_body.velocity.y);
