@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Singleton class to manage player stats globally across the game
+// Singleton to manage player stats globally across the game
 // Ensures there is only one instance of PlayerManager throughout game lifecyle
 public class PlayerManager : MonoBehaviour
 {

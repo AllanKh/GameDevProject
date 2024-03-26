@@ -7,7 +7,7 @@ public class Movement : MonoBehaviour
 
     [SerializeField] float walkSpeed = 3.0f;
     [SerializeField] float runSpeed = 8.0f;
-    [SerializeField] float jumpForce = 8.0f;
+    [SerializeField] float jumpForce = 7.0f;
 
     private Rigidbody2D player_body;
     private bool isOnGround = false;
