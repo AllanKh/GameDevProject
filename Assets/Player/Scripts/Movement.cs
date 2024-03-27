@@ -96,6 +96,7 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKeyDown("space") && isOnGround)
         {
+            playerAnimator.SetTrigger("Player_Jump");
             player_body.velocity = new Vector2(player_body.velocity.x, jumpForce);
             isOnGround = false;
         }
@@ -135,14 +136,20 @@ public class Movement : MonoBehaviour
     // Checks if player is on the ground or falling
     private void CheckIfOnGround()
     {
+        playerAnimator.SetFloat("Velocity_Y", player_body.velocity.y);
+
         if (!isOnGround && groundCollider.IsEnabledAndColliding())
         {
             isOnGround = true;
+            playerAnimator.SetBool("On_Ground", isOnGround);
         }
 
         if (isOnGround && !groundCollider.IsEnabledAndColliding())
         {
+            playerAnimator.SetTrigger("Player_Falling");
             isOnGround = false;
+            playerAnimator.SetBool("On_Ground", isOnGround);
+
         }
 
     }
