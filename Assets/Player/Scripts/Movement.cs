@@ -87,8 +87,11 @@ public class Movement : MonoBehaviour
             FlipAttackCollider(false);
         }
 
-        // Moves player accordingly
-        player_body.velocity = new Vector2(inputXAxis, player_body.velocity.y);
+        // Moves player accordingly if player is not charging a heavy attack
+        if (!PlayerManager.Instance.IsChargingHeavyAttack)
+        {
+            player_body.velocity = new Vector2(inputXAxis, player_body.velocity.y);
+        }
     }
 
     // Handle jumping
@@ -105,7 +108,7 @@ public class Movement : MonoBehaviour
     // Handle dodging
     private void DodgeManagement()
     {
-        if (Input.GetKeyDown(KeyCode.LeftControl) && !isDodging && isOnGround)
+        if (Input.GetKeyDown(KeyCode.LeftControl) && !isDodging && isOnGround && !PlayerManager.Instance.IsChargingHeavyAttack)
         {
             // Starts the coroutine
             StartCoroutine(TriggerDodge());

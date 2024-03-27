@@ -1,16 +1,11 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class Attacking : MonoBehaviour
 {
     private Animator playerAnimator;
-    private AnimatorStateInfo animationStateInfo;
     private Collider2D attackCollider;
 
-    // Start is called before the first frame update
     void Start()
     {
         playerAnimator = GetComponent<Animator>();
@@ -18,7 +13,6 @@ public class Attacking : MonoBehaviour
         attackCollider.enabled = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         AttackManager();
@@ -26,33 +20,68 @@ public class Attacking : MonoBehaviour
 
     private void AttackManager()
     {
-        if (Input.GetMouseButtonDown(0) && !IsAttacking)
+        if (Input.GetMouseButtonDown(0) && !IsAttacking && !IsHeavyAttacking)
         {
             playerAnimator.SetTrigger("Attack_Trigger");
         }
+
+        // Start charging the heavy attack
+        if (Input.GetMouseButtonDown(1) && !IsAttacking && !IsHeavyAttacking && !PlayerManager.Instance.IsChargingHeavyAttack)
+        {
+            playerAnimator.SetBool("Heavy_Attack_Charge", true);
+            PlayerManager.Instance.IsChargingHeavyAttack = true;
+            StartCoroutine(HeavyAttackCharge());
+        }
+
+        // Release the charge if not charged long enough and cancel if the button is released
+        if (Input.GetMouseButtonUp(1))
+        {
+            if (PlayerManager.Instance.IsChargingHeavyAttack)
+            {
+                playerAnimator.SetBool("Heavy_Attack_Charge", false);
+                PlayerManager.Instance.IsChargingHeavyAttack = false;
+            }
+        }
     }
 
-    // Read-Only property to check if the player is attacking 
-    // by checking if the attack animation is playing
+    private IEnumerator HeavyAttackCharge()
+    {
+        yield return new WaitForSeconds(3.0f);
+
+        // ensure player is still charging before triggering the attack
+        if (PlayerManager.Instance.IsChargingHeavyAttack)
+        {
+            playerAnimator.SetTrigger("Heavy_Attack_Trigger");
+            playerAnimator.SetBool("Heavy_Attack_Charge", false);
+            PlayerManager.Instance.IsChargingHeavyAttack = false;
+        }
+    }
+
     public bool IsAttacking
     {
         get
         {
-            animationStateInfo = playerAnimator.GetCurrentAnimatorStateInfo(0);
+            AnimatorStateInfo animationStateInfo = playerAnimator.GetCurrentAnimatorStateInfo(0);
             return animationStateInfo.IsName("Attack_Trigger") && animationStateInfo.normalizedTime < 1.0f;
         }
     }
 
-    // Enable the attack collider using animation event in Player_Attack animation
+    public bool IsHeavyAttacking
+    {
+        get
+        {
+            AnimatorStateInfo animationStateInfo = playerAnimator.GetCurrentAnimatorStateInfo(0);
+            return animationStateInfo.IsName("Heavy_Attack_Trigger") && animationStateInfo.normalizedTime < 1.0f;
+        }
+    }
+
     private void EnableAttackCollider()
     {
         attackCollider.enabled = true;
     }
 
-    // Disable the attack collider using animation event in Player_Attack animation
     private void DisableAttackCollider()
     {
         attackCollider.enabled = false;
     }
-
 }

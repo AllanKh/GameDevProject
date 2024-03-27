@@ -13,6 +13,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private float attackDamage = 10.0f; // Players attack damage
     [SerializeField] private float damagePlayer = 0.0f;
     [SerializeField] private bool isInvincible;
+    private bool isChargingHeavyAttack = false;
 
     // Called when instance is loaded and ensures there is only one instance of PlayerManager
     private void Awake()
@@ -75,5 +76,13 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    public bool IsChargingHeavyAttack
+    {
+        get { return isChargingHeavyAttack; }
+        set
+        {
+            isChargingHeavyAttack = value;
+        }
 
+    }
 }
