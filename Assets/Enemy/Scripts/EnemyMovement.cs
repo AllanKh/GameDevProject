@@ -6,22 +6,49 @@ public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] private float movementSpeed = 1.5f;
     private Rigidbody2D rb;
+    private Animator enemyAnimator;
+    private bool startMoving = false;
+    private GameObject attackColliderObject;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        enemyAnimator = GetComponent<Animator>();
+        enemyAnimator.SetInteger("Anim_State", 0);
+        StartCoroutine(WaitBeforeMoving());
+        attackColliderObject = transform.Find("AttackCollider").gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Movement();
+        if (startMoving)
+        {
+            Movement();
+        }
+    }
+
+    IEnumerator WaitBeforeMoving()
+    {
+        yield return new WaitForSeconds(5);
+        startMoving = true;
     }
 
     //Handle horizontal movement
     private void Movement()
     {
+        if (Mathf.Abs(rb.velocity.x) > Mathf.Epsilon && startMoving)
+        {
+            //Start walking animation
+            enemyAnimator.SetInteger("Anim_State", 1);
+        }
+        else
+        {
+            //Stops walking animation
+            enemyAnimator.SetInteger("Anim_State", 0);
+        }
+
         //Moves enemy
         rb.velocity = new Vector2(movementSpeed, rb.velocity.y);
 
@@ -39,10 +66,17 @@ public class EnemyMovement : MonoBehaviour
         if (rb.velocity.x < 0)
         {
             GetComponent<SpriteRenderer>().flipX = true;
+            FlipAttackCollider(true);
         }
         else if (rb.velocity.x > 0)
         {
             GetComponent<SpriteRenderer>().flipX = false;
+            FlipAttackCollider(false);
         }
+    }
+
+    private void FlipAttackCollider(bool flip)
+    {
+        attackColliderObject.transform.localPosition = new Vector2(flip ? -1 : 1, 1);
     }
 }
