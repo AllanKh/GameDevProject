@@ -23,12 +23,15 @@ public class EnemyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (startMoving)
+        EnemyAttacking enemyAttacking = GetComponent<EnemyAttacking>();
+
+        if (startMoving && !enemyAttacking.EnemyIsAttacking)
         {
             Movement();
         }
     }
 
+    //Hold enemy idle the first 5 seconds
     IEnumerator WaitBeforeMoving()
     {
         yield return new WaitForSeconds(5);
@@ -75,6 +78,7 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
+    //Check if attack collider flips
     private void FlipAttackCollider(bool flip)
     {
         attackColliderObject.transform.localPosition = new Vector2(flip ? -0.6f : 0, 0);

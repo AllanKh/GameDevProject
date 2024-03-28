@@ -7,6 +7,7 @@ public class EnemyColliders : MonoBehaviour
     //Checks the amount of colliders currently intersecting with enemy
     private int colliderCount = 0;
     private float disableTimer = 0f;
+    private GameObject enemyGameObject;
 
     public bool SensorEnabledAndColliding()
     {
@@ -21,7 +22,7 @@ public class EnemyColliders : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        //Check if AttackCollider intersects with the player and register a hit
+        //Check if AttackCollider collides with the player and register a hit
         if (other.CompareTag("Player"))
         {
             TriggerAttack();
@@ -46,15 +47,15 @@ public class EnemyColliders : MonoBehaviour
         }
     }
 
+    //Trigger the attack
     public void TriggerAttack()
     {
-        EnemyAttacking enemyAttacking = GetComponent<EnemyAttacking>();
-        //Debug.Log("Trigger");
+        enemyGameObject = GameObject.FindWithTag("Enemy");
+        EnemyAttacking enemyAttacking = enemyGameObject.GetComponent<EnemyAttacking>();
         if (enemyAttacking != null)
         {
             Debug.Log("Trigger");
             enemyAttacking.StartAttack();
-            //GetComponent<EnemyAttacking>().StartAttack();
         }
     }
 }

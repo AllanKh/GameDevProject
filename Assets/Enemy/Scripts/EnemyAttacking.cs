@@ -17,22 +17,24 @@ public class EnemyAttacking : MonoBehaviour
         attackColliderObject = transform.Find("AttackCollider").gameObject;
     }
 
+    //Trigger the attack animation if not already playing
     public void StartAttack()
     {
-        Debug.Log("StartAttack");
-        //if (!EnemyIsAttacking)
-        //{
-        //    enemyAnimator.SetTrigger("Attack_Trigger");
-        //}
-        enemyAnimator.SetTrigger("Attack_Trigger");
+        if (!EnemyIsAttacking)
+        {
+            Debug.Log("StartAttack");
+            enemyAnimator.SetTrigger("Attack_Trigger");
+        }
     }
 
+    //getter to check if enemy is attacking the player,
+    //bt checking if the attack animation is playing
     public bool EnemyIsAttacking
     {
         get
         {
             animStateInfo = enemyAnimator.GetCurrentAnimatorStateInfo(0);
-            return animStateInfo.IsName("Attack_Trigger") && animStateInfo.normalizedTime < 1.0f;
+            return animStateInfo.IsName("Enemy_Attack") && animStateInfo.normalizedTime < 1.0f;
         } 
     }
 }
