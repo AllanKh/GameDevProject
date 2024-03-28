@@ -5,6 +5,9 @@ public class Attacking : MonoBehaviour
 {
     private Animator playerAnimator;
     private Collider2D attackCollider;
+    private float chargeTimer = 0f; // Add a timer to track the charging time
+    private bool isCharging = false; // Track if currently charging
+    private float heavyAttackChargeTime = 2.0f;
 
     void Start()
     {
@@ -16,6 +19,16 @@ public class Attacking : MonoBehaviour
     void Update()
     {
         AttackManager();
+
+        // Update and check the charge timer if charging
+        if (isCharging)
+        {
+            chargeTimer += Time.deltaTime;
+            if (chargeTimer >= heavyAttackChargeTime)
+            {
+                TriggerHeavyAttack();
+            }
+        }
     }
 
     private void AttackManager()
@@ -28,33 +41,33 @@ public class Attacking : MonoBehaviour
         // Start charging the heavy attack
         if (Input.GetMouseButtonDown(1) && !IsAttacking && !IsHeavyAttacking && !PlayerManager.Instance.IsChargingHeavyAttack)
         {
-            playerAnimator.SetBool("Heavy_Attack_Charge", true);
+            isCharging = true;
             PlayerManager.Instance.IsChargingHeavyAttack = true;
-            StartCoroutine(HeavyAttackCharge());
+            playerAnimator.SetBool("Heavy_Attack_Charge", true);
+            chargeTimer = 0f; // Reset the charge attack timer whenever starting the charge
         }
 
-        // Release the charge if not charged long enough and cancel if the button is released
+        // Cancel the charge if the button is released before 3 seconds
         if (Input.GetMouseButtonUp(1))
         {
             if (PlayerManager.Instance.IsChargingHeavyAttack)
             {
-                playerAnimator.SetBool("Heavy_Attack_Charge", false);
+                isCharging = false;
                 PlayerManager.Instance.IsChargingHeavyAttack = false;
+                playerAnimator.SetBool("Heavy_Attack_Charge", false);
+                chargeTimer = 0f; // Reset the charge attack timer whenever cancelling the charge
             }
         }
     }
 
-    private IEnumerator HeavyAttackCharge()
+    private void TriggerHeavyAttack()
     {
-        yield return new WaitForSeconds(3.0f);
-
-        // ensure player is still charging before triggering the attack
-        if (PlayerManager.Instance.IsChargingHeavyAttack)
-        {
-            playerAnimator.SetTrigger("Heavy_Attack_Trigger");
-            playerAnimator.SetBool("Heavy_Attack_Charge", false);
-            PlayerManager.Instance.IsChargingHeavyAttack = false;
-        }
+        // Trigger the heavy attack and reset charge-related states
+        playerAnimator.SetTrigger("Heavy_Attack_Trigger");
+        playerAnimator.SetBool("Heavy_Attack_Charge", false);
+        PlayerManager.Instance.IsChargingHeavyAttack = false;
+        isCharging = false;
+        chargeTimer = 0f;
     }
 
     public bool IsAttacking
