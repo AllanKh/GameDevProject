@@ -17,7 +17,10 @@ public class EnemyColliders : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         colliderCount++;
-        
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
         //Check if AttackCollider intersects with the player and register a hit
         if (other.CompareTag("Player"))
         {
@@ -45,9 +48,13 @@ public class EnemyColliders : MonoBehaviour
 
     public void TriggerAttack()
     {
-        if (colliderCount > 0)
+        EnemyAttacking enemyAttacking = GetComponent<EnemyAttacking>();
+        //Debug.Log("Trigger");
+        if (enemyAttacking != null)
         {
-            GetComponent<EnemyAttacking>().StartAttack();
+            Debug.Log("Trigger");
+            enemyAttacking.StartAttack();
+            //GetComponent<EnemyAttacking>().StartAttack();
         }
     }
 }

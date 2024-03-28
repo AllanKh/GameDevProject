@@ -19,12 +19,12 @@ public class EnemyAttacking : MonoBehaviour
 
     public void StartAttack()
     {
-        EnemyColliders enemyColliders = GetComponent<EnemyColliders>();
-
-        if (!EnemyIsAttacking)
-        {
-            enemyAnimator.SetTrigger("Attack_Trigger");
-        }
+        Debug.Log("StartAttack");
+        //if (!EnemyIsAttacking)
+        //{
+        //    enemyAnimator.SetTrigger("Attack_Trigger");
+        //}
+        enemyAnimator.SetTrigger("Attack_Trigger");
     }
 
     public bool EnemyIsAttacking
