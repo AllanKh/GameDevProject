@@ -77,6 +77,6 @@ public class EnemyMovement : MonoBehaviour
 
     private void FlipAttackCollider(bool flip)
     {
-        attackColliderObject.transform.localPosition = new Vector2(flip ? -1 : 1, 1);
+        attackColliderObject.transform.localPosition = new Vector2(flip ? -0.6f : 0, 0);
     }
 }

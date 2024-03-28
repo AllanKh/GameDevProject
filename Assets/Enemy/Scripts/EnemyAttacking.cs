@@ -7,36 +7,32 @@ public class EnemyAttacking : MonoBehaviour
     private Animator enemyAnimator;
     private AnimatorStateInfo animStateInfo;
     private Collider2D attackCollider;
+    private GameObject attackColliderObject;
 
     // Start is called before the first frame update
     void Start()
     {
         enemyAnimator = GetComponent<Animator>();
         attackCollider = transform.Find("AttackCollider").GetComponent<Collider2D>();
+        attackColliderObject = transform.Find("AttackCollider").gameObject;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void StartAttack()
     {
-        
-    }
+        EnemyColliders enemyColliders = GetComponent<EnemyColliders>();
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (gameObject.CompareTag("AttackCollider") && other.CompareTag("Player"))
+        if (!EnemyIsAttacking)
         {
             enemyAnimator.SetTrigger("Attack_Trigger");
-            Debug.Log("Player hit");
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    public bool EnemyIsAttacking
     {
-        
-    }
-
-    private void EnemyAttack()
-    {
-        
+        get
+        {
+            animStateInfo = enemyAnimator.GetCurrentAnimatorStateInfo(0);
+            return animStateInfo.IsName("Attack_Trigger") && animStateInfo.normalizedTime < 1.0f;
+        } 
     }
 }
