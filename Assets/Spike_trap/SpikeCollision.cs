@@ -5,12 +5,12 @@ using UnityEngine;
 public class SpikeCollision : MonoBehaviour
 {
 
-    private PlayerManager playerManager;
+  
 
     // Start is called before the first frame update
     void Start()
     {
-        
+      
 
     }
 
@@ -29,7 +29,7 @@ public class SpikeCollision : MonoBehaviour
         if (other.CompareTag("Player"))
         {
 
-            playerManager.DamagePlayer(100);
+            PlayerManager.Instance.DamagePlayer(100);
 
     
         }
