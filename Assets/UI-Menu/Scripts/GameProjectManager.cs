@@ -1,10 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameProjectManager : MonoBehaviour
 {
-   
+    public static GameProjectManager Instance {  get; private set; }
+
+    public event EventHandler OnStateChanged;  //An event that can be called (if implemented the right way) to see when the game changes states.
+
+
     private enum State //All the gamestates of the game
     {
         WaitingToStart,
@@ -29,11 +34,11 @@ public class GameProjectManager : MonoBehaviour
         switch (state) //Switch between gamestates & set the conditions for swapping to other gameStates.
         {
             case State.WaitingToStart:
-                waitingToStartTimer -= Time.deltaTime;
-                if (waitingToStartTimer < 0f)
+                waitingToStartTimer -= Time.deltaTime;   //Start the countdown for this state, in the future this will be removed
+                if (waitingToStartTimer < 0f)    //The conditions to change the state, for now each state is timed to test them.
                 {
                     state = State.CountdownToStart;
-                    
+                    OnStateChanged?.Invoke(this, EventArgs.Empty); //A notification/event that the state has changed.
                 } 
                 break;
             case State.CountdownToStart:
@@ -41,6 +46,7 @@ public class GameProjectManager : MonoBehaviour
                 if (countdownToSartTimer < 0f)
                 {
                     state = State.GamePlaying;
+                    OnStateChanged?.Invoke(this, EventArgs.Empty);
 
                 }
                 break;
@@ -49,13 +55,14 @@ public class GameProjectManager : MonoBehaviour
                 if (gamePlayingTimer < 0f)
                 {
                     state = State.GameOver;
+                    OnStateChanged?.Invoke(this, EventArgs.Empty);
 
                 }
                 break;
             case State.GameOver:
                 break;
         }
-        Debug.Log(state);
+        //Debug.Log(state);
     }
 
     public bool IsGamePlaying()
@@ -63,4 +70,15 @@ public class GameProjectManager : MonoBehaviour
         return state == State.GamePlaying;
     }
 
+
+    public bool IsCountdownToStartActive()
+    {
+        return state == State.CountdownToStart;
+    }
+
+    public float GetCountdownToStartTimer()
+    {
+        //return countdownToSartTimer;
+        return 5;
+    }
 }
