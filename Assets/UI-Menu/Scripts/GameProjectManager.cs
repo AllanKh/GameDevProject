@@ -81,4 +81,9 @@ public class GameProjectManager : MonoBehaviour
         //return countdownToSartTimer;
         return 5;
     }
+
+    public bool IsGameOver()
+    {
+        return state == State.GameOver;
+    }
 }
