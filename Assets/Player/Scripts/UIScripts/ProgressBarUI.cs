@@ -12,4 +12,9 @@ public class ProgressbarUI : MonoBehaviour
     {
         
     }
+
+    private void Update()
+    {
+        float test = PlayerManager.Instance.Health;
+    }
 }
