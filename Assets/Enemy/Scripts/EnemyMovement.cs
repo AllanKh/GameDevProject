@@ -56,11 +56,11 @@ public class EnemyMovement : MonoBehaviour
         rb.velocity = new Vector2(movementSpeed, rb.velocity.y);
 
         //Moves enemy back and forth
-        if (rb.position.x >= -1)
+        if (rb.position.x >= 70)
         {
             movementSpeed = -1.5f;
         }
-        else if (rb.position.x <= -4)
+        else if (rb.position.x <= 65)
         {
             movementSpeed = 1.5f;
         }
