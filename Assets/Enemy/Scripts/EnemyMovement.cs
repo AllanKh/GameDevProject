@@ -11,6 +11,7 @@ public class EnemyMovement : MonoBehaviour
     private GameObject attackColliderObject;
     private GameObject detectionColliderObject;
 
+    public float MovementSpeed { get { return movementSpeed; } set { movementSpeed = value; } }
     public GameObject AttackColliderObject { get { return attackColliderObject; } set { attackColliderObject = value; } }
     public GameObject DetectionColliderObject { get { return detectionColliderObject; } set { detectionColliderObject = value; } }
 
@@ -30,7 +31,7 @@ public class EnemyMovement : MonoBehaviour
     {
         EnemyAttacking enemyAttacking = GetComponent<EnemyAttacking>();
 
-        if (startMoving && !enemyAttacking.EnemyIsAttacking)
+        if (startMoving && !enemyAttacking.AttackAnimationActive)
         {
             Movement();
         }
@@ -87,7 +88,7 @@ public class EnemyMovement : MonoBehaviour
 
     public void PlayerDetected()
     {
-        movementSpeed = 2f;
+        movementSpeed = (movementSpeed > 0) ? 2f : -2f;
     }
 
     //Check if attack collider flips

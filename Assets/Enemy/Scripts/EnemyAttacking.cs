@@ -6,8 +6,11 @@ public class EnemyAttacking : MonoBehaviour
 {
     private Animator enemyAnimator;
     private AnimatorStateInfo animStateInfo;
+    private bool enemyIsAttacking = false;
     private Collider2D attackCollider;
     private GameObject attackColliderObject;
+
+    public bool EnemyIsAttacking { get { return enemyIsAttacking; } set { enemyIsAttacking = value; } }
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +23,7 @@ public class EnemyAttacking : MonoBehaviour
     //Trigger the attack animation if not already playing
     public void StartAttack()
     {
-        if (!EnemyIsAttacking)
+        if (!AttackAnimationActive)
         {
             Debug.Log("StartAttack");
             enemyAnimator.SetTrigger("Attack_Trigger");
@@ -29,7 +32,7 @@ public class EnemyAttacking : MonoBehaviour
 
     //getter to check if enemy is attacking the player,
     //bt checking if the attack animation is playing
-    public bool EnemyIsAttacking
+    public bool AttackAnimationActive
     {
         get
         {

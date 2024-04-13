@@ -8,6 +8,8 @@ public class EnemyColliders : MonoBehaviour
     private int colliderCount = 0;
     private float disableTimer = 0f;
     private GameObject enemyGameObject;
+    private bool detectionColliderDetected;
+    private bool attackColliderDetected;
 
     public bool SensorEnabledAndColliding()
     {
@@ -24,10 +26,12 @@ public class EnemyColliders : MonoBehaviour
     {
         enemyGameObject = GameObject.FindWithTag("Enemy");
         EnemyMovement enemyMovement = enemyGameObject.GetComponent<EnemyMovement>();
-        bool attackColliderDetected = enemyMovement.AttackColliderObject.GetComponent<Collider2D>().IsTouching(other);
-        bool detectionColliderDetected = enemyMovement.DetectionColliderObject.GetComponent<Collider2D>().IsTouching(other);
-        //Check if any collider collides with the player
-        if (other.CompareTag("Player"))
+        EnemyAttacking enemyAttacking = enemyGameObject.GetComponent<EnemyAttacking>();
+        attackColliderDetected = enemyMovement.AttackColliderObject.GetComponent<Collider2D>().IsTouching(other);
+        detectionColliderDetected = enemyMovement.DetectionColliderObject.GetComponent<Collider2D>().IsTouching(other);
+
+        //Check if DetectionCollider collides with the player
+        if (detectionColliderDetected && other.CompareTag("Player"))
         {
             EnemyManager.Instance.PlayerDetected = true;
             TriggerDetection();
@@ -36,22 +40,35 @@ public class EnemyColliders : MonoBehaviour
         //Check if AttackCollider collides with player and register a hit
         if (attackColliderDetected && other.CompareTag("Player"))
         {
+            enemyAttacking.EnemyIsAttacking = true;
             TriggerAttack();
             Debug.Log("Player hit");
-        }
-        //Check if any collider no longer collides with player
-        if (!other.CompareTag("Player"))
-        {
-            EnemyManager.Instance.PlayerDetected = false;
-            Debug.Log("Player no longer detected");
-        }
+        }        
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
+        enemyGameObject = GameObject.FindWithTag("Enemy");
+        EnemyMovement enemyMovement = enemyGameObject.GetComponent<EnemyMovement>();
+        EnemyAttacking enemyAttacking = enemyGameObject.GetComponent<EnemyAttacking>();
+        detectionColliderDetected = enemyMovement.DetectionColliderObject.GetComponent<Collider2D>().IsTouching(other);
+        attackColliderDetected = enemyMovement.AttackColliderObject.GetComponent<Collider2D>().IsTouching(other);
+
         if (colliderCount > 0)
         {
             colliderCount--;
+        }
+
+        //Check if DetectionCollider no longer collides with player
+        if (!detectionColliderDetected && other.CompareTag("Player"))
+        {
+            EnemyManager.Instance.PlayerDetected = false;
+            Debug.Log("Player no longer detected");
+        }
+        //Check if AttackCollider no longer collides with player
+        if (!attackColliderDetected && other.CompareTag("Player"))
+        {
+            enemyAttacking.EnemyIsAttacking = false;
         }
     }
 
@@ -75,7 +92,7 @@ public class EnemyColliders : MonoBehaviour
             enemyAttacking.StartAttack();
         }
     }
-
+    //Trigger the detection
     public void TriggerDetection()
     {
         enemyGameObject = GameObject.FindWithTag("Enemy");
