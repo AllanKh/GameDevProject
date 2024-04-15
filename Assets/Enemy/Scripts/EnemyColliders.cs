@@ -53,24 +53,43 @@ public class EnemyColliders : MonoBehaviour
         if (!EnemyManager.Instance.IsDead)
         {
             enemyGameObject = GameObject.FindWithTag("Enemy");
-            EnemyMovement enemyMovement = enemyGameObject.GetComponent<EnemyMovement>();
-            EnemyAttacking enemyAttacking = enemyGameObject.GetComponent<EnemyAttacking>();
-            detectionColliderDetected = enemyMovement.DetectionColliderObject.GetComponent<Collider2D>().IsTouching(other);
-            attackColliderDetected = enemyMovement.AttackColliderObject.GetComponent<Collider2D>().IsTouching(other);
-
-            if (colliderCount > 0)
+            if (enemyGameObject != null)
             {
-                colliderCount--;
+                EnemyMovement enemyMovement = enemyGameObject.GetComponent<EnemyMovement>();
+                EnemyAttacking enemyAttacking = enemyGameObject.GetComponent<EnemyAttacking>();
+
+                if (enemyMovement != null && enemyAttacking != null)
+                {
+                    if (enemyMovement.DetectionColliderObject && enemyMovement.AttackColliderObject)
+                    {
+                        detectionColliderDetected = enemyMovement.DetectionColliderObject.GetComponent<Collider2D>().IsTouching(other);
+                        attackColliderDetected = enemyMovement.AttackColliderObject.GetComponent<Collider2D>().IsTouching(other);
+                    }
+
+                    if (colliderCount > 0)
+                    {
+                        colliderCount--;
+                    }
+
+                    //Check if DetectionCollider no longer collides with player
+                    if (!detectionColliderDetected && other.CompareTag("Player"))
+                    {
+                        EnemyManager.Instance.PlayerDetected = false;
+                        //Debug.Log("Player no longer detected");
+                    }
+                }
+                else
+                {
+                    Debug.LogError("EnemyMovement or EnemyAttacking component not found on the Enemy GameObject");
+                }
             }
-
-            //Check if DetectionCollider no longer collides with player
-            if (!detectionColliderDetected && other.CompareTag("Player"))
+            else
             {
-                EnemyManager.Instance.PlayerDetected = false;
-                //Debug.Log("Player no longer detected");
+                Debug.LogError("No GameObject with tag 'Enemy' found");
             }
         }
     }
+
 
     // Update is called once per frame
     void Update()
