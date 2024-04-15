@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
     private float movementSpeed = 1.5f;
+    private int moveCounter = 0;
     private Rigidbody2D rb;
     private Animator enemyAnimator;
     private bool startMoving = false;
@@ -34,6 +35,7 @@ public class EnemyMovement : MonoBehaviour
 
         if (startMoving && !enemyAttacking.AttackAnimationActive && !EnemyManager.Instance.IsDead)
         {
+            moveCounter++;
             Movement();
         }
     }
@@ -63,13 +65,15 @@ public class EnemyMovement : MonoBehaviour
         rb.velocity = new Vector2(movementSpeed, rb.velocity.y);
 
         //Moves enemy back and forth
-        if (rb.position.x >= 70 && !EnemyManager.Instance.PlayerDetected)
+        if (rb.velocity.x > 0 && moveCounter >= 1000 && !EnemyManager.Instance.PlayerDetected)
         {
             movementSpeed = -1.5f;
+            moveCounter = 0;
         }
-        else if (rb.position.x <= 65 && !EnemyManager.Instance.PlayerDetected)
+        else if (rb.velocity.x < 0 && moveCounter >= 1000 && !EnemyManager.Instance.PlayerDetected)
         {
             movementSpeed = 1.5f;
+            moveCounter = 0;
         }
 
         //Flip asset according to direction

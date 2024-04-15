@@ -11,6 +11,11 @@ public class EnemyDamageHandler : MonoBehaviour
         ApplyDamageToPlayer();
     }
 
+    IEnumerator WaitBeforeDestroy()
+    {
+        yield return new WaitForSeconds(3);
+    }
+
     private void ApplyDamageToPlayer()
     {
         EnemyAttacking enemyAttacking = GetComponent<EnemyAttacking>();
@@ -31,6 +36,8 @@ public class EnemyDamageHandler : MonoBehaviour
         {
             EnemyManager.Instance.IsDead = true;
             enemyAnimator.SetBool("IsDead", true);
+            WaitBeforeDestroy();
+            Destroy(gameObject);
         }
     }
 }
