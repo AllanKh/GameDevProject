@@ -245,7 +245,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9045943186631220671, guid: a777c49928dae93469fb4140c70aa05d, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10478,7 +10478,7 @@ GameObject:
   - component: {fileID: 478322787}
   - component: {fileID: 478322789}
   - component: {fileID: 478322788}
-  m_Layer: 3
+  m_Layer: 2
   m_Name: Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10553,7 +10553,7 @@ GameObject:
   - component: {fileID: 583609484}
   - component: {fileID: 583609486}
   - component: {fileID: 583609485}
-  m_Layer: 3
+  m_Layer: 2
   m_Name: AttackCollider
   m_TagString: AttackCollider
   m_Icon: {fileID: 0}
@@ -10645,7 +10645,7 @@ GameObject:
   - component: {fileID: 609606909}
   - component: {fileID: 609606908}
   - component: {fileID: 609606907}
-  m_Layer: 3
+  m_Layer: 2
   m_Name: HealthBarUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10794,7 +10794,7 @@ GameObject:
   m_Component:
   - component: {fileID: 736731657}
   - component: {fileID: 736731656}
-  m_Layer: 3
+  m_Layer: 2
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11183,7 +11183,7 @@ GameObject:
   - component: {fileID: 1256256391}
   - component: {fileID: 1256256394}
   - component: {fileID: 1256256395}
-  m_Layer: 3
+  m_Layer: 2
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -11333,7 +11333,7 @@ GameObject:
   - component: {fileID: 1272825832}
   - component: {fileID: 1272825831}
   - component: {fileID: 1272825830}
-  m_Layer: 3
+  m_Layer: 2
   m_Name: BarBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11423,7 +11423,7 @@ GameObject:
   - component: {fileID: 1346617065}
   - component: {fileID: 1346617066}
   - component: {fileID: 1346617067}
-  m_Layer: 3
+  m_Layer: 2
   m_Name: GroundCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
