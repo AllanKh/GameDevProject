@@ -25,8 +25,13 @@ public class EnemyAttacking : MonoBehaviour
     {
         if (!AttackAnimationActive)
         {
-            Debug.Log("StartAttack");
+            //Debug.Log("StartAttack");
             enemyAnimator.SetTrigger("Attack_Trigger");
+            enemyIsAttacking = true;
+        }
+        else
+        {
+            enemyIsAttacking = false;
         }
     }
 

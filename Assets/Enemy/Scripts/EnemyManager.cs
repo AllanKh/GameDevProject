@@ -11,9 +11,8 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private float health = 40.0f; //Enemy health
     [SerializeField] private float attackDamage = 5.0f; //Enemy attack damage
     [SerializeField] private float damageEnemy = 0.0f; //Damage taken from player
+    private bool isDead = false;
     private bool playerDetected = false;
-
-    public bool PlayerDetected { get { return playerDetected; } set { playerDetected = value; } }
 
     private void Awake()
     {
@@ -47,5 +46,17 @@ public class EnemyManager : MonoBehaviour
     public void DamageEnemy(float amountOfDamage)
     {
         Health -= amountOfDamage;
+    }
+
+    public bool PlayerDetected
+    {
+        get { return playerDetected; }
+        set { playerDetected = value; }
+    }
+
+    public bool IsDead
+    {
+        get { return isDead; }
+        set { isDead = value; }
     }
 }
