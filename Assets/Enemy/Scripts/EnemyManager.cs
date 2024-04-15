@@ -8,9 +8,9 @@ public class EnemyManager : MonoBehaviour
     //Ensures there is only one instance of EnemyManager throughout game lifecycle
     public static EnemyManager Instance { get; private set; }
 
-    [SerializeField] private float health = 40.0f; //Enemy health
-    [SerializeField] private float attackDamage = 5.0f; //Enemy attack damage
-    [SerializeField] private float damageEnemy = 0.0f; //Damage taken from player
+    private float health = 100.0f; //Enemy health
+    private float attackDamage = 25.0f; //Enemy attack damage
+    private float damageEnemy = 0.0f; //Damage taken from player
     private bool isDead = false;
     private bool playerDetected = false;
 
@@ -32,7 +32,7 @@ public class EnemyManager : MonoBehaviour
     public float Health
     {
         get { return health; }
-        set { health = Mathf.Clamp(value, 0, 40); }
+        set { health = Mathf.Clamp(value, 0, 100); }
     }
 
     //get and set enemy attack damage

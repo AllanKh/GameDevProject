@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 8317897095039766660}
   - component: {fileID: 2095678322465227594}
   - component: {fileID: 4411499549304234276}
-  - component: {fileID: 4355860357650028477}
   - component: {fileID: 5149743184649094127}
-  - component: {fileID: 8167078797502675213}
+  - component: {fileID: 2232536288393748637}
+  - component: {fileID: 1191312433806051965}
   - component: {fileID: 5388620319462374380}
   m_Layer: 0
   m_Name: Enemy1.1
@@ -79,8 +79,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -888744269
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 4723107735738678597, guid: 1018b0ba13578bf459bd254ae1a2be99, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -178,20 +178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 40
-  attackDamage: 5
   damageEnemy: 0
---- !u!114 &4355860357650028477
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2246092903113028433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87ecb724987ae458d9d756f308c5ce14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &5149743184649094127
 Animator:
   serializedVersion: 5
@@ -213,7 +200,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8167078797502675213
+--- !u!114 &2232536288393748637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2246092903113028433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87ecb724987ae458d9d756f308c5ce14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1191312433806051965
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

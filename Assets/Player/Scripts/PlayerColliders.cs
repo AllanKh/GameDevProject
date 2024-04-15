@@ -23,7 +23,7 @@ public class PlayerColliders : MonoBehaviour
         if (gameObject.CompareTag("AttackCollider") && other.CompareTag("Enemy"))
         {
             Debug.Log("Enemy Hit");
-            EnemyManager.Instance.DamageEnemy(20);
+            EnemyManager.Instance.DamageEnemy(PlayerManager.Instance.AttackDamage);
         }
 
     }

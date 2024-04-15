@@ -36,6 +36,7 @@ public class Attacking : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && !IsAttacking && !IsHeavyAttacking)
         {
             playerAnimator.SetTrigger("Attack_Trigger");
+            PlayerManager.Instance.AttackDamage = 25;
         }
 
         // Start charging the heavy attack
@@ -68,6 +69,7 @@ public class Attacking : MonoBehaviour
         PlayerManager.Instance.IsChargingHeavyAttack = false;
         isCharging = false;
         chargeTimer = 0f;
+        PlayerManager.Instance.AttackDamage = 100;
     }
 
     public bool IsAttacking

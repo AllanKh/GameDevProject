@@ -22,8 +22,11 @@ public class EnemyDamageHandler : MonoBehaviour
 
         if (enemyAttacking.EnemyIsAttacking && !enemyAttacking.AttackAnimationActive)
         {
-            PlayerManager.Instance.DamagePlayer(EnemyManager.Instance.AttackDamage);
-            Debug.Log($"Player health: {PlayerManager.Instance.Health}");
+            if (!PlayerManager.Instance.Invincible)
+            {
+                PlayerManager.Instance.DamagePlayer(EnemyManager.Instance.AttackDamage);
+                Debug.Log($"Player health: {PlayerManager.Instance.Health}");
+            }
         }
     }
 

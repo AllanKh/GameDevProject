@@ -5,15 +5,16 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     // Walk/Run variables
-    [SerializeField] float walkSpeed = 3.0f;
-    [SerializeField] float runSpeed = 8.0f;
+    private float walkSpeed = 4.0f;
+    private float runSpeed = 9.0f;
+    private float currentSpeed;
 
     // Jump vairables
-    float jumpForce = 8.0f;
+    private float jumpForce = 8.0f;
     private bool isOnGround = false;
 
     // Dodge variables
-    [SerializeField] float dodgeSpeed = 5.0f;
+    private float dodgeSpeed = 5.0f;
     private float dodgeLength;
     private bool isDodging = false;
 
@@ -37,13 +38,12 @@ public class Movement : MonoBehaviour
     void Update()
     {
         CheckIfOnGround();
-        if (!isDodging) // Prevent movement and jumping while dodging
+        if (!isDodging || isOnGround) // Prevent movement and jumping while dodging
         {
             MovementManagement();
             JumpManagement();
         }
         DodgeManagement();
-
     }
 
     // Handle horizontal movement
@@ -52,9 +52,9 @@ public class Movement : MonoBehaviour
         // Check if player is running
         bool isRunning = Input.GetKey(KeyCode.LeftShift);
         // Set movement speed to running speed if player is running
-        float movementSpeed = isRunning && isOnGround && !attacking.IsAttacking ? runSpeed : walkSpeed;
+        currentSpeed = isRunning && isOnGround && !attacking.IsAttacking ? runSpeed : walkSpeed;
         // Check which horizontal movement direction key is pressed
-        float inputXAxis = Input.GetAxis("Horizontal") * movementSpeed;
+        float inputXAxis = Input.GetAxis("Horizontal") * currentSpeed;
 
         // Checks for slight movement on X axis to start walk animation
         if (Mathf.Abs(inputXAxis) > Mathf.Epsilon)
@@ -100,7 +100,7 @@ public class Movement : MonoBehaviour
         if (Input.GetKeyDown("space") && isOnGround)
         {
             playerAnimator.SetTrigger("Player_Jump");
-            player_body.velocity = new Vector2(player_body.velocity.x, jumpForce);
+            player_body.velocity = new Vector2(currentSpeed * Input.GetAxis("Horizontal"), jumpForce);
             isOnGround = false;
         }
     }
@@ -126,7 +126,7 @@ public class Movement : MonoBehaviour
         // Sets dodgeLength to length of the dodge animation
         dodgeLength = playerAnimator.GetCurrentAnimatorStateInfo(0).length;
         PlayerManager.Instance.Invincible = true;
-        player_body.velocity = new Vector2(dodgeSpeed * dodgeDirection, player_body.velocity.y);
+        player_body.velocity = new Vector2((dodgeSpeed * 10.0f) * dodgeDirection, player_body.velocity.y);
 
 
         // Pausing the coroutine by waiting for duration of dodgeLength before moving to next line

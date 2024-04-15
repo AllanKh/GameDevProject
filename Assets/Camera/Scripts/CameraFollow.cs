@@ -27,7 +27,7 @@ public class CameraFollow : MonoBehaviour
             // Adjust orthographic size based on scroll wheel input
             mainCamera.orthographicSize -= Input.GetAxis("Mouse ScrollWheel") * zoomSensitivity;
 
-            mainCamera.orthographicSize = Mathf.Clamp(mainCamera.orthographicSize, 2.0f, 7.0f);
+            mainCamera.orthographicSize = Mathf.Clamp(mainCamera.orthographicSize, 4.0f, 12.0f);
         }
     }
 

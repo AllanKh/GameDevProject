@@ -27,9 +27,47 @@ public class EnemyColliders : MonoBehaviour
         if (!EnemyManager.Instance.IsDead)
         {
             enemyGameObject = GameObject.FindWithTag("Enemy");
+
+            if (enemyGameObject == null)
+            {
+                Debug.LogError("No GameObject with tag 'Enemy' found");
+            }
+            else
+            {
+                EnemyMovement movement = enemyGameObject.GetComponent<EnemyMovement>();
+                if (movement == null)
+                {
+                    Debug.LogError("EnemyMovement component not found on GameObject with tag 'Enemy'");
+                }
+            }
+
             EnemyMovement enemyMovement = enemyGameObject.GetComponent<EnemyMovement>();
             EnemyAttacking enemyAttacking = enemyGameObject.GetComponent<EnemyAttacking>();
-            attackColliderDetected = enemyMovement.AttackColliderObject.GetComponent<Collider2D>().IsTouching(other);
+
+            if (enemyMovement != null && enemyMovement.AttackColliderObject != null)
+            {
+                Collider2D collider = enemyMovement.AttackColliderObject.GetComponent<Collider2D>();
+                if (collider != null)
+                {
+                    attackColliderDetected = collider.IsTouching(other);
+                }
+                else
+                {
+                    Debug.LogError("Collider2D component not found on AttackColliderObject");
+                }
+            }
+            else
+            {
+                if (enemyMovement == null)
+                {
+                    Debug.LogError("enemyMovement is null");
+                }
+                if (enemyMovement != null && enemyMovement.AttackColliderObject == null)
+                {
+                    Debug.LogError("AttackColliderObject is null");
+                }
+            }
+
             detectionColliderDetected = enemyMovement.DetectionColliderObject.GetComponent<Collider2D>().IsTouching(other);
 
             //Check if DetectionCollider collides with the player

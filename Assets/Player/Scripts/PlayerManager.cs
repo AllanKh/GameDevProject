@@ -10,7 +10,7 @@ public class PlayerManager : MonoBehaviour
 
     [SerializeField] private float stamina = 100.0f; // Players stamina
     [SerializeField] private float health = 100.0f; // Players health
-    [SerializeField] private float attackDamage = 10.0f; // Players attack damage
+    [SerializeField] private float attackDamage; // Players attack damage
     [SerializeField] private float damagePlayer = 0.0f;
     [SerializeField] private bool isInvincible;
     private bool isChargingHeavyAttack = false;
