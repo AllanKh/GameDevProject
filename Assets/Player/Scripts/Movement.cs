@@ -9,7 +9,7 @@ public class Movement : MonoBehaviour
     [SerializeField] float runSpeed = 8.0f;
 
     // Jump vairables
-    [SerializeField] float jumpForce = 7.0f;
+    float jumpForce = 8.0f;
     private bool isOnGround = false;
 
     // Dodge variables
