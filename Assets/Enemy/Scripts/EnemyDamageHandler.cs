@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class EnemyDamageHandler : MonoBehaviour
 {
+
+    private Animator enemyAnimator;
+
+    private void Start()
+    {
+        enemyAnimator = GetComponent<Animator>();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -13,7 +21,12 @@ public class EnemyDamageHandler : MonoBehaviour
 
     IEnumerator WaitBeforeDestroy()
     {
-        yield return new WaitForSeconds(3);
+        enemyAnimator.SetTrigger("Death_Trigger");
+        EnemyManager.Instance.IsDead = true;
+
+        yield return new WaitForSeconds(0.7f);        
+
+        Destroy(gameObject);
     }
 
     private void ApplyDamageToPlayer()
@@ -33,14 +46,10 @@ public class EnemyDamageHandler : MonoBehaviour
     //Trigger the death animation if on or below 0 health
     private void CheckIfEnemyDead()
     {
-        Animator enemyAnimator = GetComponent<Animator>();
 
         if (EnemyManager.Instance.Health <= 0)
         {
-            EnemyManager.Instance.IsDead = true;
-            enemyAnimator.SetBool("IsDead", true);
-            WaitBeforeDestroy();
-            Destroy(gameObject);
+            StartCoroutine(WaitBeforeDestroy());
         }
     }
 }
