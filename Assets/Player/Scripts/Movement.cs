@@ -8,6 +8,7 @@ public class Movement : MonoBehaviour
     private float walkSpeed = 4.0f;
     private float runSpeed = 9.0f;
     private float currentSpeed;
+    private float floatSpeed;
 
     // Jump vairables
     private float jumpForce = 8.0f;
@@ -20,6 +21,8 @@ public class Movement : MonoBehaviour
 
     private Rigidbody2D player_body;
     private PlayerColliders groundCollider;
+    private PlayerColliders wallColliderLeft;
+    private PlayerColliders wallColliderRight;
     private GameObject attackColliderObject;
     private Attacking attacking;
     private Animator playerAnimator;
@@ -28,7 +31,11 @@ public class Movement : MonoBehaviour
     void Start()
     {
         player_body = GetComponent<Rigidbody2D>();
+
         groundCollider = transform.Find("GroundCollider").GetComponent<PlayerColliders>();
+        wallColliderLeft = transform.Find("WallCollider_Left").GetComponent<PlayerColliders>();
+        wallColliderRight = transform.Find("WallCollider_Right").GetComponent<PlayerColliders>();
+
         attackColliderObject = transform.Find("AttackCollider").gameObject;
         attacking = GetComponent<Attacking>();
         playerAnimator = GetComponent<Animator>();
@@ -44,7 +51,22 @@ public class Movement : MonoBehaviour
             JumpManagement();
         }
         DodgeManagement();
+
+        if (!isOnGround)
+        {
+            currentSpeed -= 100.5f * Time.deltaTime;
+            Debug.Log(currentSpeed);
+
+        }
+
+        if (currentSpeed < walkSpeed)
+        {
+            currentSpeed = walkSpeed;
+        }
+
     }
+
+
 
     // Handle horizontal movement
     private void MovementManagement()
@@ -52,7 +74,7 @@ public class Movement : MonoBehaviour
         // Check if player is running
         bool isRunning = Input.GetKey(KeyCode.LeftShift);
         // Set movement speed to running speed if player is running
-        currentSpeed = isRunning && isOnGround && !attacking.IsAttacking ? runSpeed : walkSpeed;
+        currentSpeed = isRunning && !attacking.IsAttacking ? runSpeed : walkSpeed;
         // Check which horizontal movement direction key is pressed
         float inputXAxis = Input.GetAxis("Horizontal") * currentSpeed;
 
@@ -100,6 +122,8 @@ public class Movement : MonoBehaviour
         if (Input.GetKeyDown("space") && isOnGround)
         {
             playerAnimator.SetTrigger("Player_Jump");
+            Debug.Log(Input.GetAxis("Horizontal"));
+            Debug.Log(currentSpeed);
             player_body.velocity = new Vector2(currentSpeed * Input.GetAxis("Horizontal"), jumpForce);
             isOnGround = false;
         }
@@ -145,6 +169,15 @@ public class Movement : MonoBehaviour
         {
             isOnGround = true;
             playerAnimator.SetBool("On_Ground", isOnGround);
+        }
+
+        if ((!isOnGround && wallColliderLeft.IsEnabledAndColliding()) || (!isOnGround && wallColliderRight.IsEnabledAndColliding()))
+        {
+            Debug.Log("Not on ground");
+            playerAnimator.SetTrigger("Player_Falling");
+            isOnGround = false;
+            playerAnimator.SetBool("On_Ground", isOnGround);
+            player_body.velocity = new Vector2(Input.GetAxis("Horizontal"), -(jumpForce/2));
         }
 
         if (isOnGround && !groundCollider.IsEnabledAndColliding())

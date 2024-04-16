@@ -40,6 +40,6 @@ public class CameraFollow : MonoBehaviour
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, attachObject.position, cameraSmoothingSpeed);
         transform.position = smoothedPosition;
 
-        transform.position = new Vector3(transform.position.x, transform.position.y, -10.0f);
+        transform.position = new Vector3(transform.position.x, transform.position.y + 0.3f, -10.0f);
     }
 }
