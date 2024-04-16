@@ -14,8 +14,21 @@ public class PickupCollider : MonoBehaviour
     void OnTriggerEnter2D(Collider2D c2d)
     {
         //Destroy Potion if picked up.
-        if (c2d.CompareTag("Player"))
+        if (c2d.CompareTag("Player") && this.CompareTag("Potion"))
         {
+            
+            Destroy(gameObject);
+        }
+
+        if (c2d.CompareTag("Player") && this.CompareTag("Key"))
+        {
+
+            Destroy(gameObject);
+        }
+
+        if (c2d.CompareTag("Player") && this.CompareTag("Coin"))
+        {
+
             Destroy(gameObject);
         }
     }

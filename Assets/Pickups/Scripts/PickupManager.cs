@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class PickupManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private int healthRegen = 10;
+    [SerializeField] private int scoreMultiplier = 10;
+    private int totalCoins;
 
-    // Update is called once per frame
-    void Update()
+    public void PotionPickupEvent()
     {
-        
+        PlayerManager.Instance.Health += healthRegen;
+
     }
+    
+
+
+
 }
