@@ -4,5 +4,60 @@ using UnityEngine;
 
 public class BossAttack : MonoBehaviour
 {
+    [SerializeField] private float attackCooldown;
+    [SerializeField] private float range;
+    [SerializeField] private float colliderDistance;
+    [SerializeField] private BoxCollider2D boxCollider;
+    [SerializeField] private LayerMask playerLayer;
+    private float cooldownTimer = 0;
+    private Animator anim;
     
+
+    private void Awake()
+    {
+        anim = GetComponent<Animator>();
+    }
+
+    private void Update()
+    {
+        cooldownTimer += Time.deltaTime;
+
+        //Attack only when boss sees player
+        if (PlayerInSight())
+        {
+            if (cooldownTimer >= attackCooldown)
+            {
+                cooldownTimer = 0;
+
+                anim.SetTrigger("attack");
+            }
+        }
+    }
+
+    //Checks if the player is in sight of the boss
+    private bool PlayerInSight()
+    {
+        RaycastHit2D hit = Physics2D.BoxCast(boxCollider.bounds.center + transform.right * range * transform.localScale.x * colliderDistance,
+            new Vector2(boxCollider.bounds.size.x, boxCollider.bounds.size.y),
+            0, Vector2.left, 0, playerLayer);
+
+        return hit.collider != null;
+    }
+    //Shows the the boss attacking box
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(boxCollider.bounds.center + transform.right * range * transform.localScale.x * colliderDistance,
+            new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z));
+    }
+    //Damage player when boss attack
+    private void DamagePlayer()
+    {
+        if (PlayerInSight()) 
+        {
+            PlayerManager.Instance.DamagePlayer(BossManager.Instance.AttackDamage);
+            //see player health report with each boss attack
+            Debug.Log(PlayerManager.Instance.Health);
+        }
+    }
 }

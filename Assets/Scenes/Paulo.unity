@@ -25371,6 +25371,7 @@ GameObject:
   - component: {fileID: 1297610232}
   - component: {fileID: 1297610237}
   - component: {fileID: 1297610236}
+  - component: {fileID: 1297610238}
   - component: {fileID: 1297610235}
   m_Layer: 7
   m_Name: Boss
@@ -25458,6 +25459,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 972756c3d3cb58248955eb41bc5a9c23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackCooldown: 1
+  range: -1.6
+  colliderDistance: 0.3
+  boxCollider: {fileID: 1297610236}
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!61 &1297610236
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -25524,6 +25532,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1297610238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1297610230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfcf806e46ca7bb4cb982516d19d9db9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  attackDamage: 10
+  damageEnemy: 0
 --- !u!1001 &1314154616
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26548,11 +26571,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2445427119135345739, guid: 588c374176b934e309d89d5b1396059c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 70.05
+      value: 75.287
       objectReference: {fileID: 0}
     - target: {fileID: 2445427119135345739, guid: 588c374176b934e309d89d5b1396059c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.5
+      value: 4.545
       objectReference: {fileID: 0}
     - target: {fileID: 2445427119135345739, guid: 588c374176b934e309d89d5b1396059c, type: 3}
       propertyPath: m_LocalPosition.z
