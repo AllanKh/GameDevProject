@@ -8,7 +8,8 @@ public class EnemyAttacking : MonoBehaviour
     private AnimatorStateInfo animStateInfo;
     private bool enemyIsAttacking = false;
     private Collider2D attackCollider;
-    private GameObject attackColliderObject;
+    private float cooldown = 1f;
+    private float lastAttackAt = -9999f;
 
     public bool EnemyIsAttacking { get { return enemyIsAttacking; } set { enemyIsAttacking = value; } }
 
@@ -17,7 +18,6 @@ public class EnemyAttacking : MonoBehaviour
     {
         enemyAnimator = GetComponent<Animator>();
         attackCollider = transform.Find("AttackCollider").GetComponent<Collider2D>();
-        attackColliderObject = transform.Find("AttackCollider").gameObject;
     }
 
     //Trigger the attack animation if not already playing
@@ -25,13 +25,12 @@ public class EnemyAttacking : MonoBehaviour
     {
         if (!AttackAnimationActive)
         {
-            //Debug.Log("StartAttack");
-            enemyAnimator.SetTrigger("Attack_Trigger");
-            enemyIsAttacking = true;
-        }
-        else
-        {
-            enemyIsAttacking = false;
+            //Rate-limits the attack animation
+            if (Time.time > lastAttackAt + cooldown)
+            {
+                enemyAnimator.SetTrigger("Attack_Trigger");
+                lastAttackAt = Time.time;
+            }
         }
     }
 

@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
+    private EnemyManager enemyManager;
     private float movementSpeed = 1.5f;
     private int moveCounter = 0;
     private Rigidbody2D rb;
     private Animator enemyAnimator;
     private bool startMoving = false;
+    private EnemyAttacking enemyAttacking;
     private GameObject attackColliderObject;
     private GameObject detectionColliderObject;
 
@@ -20,10 +22,12 @@ public class EnemyMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        enemyManager = GetComponent<EnemyManager>();
         rb = GetComponent<Rigidbody2D>();
         enemyAnimator = GetComponent<Animator>();
         enemyAnimator.SetInteger("Anim_State", 0);
         StartCoroutine(WaitBeforeMoving());
+        enemyAttacking = GetComponent<EnemyAttacking>();
         attackColliderObject = transform.Find("AttackCollider").gameObject;
         detectionColliderObject = transform.Find("DetectionCollider").gameObject;
     }
@@ -31,9 +35,7 @@ public class EnemyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        EnemyAttacking enemyAttacking = GetComponent<EnemyAttacking>();
-
-        if (startMoving && !enemyAttacking.AttackAnimationActive && !EnemyManager.Instance.IsDead)
+        if (startMoving && !enemyAttacking.AttackAnimationActive && !enemyManager.IsDead)
         {
             moveCounter++;
             Movement();
@@ -46,7 +48,7 @@ public class EnemyMovement : MonoBehaviour
         yield return new WaitForSeconds(5);
         startMoving = true;
     }
-
+    
     //Handle horizontal movement
     private void Movement()
     {
@@ -65,15 +67,21 @@ public class EnemyMovement : MonoBehaviour
         rb.velocity = new Vector2(movementSpeed, rb.velocity.y);
 
         //Moves enemy back and forth
-        if (rb.velocity.x > 0 && moveCounter >= 1000 && !EnemyManager.Instance.PlayerDetected)
+        if (rb.velocity.x > 0 && moveCounter >= 1000 && !enemyManager.PlayerDetected)
         {
             movementSpeed = -1.5f;
             moveCounter = 0;
         }
-        else if (rb.velocity.x < 0 && moveCounter >= 1000 && !EnemyManager.Instance.PlayerDetected)
+        else if (rb.velocity.x < 0 && moveCounter >= 1000 && !enemyManager.PlayerDetected)
         {
             movementSpeed = 1.5f;
             moveCounter = 0;
+        }
+
+        //Stops moving when attacking
+        if (enemyAttacking.EnemyIsAttacking)
+        {
+            rb.velocity = new Vector2(0, rb.velocity.y);
         }
 
         //Flip asset according to direction
@@ -91,6 +99,7 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
+    //Increase the movementspeed when detecting the player
     public void PlayerDetected()
     {
         movementSpeed = (movementSpeed > 0) ? 2f : -2f;
@@ -102,6 +111,7 @@ public class EnemyMovement : MonoBehaviour
         attackColliderObject.transform.localPosition = new Vector2(flip ? -0.6f : 0, 0);
     }
 
+    //Check if detection collider flips
     private void FlipDetectionCollider(bool flip)
     {
         detectionColliderObject.transform.localPosition = new Vector2(flip ? -1.55f : 1.55f, 0);

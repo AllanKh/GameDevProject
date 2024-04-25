@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class EnemyDamageHandler : MonoBehaviour
 {
-
+    private EnemyManager enemyManager;
     private Animator enemyAnimator;
 
     private void Start()
     {
+        enemyManager = GetComponent<EnemyManager>();
         enemyAnimator = GetComponent<Animator>();
     }
 
@@ -16,38 +17,36 @@ public class EnemyDamageHandler : MonoBehaviour
     void Update()
     {
         CheckIfEnemyDead();
-        ApplyDamageToPlayer();
     }
 
+    //Destroy gameObject after death animation
     IEnumerator WaitBeforeDestroy()
     {
         enemyAnimator.SetTrigger("Death_Trigger");
-        EnemyManager.Instance.IsDead = true;
+        enemyManager.Instance.IsDead = true;
 
         yield return new WaitForSeconds(0.7f);        
 
         Destroy(gameObject);
     }
 
+    //Animation event
+    //Apply damage to player when an attack have succesfully landed
     private void ApplyDamageToPlayer()
     {
         EnemyAttacking enemyAttacking = GetComponent<EnemyAttacking>();
 
-        if (enemyAttacking.EnemyIsAttacking && !enemyAttacking.AttackAnimationActive)
+        if (!PlayerManager.Instance.Invincible && enemyAttacking.EnemyIsAttacking)
         {
-            if (!PlayerManager.Instance.Invincible)
-            {
-                PlayerManager.Instance.DamagePlayer(EnemyManager.Instance.AttackDamage);
-                Debug.Log($"Player health: {PlayerManager.Instance.Health}");
-            }
+            PlayerManager.Instance.DamagePlayer(enemyManager.AttackDamage);
+            Debug.Log($"Player health: {PlayerManager.Instance.Health}");
         }
     }
 
     //Trigger the death animation if on or below 0 health
     private void CheckIfEnemyDead()
     {
-
-        if (EnemyManager.Instance.Health <= 0)
+        if (enemyManager.Health <= 0)
         {
             StartCoroutine(WaitBeforeDestroy());
         }

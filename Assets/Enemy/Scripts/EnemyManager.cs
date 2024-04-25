@@ -4,27 +4,34 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    //Singleton to manage enemy stats globally across the game
-    //Ensures there is only one instance of EnemyManager throughout game lifecycle
-    public static EnemyManager Instance { get; private set; }
+    //Instance of the class to get the properties
+    public EnemyManager Instance { get; private set; }
 
-    private float health = 100.0f; //Enemy health
-    private float attackDamage = 25.0f; //Enemy attack damage
-    private float damageEnemy = 0.0f; //Damage taken from player
-    private bool isDead = false;
-    private bool playerDetected = false;
+    [SerializeField]private GameObject prefab;
+    private float health; //Enemy health
+    private float attackDamage; //Enemy attack damage
+    private bool isDead;
+    private bool playerDetected;
 
-    private void Awake()
+    //private void Awake()
+    //{
+    //    if (Instance != null && Instance != this)
+    //    {
+    //        Destroy(gameObject); //Destroys GameObject script it is attatched to if there is a duplicate
+    //    }
+    //    else
+    //    {
+    //        Instance = this;
+    //        DontDestroyOnLoad(gameObject); //Prevents EnemyManager from being destroyed when changing scenes
+    //    }
+    //}
+
+    void Start()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject); //Destroys GameObject script it is attatched to if there is a duplicate
-        }
-        else
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject); //Prevents EnemyManager from being destroyed when changing scenes
-        }
+        health = 100.0f;
+        attackDamage = 25.0f;
+        isDead = false;
+        playerDetected = false;
     }
 
     //get and set enemy health

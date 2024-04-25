@@ -5,11 +5,14 @@ using UnityEngine;
 public class EnemyColliders : MonoBehaviour
 {
     //Checks the amount of colliders currently intersecting with enemy
+    private EnemyManager enemyManager;
     private int colliderCount = 0;
     private float disableTimer = 0f;
     private GameObject enemyGameObject;
     private bool detectionColliderDetected;
     private bool attackColliderDetected;
+
+    public bool AttackColliderDetected { get; set; }
 
     public bool SensorEnabledAndColliding()
     {
@@ -24,7 +27,8 @@ public class EnemyColliders : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (!EnemyManager.Instance.IsDead)
+        enemyManager = GetComponent<EnemyManager>();
+        if (!enemyManager.Instance.IsDead)
         {
             enemyGameObject = GameObject.FindWithTag("Enemy");
 
@@ -73,22 +77,22 @@ public class EnemyColliders : MonoBehaviour
             //Check if DetectionCollider collides with the player
             if (detectionColliderDetected && other.CompareTag("Player"))
             {
-                EnemyManager.Instance.PlayerDetected = true;
+                enemyManager.Instance.PlayerDetected = true;
                 TriggerDetection();
-                //Debug.Log("Player detected");
             }
             //Check if AttackCollider collides with player and register a hit
             if (attackColliderDetected && other.CompareTag("Player"))
             {
+                enemyAttacking.EnemyIsAttacking = true;
                 TriggerAttack();
-                //Debug.Log("Player hit");
             }
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (!EnemyManager.Instance.IsDead)
+        enemyManager = GetComponent<EnemyManager>();
+        if (!enemyManager.Instance.IsDead)
         {
             enemyGameObject = GameObject.FindWithTag("Enemy");
             if (enemyGameObject != null)
@@ -112,8 +116,12 @@ public class EnemyColliders : MonoBehaviour
                     //Check if DetectionCollider no longer collides with player
                     if (!detectionColliderDetected && other.CompareTag("Player"))
                     {
-                        EnemyManager.Instance.PlayerDetected = false;
-                        //Debug.Log("Player no longer detected");
+                        enemyManager.Instance.PlayerDetected = false;
+                    }
+                    //Check if AttackCollider no longer collides with player
+                    if (!attackColliderDetected && other.CompareTag("Player"))
+                    {
+                        enemyAttacking.EnemyIsAttacking = false;
                     }
                 }
                 else
@@ -145,7 +153,6 @@ public class EnemyColliders : MonoBehaviour
         EnemyAttacking enemyAttacking = enemyGameObject.GetComponent<EnemyAttacking>();
         if (enemyAttacking != null)
         {
-            //Debug.Log("Trigger");
             enemyAttacking.StartAttack();
         }
     }
