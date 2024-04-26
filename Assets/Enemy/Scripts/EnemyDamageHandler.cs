@@ -7,7 +7,7 @@ public class EnemyDamageHandler : MonoBehaviour
     private EnemyManager enemyManager;
     private Animator enemyAnimator;
 
-    private void Start()
+    void Start()
     {
         enemyManager = GetComponent<EnemyManager>();
         enemyAnimator = GetComponent<Animator>();
@@ -23,7 +23,7 @@ public class EnemyDamageHandler : MonoBehaviour
     IEnumerator WaitBeforeDestroy()
     {
         enemyAnimator.SetTrigger("Death_Trigger");
-        enemyManager.Instance.IsDead = true;
+        enemyManager.SkeletonIsDead = true;
 
         yield return new WaitForSeconds(0.7f);        
 
@@ -38,7 +38,7 @@ public class EnemyDamageHandler : MonoBehaviour
 
         if (!PlayerManager.Instance.Invincible && enemyAttacking.EnemyIsAttacking)
         {
-            PlayerManager.Instance.DamagePlayer(enemyManager.AttackDamage);
+            PlayerManager.Instance.DamagePlayer(enemyManager.SkeletonAttackDamage);
             Debug.Log($"Player health: {PlayerManager.Instance.Health}");
         }
     }
@@ -46,7 +46,7 @@ public class EnemyDamageHandler : MonoBehaviour
     //Trigger the death animation if on or below 0 health
     private void CheckIfEnemyDead()
     {
-        if (enemyManager.Health <= 0)
+        if (enemyManager.SkeletonHealth <= 0)
         {
             StartCoroutine(WaitBeforeDestroy());
         }

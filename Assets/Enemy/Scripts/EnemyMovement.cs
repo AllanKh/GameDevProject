@@ -35,7 +35,7 @@ public class EnemyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (startMoving && !enemyAttacking.AttackAnimationActive && !enemyManager.IsDead)
+        if (startMoving && !enemyAttacking.AttackAnimationActive && !enemyManager.SkeletonIsDead)
         {
             moveCounter++;
             Movement();
@@ -67,12 +67,12 @@ public class EnemyMovement : MonoBehaviour
         rb.velocity = new Vector2(movementSpeed, rb.velocity.y);
 
         //Moves enemy back and forth
-        if (rb.velocity.x > 0 && moveCounter >= 1000 && !enemyManager.PlayerDetected)
+        if (rb.velocity.x > 0 && moveCounter >= 1000 && !enemyManager.SkeletonDetectPlayer)
         {
             movementSpeed = -1.5f;
             moveCounter = 0;
         }
-        else if (rb.velocity.x < 0 && moveCounter >= 1000 && !enemyManager.PlayerDetected)
+        else if (rb.velocity.x < 0 && moveCounter >= 1000 && !enemyManager.SkeletonDetectPlayer)
         {
             movementSpeed = 1.5f;
             moveCounter = 0;

@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerColliders : MonoBehaviour
 {
     // colliderCound checks mount of colliders currently intersecting with player
-    private EnemyManager enemyManager;
+    private EnemyManager skeletonManager;
+    private GameObject skeletonGameObject;
     private int colliderCount = 0;
     private float disableTimer = 0f;
 
@@ -19,14 +20,14 @@ public class PlayerColliders : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         colliderCount++;
-        enemyManager = GetComponent<EnemyManager>();
+        skeletonGameObject = GameObject.FindWithTag("Skeleton");
+        skeletonManager = skeletonGameObject.GetComponent<EnemyManager>();
         // Check if AttackCollider is touching an enemy and register a hit
-        if (gameObject.CompareTag("AttackCollider") && other.CompareTag("Enemy"))
+        if (gameObject.CompareTag("AttackCollider") && other.CompareTag("Skeleton"))
         {
-            Debug.Log("Enemy Hit");
-            enemyManager.Instance.DamageEnemy(PlayerManager.Instance.AttackDamage);
+            Debug.Log("Skeleton Hit");
+            skeletonManager.DamageSkeleton(PlayerManager.Instance.AttackDamage);
         }
-
     }
 
 

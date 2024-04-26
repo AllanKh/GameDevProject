@@ -6,9 +6,9 @@ public class EnemyColliders : MonoBehaviour
 {
     //Checks the amount of colliders currently intersecting with enemy
     private EnemyManager enemyManager;
+    private GameObject enemyGameObject;
     private int colliderCount = 0;
     private float disableTimer = 0f;
-    private GameObject enemyGameObject;
     private bool detectionColliderDetected;
     private bool attackColliderDetected;
 
@@ -27,21 +27,20 @@ public class EnemyColliders : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        enemyManager = GetComponent<EnemyManager>();
-        if (!enemyManager.Instance.IsDead)
+        enemyGameObject = GameObject.FindWithTag("Skeleton");
+        enemyManager = enemyGameObject.GetComponent<EnemyManager>();
+        if (!enemyManager.SkeletonIsDead)
         {
-            enemyGameObject = GameObject.FindWithTag("Enemy");
-
             if (enemyGameObject == null)
             {
-                Debug.LogError("No GameObject with tag 'Enemy' found");
+                Debug.LogError("No GameObject with tag 'Skeleton' found");
             }
             else
             {
                 EnemyMovement movement = enemyGameObject.GetComponent<EnemyMovement>();
                 if (movement == null)
                 {
-                    Debug.LogError("EnemyMovement component not found on GameObject with tag 'Enemy'");
+                    Debug.LogError("EnemyMovement component not found on GameObject with tag 'Skeleton'");
                 }
             }
 
@@ -64,7 +63,7 @@ public class EnemyColliders : MonoBehaviour
             {
                 if (enemyMovement == null)
                 {
-                    Debug.LogError("enemyMovement is null");
+                    Debug.LogError("skeletonMovement is null");
                 }
                 if (enemyMovement != null && enemyMovement.AttackColliderObject == null)
                 {
@@ -77,7 +76,7 @@ public class EnemyColliders : MonoBehaviour
             //Check if DetectionCollider collides with the player
             if (detectionColliderDetected && other.CompareTag("Player"))
             {
-                enemyManager.Instance.PlayerDetected = true;
+                enemyManager.SkeletonDetectPlayer = true;
                 TriggerDetection();
             }
             //Check if AttackCollider collides with player and register a hit
@@ -91,10 +90,11 @@ public class EnemyColliders : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        enemyManager = GetComponent<EnemyManager>();
-        if (!enemyManager.Instance.IsDead)
+        enemyGameObject = GameObject.FindWithTag("Skeleton");
+        enemyManager = enemyGameObject.GetComponent<EnemyManager>();
+        if (!enemyManager.SkeletonIsDead)
         {
-            enemyGameObject = GameObject.FindWithTag("Enemy");
+            //enemyGameObject = GameObject.FindWithTag("Enemy");
             if (enemyGameObject != null)
             {
                 EnemyMovement enemyMovement = enemyGameObject.GetComponent<EnemyMovement>();
@@ -116,7 +116,7 @@ public class EnemyColliders : MonoBehaviour
                     //Check if DetectionCollider no longer collides with player
                     if (!detectionColliderDetected && other.CompareTag("Player"))
                     {
-                        enemyManager.Instance.PlayerDetected = false;
+                        enemyManager.SkeletonDetectPlayer = false;
                     }
                     //Check if AttackCollider no longer collides with player
                     if (!attackColliderDetected && other.CompareTag("Player"))
@@ -126,12 +126,12 @@ public class EnemyColliders : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogError("EnemyMovement or EnemyAttacking component not found on the Enemy GameObject");
+                    Debug.LogError("EnemyMovement or EnemyAttacking component not found on the Skeleton GameObject");
                 }
             }
             else
             {
-                Debug.LogError("No GameObject with tag 'Enemy' found");
+                Debug.LogError("No GameObject with tag 'Skeleton' found");
             }
         }
     }
@@ -149,7 +149,7 @@ public class EnemyColliders : MonoBehaviour
     //Trigger the attack
     public void TriggerAttack()
     {
-        enemyGameObject = GameObject.FindWithTag("Enemy");
+        enemyGameObject = GameObject.FindWithTag("Skeleton");
         EnemyAttacking enemyAttacking = enemyGameObject.GetComponent<EnemyAttacking>();
         if (enemyAttacking != null)
         {
@@ -159,7 +159,7 @@ public class EnemyColliders : MonoBehaviour
     //Trigger the detection
     public void TriggerDetection()
     {
-        enemyGameObject = GameObject.FindWithTag("Enemy");
+        enemyGameObject = GameObject.FindWithTag("Skeleton");
         EnemyMovement enemyMovement = enemyGameObject.GetComponent<EnemyMovement>();
         if (enemyMovement != null)
         {

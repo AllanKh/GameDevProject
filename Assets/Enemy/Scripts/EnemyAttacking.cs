@@ -41,7 +41,7 @@ public class EnemyAttacking : MonoBehaviour
         get
         {
             animStateInfo = enemyAnimator.GetCurrentAnimatorStateInfo(0);
-            return animStateInfo.IsName("Enemy_Attack") && animStateInfo.normalizedTime < 1.0f;
+            return animStateInfo.IsName("Skeleton_Attack") && animStateInfo.normalizedTime < 1.0f;
         } 
     }
 }

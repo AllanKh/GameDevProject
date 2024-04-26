@@ -14,7 +14,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Dennis temp.unity
     guid: 65181c84dacdce345858657b483e9491
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   m_configObjects: {}
