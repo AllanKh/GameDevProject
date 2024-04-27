@@ -1,8 +1,11 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PickupCollider : MonoBehaviour
+
 {
     void Awake()
     {
@@ -16,8 +19,9 @@ public class PickupCollider : MonoBehaviour
         //Destroy Potion if picked up.
         if (c2d.CompareTag("Player") && this.CompareTag("Potion"))
         {
-            
+            PlayerManager.Instance.Health += 15;
             Destroy(gameObject);
+            Debug.Log(PlayerManager.Instance.Health);
         }
 
         if (c2d.CompareTag("Player") && this.CompareTag("Key"))
@@ -31,6 +35,10 @@ public class PickupCollider : MonoBehaviour
 
             Destroy(gameObject);
         }
+    }
+
+    void ObjectCollision()
+    {
     }
 
 

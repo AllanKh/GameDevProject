@@ -4,15 +4,34 @@ using UnityEngine;
 
 public class PickupManager : MonoBehaviour
 {
-    [SerializeField] private int healthRegen = 10;
+
+    public static PickupManager Instance { get; private set; }
+    [SerializeField] static int healthRegen = 10;
     [SerializeField] private int scoreMultiplier = 10;
     private int totalCoins;
+    private string objectTag;
 
-    public void PotionPickupEvent()
+    public void PickupEvent(bool condition)
     {
-        PlayerManager.Instance.Health += healthRegen;
+
+        if (condition && objectTag == "Potion")
+        {
+            PlayerManager.Instance.Health += healthRegen;
+        }
+        
+
+
 
     }
+
+    public int GetHealthRegen()
+    {
+        return healthRegen;
+    }
+
+
+
+
     
 
 
