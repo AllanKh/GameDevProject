@@ -25,6 +25,12 @@ public class PlayerColliders : MonoBehaviour
             Debug.Log("Enemy Hit");
         }
 
+        if (gameObject.CompareTag("AttackCollider") && other.CompareTag("Boss"))
+        {
+            BossDamageDieHandler.Instance.DamageBoss(PlayerManager.Instance.AttackDamage);
+            Debug.Log(BossManager.Instance.Health);
+        }
+
     }
 
 

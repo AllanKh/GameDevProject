@@ -10,12 +10,16 @@ public class BossAttack : MonoBehaviour
     [SerializeField] private BoxCollider2D boxCollider;
     [SerializeField] private LayerMask playerLayer;
     private float cooldownTimer = 0;
+    
+    //references
     private Animator anim;
+    private BossWalk bossWalk;
     
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
+        bossWalk =  GetComponentInParent<BossWalk>();
     }
 
     private void Update()
@@ -31,6 +35,11 @@ public class BossAttack : MonoBehaviour
 
                 anim.SetTrigger("attack");
             }
+        }
+        //When player is not in sight keep moving when player is in sight attack and stop moving
+        if (bossWalk != null)
+        {
+            bossWalk.enabled = !PlayerInSight();
         }
     }
 
@@ -56,6 +65,7 @@ public class BossAttack : MonoBehaviour
         if (PlayerInSight()) 
         {
             PlayerManager.Instance.DamagePlayer(BossManager.Instance.AttackDamage);
+
             //see player health report with each boss attack
             Debug.Log(PlayerManager.Instance.Health);
         }
