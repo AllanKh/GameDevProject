@@ -23,5 +23,8 @@ public class MainMenuUI : MonoBehaviour
         {
             Application.Quit();  //Quit the game (Won't "work" inside the editor, but it does, trust me) 
         });
+
+        Time.timeScale = 1.0f;
+
     }
 }

@@ -31,6 +31,14 @@ public class GameInput : MonoBehaviour
         playerInputActions.Player.Pause.performed += Pause_performed; //Listen for this input
     }
 
+    private void OnDestroy()  //Stop listening to old events and destroy things to prevent duplication after quitting to main menu.
+    {
+        playerInputActions.Player.Pause.performed -= Pause_performed; //Stop listening
+
+        playerInputActions.Dispose(); //Dispose/destroy this.
+    }
+
+
     private void Pause_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         OnPauseAction?.Invoke(this, EventArgs.Empty);  //When the Pause button is pressed, activate this event!
