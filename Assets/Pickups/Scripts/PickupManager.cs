@@ -6,6 +6,7 @@ public class PickupManager : MonoBehaviour
 {
 
     public static PickupManager Instance { get; private set; }
+
     [SerializeField] static int healthRegen = 10;
     [SerializeField] private int scoreMultiplier = 10;
     private int totalCoins;
@@ -19,21 +20,11 @@ public class PickupManager : MonoBehaviour
             PlayerManager.Instance.Health += healthRegen;
         }
         
-
-
-
     }
 
     public int GetHealthRegen()
     {
         return healthRegen;
     }
-
-
-
-
-    
-
-
 
 }

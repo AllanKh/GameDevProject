@@ -11,6 +11,8 @@ TagManager:
   - Key
   - Potion
   - Coin
+  - BarrelCollider
+  - Barrel
   layers:
   - Default
   - TransparentFX

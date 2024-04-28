@@ -5,17 +5,16 @@ using UnityEngine;
 public class SpawnPickups : MonoBehaviour
 {
 
-    public GameObject myPrefab;
+    public List<GameObject> myPrefab;
 
-    // Start is called before the first frame update
-    void Start()
+    void SpawnObject(int i)
     {
-        Instantiate(myPrefab, new Vector2(81, 5), Quaternion.identity);
+         Instantiate(myPrefab[i],transform.parent.position, Quaternion.identity);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SpawnNow()
     {
-        
+        int i = Random.Range(0, myPrefab.Count - 1);
+        SpawnObject(i);
     }
 }
