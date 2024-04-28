@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerColliders : MonoBehaviour
 {
     // colliderCound checks mount of colliders currently intersecting with player
-    private EnemyManager skeletonManager;
-    private GameObject skeletonGameObject;
+    private GameObject[] skeletonGameObjects;
+    private GameObject[] flyingEyeGameObjects;
     private int colliderCount = 0;
     private float disableTimer = 0f;
 
@@ -20,13 +20,25 @@ public class PlayerColliders : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         colliderCount++;
-        skeletonGameObject = GameObject.FindWithTag("Skeleton");
-        skeletonManager = skeletonGameObject.GetComponent<EnemyManager>();
-        // Check if AttackCollider is touching an enemy and register a hit
-        if (gameObject.CompareTag("AttackCollider") && other.CompareTag("Skeleton"))
+        // Check if AttackCollider is touching a skeleton and register a hit
+        skeletonGameObjects = GameObject.FindGameObjectsWithTag("Skeleton");
+        foreach (GameObject g in skeletonGameObjects)
         {
-            Debug.Log("Skeleton Hit");
-            skeletonManager.DamageSkeleton(PlayerManager.Instance.AttackDamage);
+            if (gameObject.CompareTag("AttackCollider") && g.GetComponent<Collider2D>() == other)
+            {
+                Debug.Log("Skeleton Hit");
+                g.GetComponent<SkeletonManager>().DamageSkeleton(PlayerManager.Instance.AttackDamage);
+            }
+        }
+        //Check if AttackCollider is touching a flying eye and register a hit
+        flyingEyeGameObjects = GameObject.FindGameObjectsWithTag("FlyingEye");
+        foreach (GameObject g in flyingEyeGameObjects)
+        {
+            if (gameObject.CompareTag("AttackCollider") && g.GetComponent<Collider2D>() == other)
+            {
+                Debug.Log("Flying Eye Hit");
+                g.GetComponent<FlyingEyeManager>().DamageFlyingEye(PlayerManager.Instance.AttackDamage);
+            }
         }
     }
 

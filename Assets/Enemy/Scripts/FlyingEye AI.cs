@@ -6,6 +6,10 @@ using Pathfinding;
 public class FlyingEyeAI : MonoBehaviour
 {
     [SerializeField]private Transform target;
+    private FlyingEyeAttacking flyingEyeAttacking;
+    private GameObject[] gameObjects;
+    private GameObject attackColliderObject;
+    private GameObject detectionColliderObject;
     private float speed = 300f;
     private float nextWaypointDistance = 3f;
     private Path path;
@@ -13,21 +17,25 @@ public class FlyingEyeAI : MonoBehaviour
     private bool reachedEndOfPath = false;
     private Seeker seeker;
     private Rigidbody2D rb;
-    private FlyingEyeColliders flyingEyeCollider;
+
+    public GameObject AttackColliderObject { get { return attackColliderObject; } set { attackColliderObject = value; } }
+    public GameObject DetectionColliderObject { get { return detectionColliderObject; } set { detectionColliderObject = value; } }
 
     // Start is called before the first frame update
     void Start()
     {
+        flyingEyeAttacking = GetComponent<FlyingEyeAttacking>();
+        gameObjects = GameObject.FindGameObjectsWithTag("FlyingEye");
+        attackColliderObject = transform.Find("AttackCollider").gameObject;
+        detectionColliderObject = transform.Find("DetectionCollider").gameObject;
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
+        InvokeRepeating("UpdatePath", 0f, 0.05f);
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
-        //If player is within a certain area
-        //InvokeRepeating("UpdatePath", 0f, 0.5f);
-
         if (path == null)
         {
             return;
@@ -45,8 +53,16 @@ public class FlyingEyeAI : MonoBehaviour
 
         Vector2 direction = ((Vector2)path.vectorPath[curretnWaypoint] - rb.position).normalized;
         Vector2 force = direction * speed * Time.deltaTime;
-
         rb.AddForce(force);
+
+        if (flyingEyeAttacking.FlyingEyeIsAttacking)
+        {
+            speed = 0;
+        }
+        else if (!flyingEyeAttacking.FlyingEyeIsAttacking)
+        {
+            speed = 300.0f;
+        }
 
         float distance = Vector2.Distance(rb.position, path.vectorPath[curretnWaypoint]);
         if (distance < nextWaypointDistance)
@@ -54,21 +70,29 @@ public class FlyingEyeAI : MonoBehaviour
             curretnWaypoint++;
         }
 
-        if (rb.velocity.x > 0)
-        {
-            GetComponent<SpriteRenderer>().flipX = false;
-        }
-        else if (rb.velocity.x < 0)
+        if (rb.velocity.x < 0)
         {
             GetComponent<SpriteRenderer>().flipX = true;
+            FlipAttackCollider(true);
+        }
+        else if (rb.velocity.x > 0)
+        {
+            GetComponent<SpriteRenderer>().flipX = false;
+            FlipAttackCollider(false);
         }
     }
 
     private void UpdatePath()
     {
-        if (seeker.IsDone())
+        foreach (GameObject g in gameObjects)
         {
-            seeker.StartPath(rb.position, target.position, OnPathComplete);
+            if (!g.GetComponent<FlyingEyeManager>().FlyingEyeIsDead)
+            {
+                if (seeker.IsDone())
+                {
+                    seeker.StartPath(rb.position, target.position, OnPathComplete);
+                }
+            }
         }
     }
 
@@ -79,5 +103,10 @@ public class FlyingEyeAI : MonoBehaviour
             path = p;
             curretnWaypoint = 0;
         }
+    }
+
+    private void FlipAttackCollider(bool flip)
+    {
+        attackColliderObject.transform.localPosition = new Vector2(flip ? -0.4f : 0f, 0);
     }
 }

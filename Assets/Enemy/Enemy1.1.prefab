@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 2232536288393748637}
   - component: {fileID: 1191312433806051965}
   - component: {fileID: 5388620319462374380}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy1.1
   m_TagString: Skeleton
   m_Icon: {fileID: 0}
@@ -135,7 +135,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2

@@ -2,22 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAttacking : MonoBehaviour
+public class SkeletonAttacking : MonoBehaviour
 {
-    private Animator enemyAnimator;
+    private Animator skeletonAnimator;
     private AnimatorStateInfo animStateInfo;
-    private bool enemyIsAttacking = false;
-    private Collider2D attackCollider;
+    private bool skeletonIsAttacking = false;
     private float cooldown = 1f;
     private float lastAttackAt = -9999f;
 
-    public bool EnemyIsAttacking { get { return enemyIsAttacking; } set { enemyIsAttacking = value; } }
+    public bool SkeletonIsAttacking { get { return skeletonIsAttacking; } set { skeletonIsAttacking = value; } }
 
     // Start is called before the first frame update
     void Start()
     {
-        enemyAnimator = GetComponent<Animator>();
-        attackCollider = transform.Find("AttackCollider").GetComponent<Collider2D>();
+        skeletonAnimator = GetComponent<Animator>();
     }
 
     //Trigger the attack animation if not already playing
@@ -28,19 +26,19 @@ public class EnemyAttacking : MonoBehaviour
             //Rate-limits the attack animation
             if (Time.time > lastAttackAt + cooldown)
             {
-                enemyAnimator.SetTrigger("Attack_Trigger");
+                skeletonAnimator.SetTrigger("Attack_Trigger");
                 lastAttackAt = Time.time;
             }
         }
     }
 
-    //getter to check if enemy is attacking the player,
-    //bt checking if the attack animation is playing
+    //getter to check if skeleton is attacking the player,
+    //by checking if the attack animation is playing
     public bool AttackAnimationActive
     {
         get
         {
-            animStateInfo = enemyAnimator.GetCurrentAnimatorStateInfo(0);
+            animStateInfo = skeletonAnimator.GetCurrentAnimatorStateInfo(0);
             return animStateInfo.IsName("Skeleton_Attack") && animStateInfo.normalizedTime < 1.0f;
         } 
     }

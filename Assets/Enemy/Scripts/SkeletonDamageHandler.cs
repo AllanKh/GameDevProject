@@ -2,28 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyDamageHandler : MonoBehaviour
+public class SkeletonDamageHandler : MonoBehaviour
 {
-    private EnemyManager enemyManager;
-    private Animator enemyAnimator;
+    private SkeletonManager skeletonManager;
+    private Animator skeletonAnimator;
 
     void Start()
     {
-        enemyManager = GetComponent<EnemyManager>();
-        enemyAnimator = GetComponent<Animator>();
+        skeletonManager = GetComponent<SkeletonManager>();
+        skeletonAnimator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        CheckIfEnemyDead();
+        CheckIfSkeletonDead();
     }
 
     //Destroy gameObject after death animation
     IEnumerator WaitBeforeDestroy()
     {
-        enemyAnimator.SetTrigger("Death_Trigger");
-        enemyManager.SkeletonIsDead = true;
+        skeletonAnimator.SetTrigger("Death_Trigger");
+        skeletonManager.SkeletonIsDead = true;
 
         yield return new WaitForSeconds(0.7f);        
 
@@ -34,19 +34,19 @@ public class EnemyDamageHandler : MonoBehaviour
     //Apply damage to player when an attack have succesfully landed
     private void ApplyDamageToPlayer()
     {
-        EnemyAttacking enemyAttacking = GetComponent<EnemyAttacking>();
+        SkeletonAttacking skeletonAttacking = GetComponent<SkeletonAttacking>();
 
-        if (!PlayerManager.Instance.Invincible && enemyAttacking.EnemyIsAttacking)
+        if (!PlayerManager.Instance.Invincible && skeletonAttacking.SkeletonIsAttacking)
         {
-            PlayerManager.Instance.DamagePlayer(enemyManager.SkeletonAttackDamage);
+            PlayerManager.Instance.DamagePlayer(skeletonManager.SkeletonAttackDamage);
             Debug.Log($"Player health: {PlayerManager.Instance.Health}");
         }
     }
 
     //Trigger the death animation if on or below 0 health
-    private void CheckIfEnemyDead()
+    private void CheckIfSkeletonDead()
     {
-        if (enemyManager.SkeletonHealth <= 0)
+        if (skeletonManager.SkeletonHealth <= 0)
         {
             StartCoroutine(WaitBeforeDestroy());
         }

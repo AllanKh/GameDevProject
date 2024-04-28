@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMovement : MonoBehaviour
+public class SkeletonMovement : MonoBehaviour
 {
-    private EnemyManager enemyManager;
+    private SkeletonManager skeletonManager;
     private float movementSpeed = 1.5f;
     private int moveCounter = 0;
     private Rigidbody2D rb;
-    private Animator enemyAnimator;
+    private Animator skeletonAnimator;
     private bool startMoving = false;
-    private EnemyAttacking enemyAttacking;
+    private SkeletonAttacking skeletonAttacking;
     private GameObject attackColliderObject;
     private GameObject detectionColliderObject;
 
@@ -22,12 +22,12 @@ public class EnemyMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        enemyManager = GetComponent<EnemyManager>();
+        skeletonManager = GetComponent<SkeletonManager>();
         rb = GetComponent<Rigidbody2D>();
-        enemyAnimator = GetComponent<Animator>();
-        enemyAnimator.SetInteger("Anim_State", 0);
+        skeletonAnimator = GetComponent<Animator>();
+        skeletonAnimator.SetInteger("Anim_State", 0);
         StartCoroutine(WaitBeforeMoving());
-        enemyAttacking = GetComponent<EnemyAttacking>();
+        skeletonAttacking = GetComponent<SkeletonAttacking>();
         attackColliderObject = transform.Find("AttackCollider").gameObject;
         detectionColliderObject = transform.Find("DetectionCollider").gameObject;
     }
@@ -35,7 +35,7 @@ public class EnemyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (startMoving && !enemyAttacking.AttackAnimationActive && !enemyManager.SkeletonIsDead)
+        if (startMoving && !skeletonAttacking.AttackAnimationActive && !skeletonManager.SkeletonIsDead)
         {
             moveCounter++;
             Movement();
@@ -55,31 +55,31 @@ public class EnemyMovement : MonoBehaviour
         if (Mathf.Abs(rb.velocity.x) > Mathf.Epsilon && startMoving)
         {
             //Start walking animation
-            enemyAnimator.SetInteger("Anim_State", 1);
+            skeletonAnimator.SetInteger("Anim_State", 1);
         }
         else
         {
             //Stops walking animation
-            enemyAnimator.SetInteger("Anim_State", 0);
+            skeletonAnimator.SetInteger("Anim_State", 0);
         }
 
         //Moves enemy
         rb.velocity = new Vector2(movementSpeed, rb.velocity.y);
 
         //Moves enemy back and forth
-        if (rb.velocity.x > 0 && moveCounter >= 1000 && !enemyManager.SkeletonDetectPlayer)
+        if (rb.velocity.x > 0 && moveCounter >= 1000 && !skeletonManager.SkeletonDetectPlayer)
         {
             movementSpeed = -1.5f;
             moveCounter = 0;
         }
-        else if (rb.velocity.x < 0 && moveCounter >= 1000 && !enemyManager.SkeletonDetectPlayer)
+        else if (rb.velocity.x < 0 && moveCounter >= 1000 && !skeletonManager.SkeletonDetectPlayer)
         {
             movementSpeed = 1.5f;
             moveCounter = 0;
         }
 
         //Stops moving when attacking
-        if (enemyAttacking.EnemyIsAttacking)
+        if (skeletonAttacking.SkeletonIsAttacking)
         {
             rb.velocity = new Vector2(0, rb.velocity.y);
         }
