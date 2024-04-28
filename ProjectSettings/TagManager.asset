@@ -52,6 +52,9 @@ TagManager:
   - name: Walls
     uniqueID: 1467834019
     locked: 0
+  - name: Door
+    uniqueID: 3114295073
+    locked: 0
   - name: Game Objects
     uniqueID: 3406223027
     locked: 0
