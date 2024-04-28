@@ -15,7 +15,7 @@ public class PlayerManager : MonoBehaviour
     private bool isInvincible;
     private bool isBlocking;
     private bool isChargingHeavyAttack = false;
-    private bool hasBoosKey = false;
+    private bool hasBossKey = true;
 
     // Called when instance is loaded and ensures there is only one instance of PlayerManager
     private void Awake()
@@ -100,10 +100,10 @@ public class PlayerManager : MonoBehaviour
     // Get and set if player has boss key
     public bool HasBossKey
     {
-        get { return hasBoosKey; }
+        get { return hasBossKey; }
         set
         {
-            hasBoosKey = value;
+            hasBossKey = value;
         }
     }
 }
