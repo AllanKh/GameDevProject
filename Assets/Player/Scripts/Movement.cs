@@ -58,7 +58,10 @@ public class Movement : MonoBehaviour
             MovementManagement();
             JumpManagement();
         }
-        DodgeManagement();
+        if (!PlayerManager.Instance.Blocking)
+        {
+            DodgeManagement();
+        }
 
         if (!isOnGround)
         {
@@ -77,55 +80,58 @@ public class Movement : MonoBehaviour
     // Handle horizontal movement
     private void MovementManagement()
     {
-        // Check if player is running
-        bool isRunning = Input.GetKey(KeyCode.LeftShift);
-        // Set movement speed to running speed if player is running
-        currentSpeed = isRunning && !attacking.IsAttacking ? runSpeed : walkSpeed;
-        // Check which horizontal movement direction key is pressed
-        float inputXAxis = Input.GetAxis("Horizontal") * currentSpeed;
-
-        // Checks for slight movement on X axis to start walk animation
-        if (Mathf.Abs(inputXAxis) > Mathf.Epsilon)
+        if (!PlayerManager.Instance.Blocking)
         {
-            // Starts the walking animation
-            if (isRunning)
+            // Check if player is running
+            bool isRunning = Input.GetKey(KeyCode.LeftShift);
+            // Set movement speed to running speed if player is running
+            currentSpeed = isRunning && !attacking.IsAttacking ? runSpeed : walkSpeed;
+            // Check which horizontal movement direction key is pressed
+            float inputXAxis = Input.GetAxis("Horizontal") * currentSpeed;
+
+            // Checks for slight movement on X axis to start walk animation
+            if (Mathf.Abs(inputXAxis) > Mathf.Epsilon)
             {
-                playerAnimator.SetInteger("Anim_State", 2);
+                // Starts the walking animation
+                if (isRunning)
+                {
+                    playerAnimator.SetInteger("Anim_State", 2);
+                }
+                else
+                {
+                    playerAnimator.SetInteger("Anim_State", 1);
+                }
             }
             else
             {
-                playerAnimator.SetInteger("Anim_State", 1);
+                // Stops the walking animation
+                playerAnimator.SetInteger("Anim_State", 0);
             }
-        }
-        else
-        {
-            // Stops the walking animation
-            playerAnimator.SetInteger("Anim_State", 0);
-        }
 
-        // Handle inputs and asset flipping
-        if (inputXAxis < 0)
-        {
-            GetComponent<SpriteRenderer>().flipX = true;
-            FlipAttackCollider(true);
-        }
-        else if (inputXAxis > 0)
-        {
-            GetComponent<SpriteRenderer>().flipX = false;
-            FlipAttackCollider(false);
-        }
+            // Handle inputs and asset flipping
+            if (inputXAxis < 0)
+            {
+                GetComponent<SpriteRenderer>().flipX = true;
+                FlipAttackCollider(true);
+            }
+            else if (inputXAxis > 0)
+            {
+                GetComponent<SpriteRenderer>().flipX = false;
+                FlipAttackCollider(false);
+            }
 
-        // Moves player accordingly if player is not charging a heavy attack
-        if (!PlayerManager.Instance.IsChargingHeavyAttack)
-        {
-            player_body.velocity = new Vector2(inputXAxis, player_body.velocity.y);
+            // Moves player accordingly if player is not charging a heavy attack
+            if (!PlayerManager.Instance.IsChargingHeavyAttack)
+            {
+                player_body.velocity = new Vector2(inputXAxis, player_body.velocity.y);
+            }
         }
     }
 
     // Handle jumping
     private void JumpManagement()
     {
-        if (Input.GetKeyDown("space") && isOnGround)
+        if (Input.GetKeyDown("space") && isOnGround && !PlayerManager.Instance.Blocking)
         {
             playerAnimator.SetTrigger("Player_Jump");
             player_body.velocity = new Vector2(currentSpeed * Input.GetAxis("Horizontal"), jumpForce);

@@ -13,6 +13,7 @@ public class PlayerManager : MonoBehaviour
     private float attackDamage; // Players attack damage
     private float damagePlayer = 0.0f;
     private bool isInvincible;
+    private bool isBlocking;
     private bool isChargingHeavyAttack = false;
     private bool hasBoosKey = false;
 
@@ -74,6 +75,15 @@ public class PlayerManager : MonoBehaviour
         set
         {
             isInvincible = value;
+        }
+    }
+
+    public bool Blocking
+    {
+        get { return isBlocking; }
+        set
+        {
+            isBlocking = value;
         }
     }
 

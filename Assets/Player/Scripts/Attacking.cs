@@ -18,8 +18,8 @@ public class Attacking : MonoBehaviour
 
     void Update()
     {
+        BlockManager();
         AttackManager();
-
         // Update and check the charge timer if charging
         if (isCharging)
         {
@@ -31,16 +31,33 @@ public class Attacking : MonoBehaviour
         }
     }
 
+    private void BlockManager()
+    {
+        if (Input.GetKeyDown(KeyCode.Q) && !IsAttacking && !IsHeavyAttacking && !isCharging)
+        {
+            playerAnimator.SetBool("Player_Block", true);
+            PlayerManager.Instance.Invincible = true;
+            PlayerManager.Instance.Blocking = true;
+        }
+        if (Input.GetKeyUp(KeyCode.Q))
+        {
+            playerAnimator.SetBool("Player_Block", false);
+            PlayerManager.Instance.Invincible = false;
+            PlayerManager.Instance.Blocking = false;
+        }
+    }
+
     private void AttackManager()
     {
-        if (Input.GetMouseButtonDown(0) && !IsAttacking && !IsHeavyAttacking)
+
+        if (Input.GetMouseButtonDown(0) && !IsAttacking && !IsHeavyAttacking && !PlayerManager.Instance.Blocking)
         {
             playerAnimator.SetTrigger("Attack_Trigger");
             PlayerManager.Instance.AttackDamage = 25;
         }
 
         // Start charging the heavy attack
-        if (Input.GetMouseButtonDown(1) && !IsAttacking && !IsHeavyAttacking && !PlayerManager.Instance.IsChargingHeavyAttack)
+        if (Input.GetMouseButtonDown(1) && !IsAttacking && !IsHeavyAttacking && !PlayerManager.Instance.IsChargingHeavyAttack && !PlayerManager.Instance.Blocking)
         {
             isCharging = true;
             PlayerManager.Instance.IsChargingHeavyAttack = true;
