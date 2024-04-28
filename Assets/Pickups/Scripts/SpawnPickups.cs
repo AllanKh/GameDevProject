@@ -17,4 +17,12 @@ public class SpawnPickups : MonoBehaviour
         int i = Random.Range(0, myPrefab.Count - 1);
         SpawnObject(i);
     }
+    public void SpawnKeyEvent()
+    {
+        GameObject go = GameObject.FindWithTag("Enemy");
+        if (go = null)
+        {
+            Instantiate(myPrefab[3], PlayerManager.Instance.gameObject.transform.position, Quaternion.identity);
+        }
+    }
 }
