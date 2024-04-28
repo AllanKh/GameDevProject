@@ -6,10 +6,13 @@ public class DoorManager : MonoBehaviour
 {
 
     private BoxCollider2D doorCollider;
+    public Sprite openDoorSprite;
+    private SpriteRenderer spriteRenderer;
 
     void Awake()
     {
         doorCollider = GetComponent<BoxCollider2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -30,11 +33,8 @@ public class DoorManager : MonoBehaviour
 
     private void OpenDoor()
     {
-        // Disable the collider to allow passage
         doorCollider.enabled = false;
-
-        // Optionally, change the sprite or animation to show the door is open
-        Debug.Log("Door opened!");
+        spriteRenderer.sprite = openDoorSprite;
     }
 
 

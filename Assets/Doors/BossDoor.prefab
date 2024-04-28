@@ -143,3 +143,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6f2bdd725dba064e890e153782ffa29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  openDoorSprite: {fileID: 21300180, guid: 40f539b353576a2448588d9417312eed, type: 3}
