@@ -13,11 +13,18 @@ public class Movement : MonoBehaviour
     // Jump vairables
     private float jumpForce = 8.0f;
     private bool isOnGround = false;
+    private bool hasJumped = false;
 
     // Dodge variables
     private float dodgeSpeed = 5.0f;
     private float dodgeLength;
     private bool isDodging = false;
+
+    // Fall damage variables
+    private float lastGroundedYPos;
+    private const float minimumFallDistance = 5.0f; // Minimum distance to fall before applying damage
+    private const float safeFallDistance = 4.0f; // Fall distance at which player starts taking damage
+    private const float damageMultiplier = 5.0f; // Multiplier for fall damage calculation
 
     private Rigidbody2D player_body;
     private PlayerColliders groundCollider;
@@ -31,6 +38,7 @@ public class Movement : MonoBehaviour
     void Start()
     {
         player_body = GetComponent<Rigidbody2D>();
+        lastGroundedYPos = transform.position.y;
 
         groundCollider = transform.Find("GroundCollider").GetComponent<PlayerColliders>();
         wallColliderLeft = transform.Find("WallCollider_Left").GetComponent<PlayerColliders>();
@@ -55,8 +63,6 @@ public class Movement : MonoBehaviour
         if (!isOnGround)
         {
             currentSpeed -= 100.5f * Time.deltaTime;
-            Debug.Log(currentSpeed);
-
         }
 
         if (currentSpeed < walkSpeed)
@@ -122,10 +128,9 @@ public class Movement : MonoBehaviour
         if (Input.GetKeyDown("space") && isOnGround)
         {
             playerAnimator.SetTrigger("Player_Jump");
-            Debug.Log(Input.GetAxis("Horizontal"));
-            Debug.Log(currentSpeed);
             player_body.velocity = new Vector2(currentSpeed * Input.GetAxis("Horizontal"), jumpForce);
             isOnGround = false;
+            hasJumped = true;
         }
     }
 
@@ -167,28 +172,47 @@ public class Movement : MonoBehaviour
 
         if (!isOnGround && groundCollider.IsEnabledAndColliding())
         {
+            if (!hasJumped) // Calculate fall damage only if the fall wasn't initiated by a jump
+            {
+                float fallDistance = lastGroundedYPos - transform.position.y;
+                if (fallDistance > minimumFallDistance)
+                {
+                    ApplyFallDamage(fallDistance);
+                }
+            }
             isOnGround = true;
             playerAnimator.SetBool("On_Ground", isOnGround);
+            hasJumped = false;  // Reset jump status
+            lastGroundedYPos = transform.position.y; // Reset fall distance calculation base
         }
 
         if ((!isOnGround && wallColliderLeft.IsEnabledAndColliding()) || (!isOnGround && wallColliderRight.IsEnabledAndColliding()))
         {
-            Debug.Log("Not on ground");
             playerAnimator.SetTrigger("Player_Falling");
             isOnGround = false;
             playerAnimator.SetBool("On_Ground", isOnGround);
-            player_body.velocity = new Vector2(Input.GetAxis("Horizontal"), -(jumpForce/2));
+            player_body.velocity = new Vector2(Input.GetAxis("Horizontal"), -4);
         }
 
         if (isOnGround && !groundCollider.IsEnabledAndColliding())
         {
+            lastGroundedYPos = transform.position.y;
             playerAnimator.SetTrigger("Player_Falling");
             isOnGround = false;
-            playerAnimator.SetBool("On_Ground", isOnGround);
-
+            hasJumped = false;  // Ensure jumped is false when genuinely falling
         }
 
     }
+
+    private void ApplyFallDamage(float fallDistance)
+    {
+        float damage = (fallDistance - safeFallDistance) * damageMultiplier; // Calculate damage
+        if (damage > 0)
+        {
+            PlayerManager.Instance.DamagePlayer(damage);
+        }
+    }
+
 
     // Method to flip the attack collider when changing directions
     private void FlipAttackCollider(bool flip)

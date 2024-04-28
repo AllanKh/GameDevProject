@@ -13103,7 +13103,7 @@ Transform:
   m_GameObject: {fileID: 1313484963}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.47, y: 0.665, z: 0}
+  m_LocalPosition: {x: -0.47, y: 0.689, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13152,7 +13152,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.05, y: 1.2}
+  m_Size: {x: 0.05, y: 1.25}
   m_EdgeRadius: 0
 --- !u!114 &1313484967
 MonoBehaviour:
@@ -14792,7 +14792,7 @@ Transform:
   m_GameObject: {fileID: 1425260408}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.38, y: 0.665, z: 0}
+  m_LocalPosition: {x: 0.38, y: 0.689, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14853,7 +14853,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.05, y: 1.2}
+  m_Size: {x: 0.05, y: 1.25}
   m_EdgeRadius: 0
 --- !u!1001 &1526831292
 PrefabInstance:

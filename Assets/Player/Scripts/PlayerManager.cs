@@ -8,12 +8,13 @@ public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance { get; private set; }
 
-    [SerializeField] private float stamina = 100.0f; // Players stamina
-    [SerializeField] private float health = 100.0f; // Players health
-    [SerializeField] private float attackDamage; // Players attack damage
-    [SerializeField] private float damagePlayer = 0.0f;
-    [SerializeField] private bool isInvincible;
+    private float stamina = 100.0f; // Players stamina
+    private float health = 100.0f; // Players health
+    private float attackDamage; // Players attack damage
+    private float damagePlayer = 0.0f;
+    private bool isInvincible;
     private bool isChargingHeavyAttack = false;
+    private bool hasBoosKey = false;
 
     // Called when instance is loaded and ensures there is only one instance of PlayerManager
     private void Awake()
@@ -84,5 +85,15 @@ public class PlayerManager : MonoBehaviour
             isChargingHeavyAttack = value;
         }
 
+    }
+
+    // Get and set if player has boss key
+    public bool HasBossKey
+    {
+        get { return hasBoosKey; }
+        set
+        {
+            hasBoosKey = value;
+        }
     }
 }
