@@ -29,7 +29,6 @@ public class GameInput : MonoBehaviour
         playerInputActions.Player.Enable();
 
         playerInputActions.Player.Pause.performed += Pause_performed; //Listen for this input
-
     }
 
     private void Pause_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
