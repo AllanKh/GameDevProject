@@ -1,10 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GamePauseUI : MonoBehaviour
 {
 
+
+    [SerializeField] private Button resumeButton;
+    [SerializeField] private Button mainMenuButton;
+
+
+    private void Awake()
+    {
+        resumeButton.onClick.AddListener(() => //When "resumeButton" is pressed, do this!
+        {
+            GameInput.Instance.TogglePauseGame(); //Unpause the game
+        });
+        mainMenuButton.onClick.AddListener(() => //When "mainMenuButton" is pressed, do this!
+        {
+            Loader.Load(Loader.Scene.MainMenuScene); //Go back to the Main Menu Scene.
+        });
+    }
 
     private void Start()
     {

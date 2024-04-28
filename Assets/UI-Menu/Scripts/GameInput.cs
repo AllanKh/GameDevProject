@@ -38,7 +38,7 @@ public class GameInput : MonoBehaviour
     }
 
 
-    private void TogglePauseGame() //Pause the game! I need to figure out this with the others.
+    public void TogglePauseGame() //Pause the game! I need to figure out this with the others.
     {
         isGamePause = !isGamePause;
 
