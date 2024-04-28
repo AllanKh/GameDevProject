@@ -54,7 +54,7 @@ public class Movement : MonoBehaviour
         // Set movement speed to running speed if player is running
         float movementSpeed = isRunning && isOnGround && !attacking.IsAttacking ? runSpeed : walkSpeed;
         // Check which horizontal movement direction key is pressed
-        float inputXAxis = Input.GetAxis("Horizontal") * movementSpeed;
+        float inputXAxis = Input.GetAxis("Horizontal") * movementSpeed; 
 
         // Checks for slight movement on X axis to start walk animation
         if (Mathf.Abs(inputXAxis) > Mathf.Epsilon)
@@ -100,7 +100,7 @@ public class Movement : MonoBehaviour
         if (Input.GetKeyDown("space") && isOnGround)
         {
             playerAnimator.SetTrigger("Player_Jump");
-            player_body.velocity = new Vector2(player_body.velocity.x, jumpForce);
+            player_body.velocity = new Vector2(player_body.velocity.x, jumpForce); 
             isOnGround = false;
         }
     }

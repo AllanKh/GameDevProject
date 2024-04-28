@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ProgressbarUI : MonoBehaviour
+public class EnemyProgressbarUI : MonoBehaviour
 {
 
     [SerializeField] private Image barImage;
@@ -15,6 +15,6 @@ public class ProgressbarUI : MonoBehaviour
 
     private void Update()
     {
-        barImage.fillAmount = PlayerManager.Instance.Health;
+        barImage.fillAmount = EnemyManager.Instance.Health;
     }
 }
