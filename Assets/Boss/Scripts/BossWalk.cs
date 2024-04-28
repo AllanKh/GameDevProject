@@ -10,8 +10,14 @@ public class BossWalk : MonoBehaviour
 
     private Transform player;
     private Rigidbody2D rb;
+
     private bool startMoving = false;
     private bool isFlipped = false;
+
+    //Boss phase 2
+    private bool phase2Activated = false;
+    private float phase2SpeedMulti = 2f;
+    private float phase2Threshold = 30f;
 
 
     private void Start()
@@ -26,6 +32,11 @@ public class BossWalk : MonoBehaviour
         if (startMoving == true)
         {
             Movement();
+        }
+
+        if (!phase2Activated && BossManager.Instance.Health <= phase2Threshold)
+        {
+            Phase2();
         }
 
     }
@@ -71,6 +82,12 @@ public class BossWalk : MonoBehaviour
             transform.Rotate(0f, 180f, 0f);
             isFlipped = true;
         }
+    }
+
+    private void Phase2()
+    {
+        phase2Activated = true;
+        speed *= phase2SpeedMulti;
     }
     
 }

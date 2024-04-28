@@ -11,10 +11,16 @@ public class BossAttack : MonoBehaviour
     [SerializeField] private LayerMask playerLayer;
     private float cooldownTimer = 0;
     
-    //references
+    //References
     private Animator anim;
     private BossWalk bossWalk;
-    
+
+    //Phase 2
+    private bool phase2Activated = false;
+    private float phase2AttackCooldownMulti = 0.5f;
+    private float phase2Threshold = 30f;
+
+
 
     private void Awake()
     {
@@ -41,6 +47,8 @@ public class BossAttack : MonoBehaviour
         {
             bossWalk.enabled = !PlayerInSight();
         }
+
+        Phase2();
     }
 
     //Checks if the player is in sight of the boss
@@ -66,8 +74,17 @@ public class BossAttack : MonoBehaviour
         {
             PlayerManager.Instance.DamagePlayer(BossManager.Instance.AttackDamage);
 
-            //see player health report with each boss attack
+            //See player health report with each boss attack
             Debug.Log(PlayerManager.Instance.Health);
+        }
+    }
+
+    private void Phase2()
+    {
+        if (!phase2Activated && BossManager.Instance.Health <= phase2Threshold)
+        {
+            attackCooldown *= phase2AttackCooldownMulti;
+            phase2Activated = true;
         }
     }
 }

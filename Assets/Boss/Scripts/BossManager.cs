@@ -8,7 +8,6 @@ public class BossManager : MonoBehaviour
 
     [SerializeField] private float health = 100.0f; // Boss Health
     [SerializeField] private float attackDamage = 10.0f; // Boss damage on player
-    [SerializeField] private float damageEnemy = 0.0f; // Boss damage from player
  
     private void Awake()
     {
