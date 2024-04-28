@@ -9,6 +9,7 @@ public class GamePauseUI : MonoBehaviour
 
     [SerializeField] private Button resumeButton;
     [SerializeField] private Button mainMenuButton;
+    [SerializeField] private Button optionsButton;
 
 
     private void Awake()
@@ -20,6 +21,10 @@ public class GamePauseUI : MonoBehaviour
         mainMenuButton.onClick.AddListener(() => //When "mainMenuButton" is pressed, do this!
         {
             Loader.Load(Loader.Scene.MainMenuScene); //Go back to the Main Menu Scene.
+        });
+        optionsButton.onClick.AddListener(() => 
+        {
+            OptionsUI.Instance.Show();
         });
     }
 
