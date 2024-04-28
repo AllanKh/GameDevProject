@@ -20,25 +20,27 @@ public class PickupCollider : MonoBehaviour
         if (c2d.CompareTag("Player") && this.CompareTag("Potion"))
         {
             PlayerManager.Instance.Health += 15;
-            Destroy(gameObject);
+            DestroyParentGameObject();
             Debug.Log(PlayerManager.Instance.Health);
         }
 
         if (c2d.CompareTag("Player") && this.CompareTag("Key"))
         {
-
-            Destroy(gameObject);
+            // TODO: Add logic for Key Pickup in a player class or a game manager.
+            DestroyParentGameObject();
         }
 
         if (c2d.CompareTag("Player") && this.CompareTag("Coin"))
         {
 
-            Destroy(gameObject);
+            DestroyParentGameObject();
         }
     }
 
-    void ObjectCollision()
+    public void DestroyParentGameObject()
     {
+        Destroy(transform.parent.gameObject);
+
     }
 
 
