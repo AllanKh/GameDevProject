@@ -10,7 +10,8 @@ public static class Loader
     {
         MainMenuScene,
         LoadingScene,
-        Allan
+        Allan,
+        Dennis
     }
 
 
