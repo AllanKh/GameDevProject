@@ -46,6 +46,8 @@ public class BossWalk : MonoBehaviour
     {
         yield return new WaitForSeconds(5);
         startMoving = true;
+
+        BossHealthUI.instance.Show();   //ADDED BY DENNIS, this activates the HP Bar to show on the screen.
     }
     
     //Boss moves towars player position
