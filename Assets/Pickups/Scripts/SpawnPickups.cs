@@ -14,8 +14,9 @@ public class SpawnPickups : MonoBehaviour
 
     public void SpawnNow()
     {
-        int i = Random.Range(0, myPrefab.Count - 1);
+        int i = Random.Range(0, myPrefab.Count);
         SpawnObject(i);
+        Debug.Log(i);
     }
     public void SpawnKeyEvent()
     {

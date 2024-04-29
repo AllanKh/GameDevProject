@@ -262,5 +262,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c15551dee24ff204b9fb3b6ed139b64c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropForce: 5
+  dropForce: 4
   xAxisForce: 2
