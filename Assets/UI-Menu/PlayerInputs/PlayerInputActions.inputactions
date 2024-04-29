@@ -1,0 +1,34 @@
+{
+    "name": "PlayerInputActions",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "ad2ad3d4-aafd-4d16-9613-45052b361a65",
+            "actions": [
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "b1791112-90e6-492e-82ca-508cf8150fd1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a3463420-f4cc-4126-b702-3c9406482a4d",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
