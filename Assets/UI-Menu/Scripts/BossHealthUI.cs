@@ -11,24 +11,29 @@ public class BossHealthUI : MonoBehaviour
     [SerializeField] private Image barImage;
 
 
-
     private void Awake()
     {
         instance = this;
         Hide();
     }
 
+  
+
+
 
     private void Update()
     {
-        barImage.fillAmount = BossManager.Instance.Health / 100;
+        
+        barImage.fillAmount = BossManager.Instance.Health / 100;   
+        
+
         
         if (barImage.fillAmount <= 0)
         {
             Hide();
+
         }
     }
-
 
 
     public void Show()
