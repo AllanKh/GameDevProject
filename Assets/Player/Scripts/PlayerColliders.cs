@@ -40,6 +40,13 @@ public class PlayerColliders : MonoBehaviour
                 g.GetComponent<FlyingEyeManager>().DamageFlyingEye(PlayerManager.Instance.AttackDamage);
             }
         }
+
+        if (gameObject.CompareTag("AttackCollider") && other.CompareTag("Boss"))
+        {
+            BossDamageDieHandler.Instance.DamageBoss(PlayerManager.Instance.AttackDamage);
+            Debug.Log(BossManager.Instance.Health);
+        }
+
     }
 
 

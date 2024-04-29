@@ -16,6 +16,7 @@ TagManager:
   - Coin
   - BarrelCollider
   - Barrel
+  - Boss
   layers:
   - Default
   - TransparentFX
@@ -27,6 +28,10 @@ TagManager:
   - Enemy
   - Water
   - UI
+  - Water
+  - UI
+  - Player
+  - Boss
   m_SortingLayers:
   - name: Default
     uniqueID: 0
