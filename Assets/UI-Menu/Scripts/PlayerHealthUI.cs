@@ -10,6 +10,6 @@ public class PlayerHealthUI : MonoBehaviour
 
     private void Update()
     {
-        barImage.fillAmount = PlayerManager.Instance.Health;
+        barImage.fillAmount = PlayerManager.Instance.Health / 100;
     }
 }
