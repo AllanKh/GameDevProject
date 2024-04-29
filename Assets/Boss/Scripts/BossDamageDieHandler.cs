@@ -33,11 +33,14 @@ public class BossDamageDieHandler : MonoBehaviour
     {
         BossManager.Instance.Health -= amountOfDamage;
 
+        /*
         if (BossManager.Instance.Health > 0)
         {
             anim.SetTrigger("hurt");
         }
-        else if (BossManager.Instance.Health <= 0)
+        */
+
+        if (BossManager.Instance.Health <= 0)
         {
             if (!dead)
             {
@@ -49,7 +52,14 @@ public class BossDamageDieHandler : MonoBehaviour
                     component.enabled = false;
                 }
                 dead = true;
+
+                StartCoroutine(WaitBeforeDeletingBoss());
             }
         }
+    }
+    IEnumerator WaitBeforeDeletingBoss()
+    {
+        yield return new WaitForSeconds(1.2f);
+        Destroy(gameObject);
     }
 }
