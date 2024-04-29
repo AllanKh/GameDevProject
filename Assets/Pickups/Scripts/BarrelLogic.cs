@@ -9,8 +9,6 @@ public class BarrelLogic : MonoBehaviour
     {
         GetComponent<Collider2D>().isTrigger = true;
     }
-
-
     void OnTriggerEnter2D(Collider2D c2d)
     {
         if (c2d.CompareTag("AttackCollider") && this.CompareTag("BarrelCollider"))
@@ -19,8 +17,6 @@ public class BarrelLogic : MonoBehaviour
             DestroyParentGameObject();
         }
     }
-
-
     public void DestroyParentGameObject()
     {
             Destroy(transform.parent.gameObject);
