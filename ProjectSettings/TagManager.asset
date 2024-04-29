@@ -9,6 +9,8 @@ TagManager:
   - AttackCollider
   - Spike
   - DetectionCollider
+  - Skeleton
+  - FlyingEye
   layers:
   - Default
   - TransparentFX
@@ -16,8 +18,8 @@ TagManager:
   - Game Objects
   - Water
   - UI
-  - 
-  - 
+  - Obstacle
+  - Enemy
   - 
   - 
   - 
