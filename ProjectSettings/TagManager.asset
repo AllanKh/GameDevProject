@@ -11,6 +11,11 @@ TagManager:
   - DetectionCollider
   - Skeleton
   - FlyingEye
+  - Key
+  - Potion
+  - Coin
+  - BarrelCollider
+  - Barrel
   layers:
   - Default
   - TransparentFX
@@ -20,30 +25,8 @@ TagManager:
   - UI
   - Obstacle
   - Enemy
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Water
+  - UI
   m_SortingLayers:
   - name: Default
     uniqueID: 0
