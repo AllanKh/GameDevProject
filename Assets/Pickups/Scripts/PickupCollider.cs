@@ -27,6 +27,8 @@ public class PickupCollider : MonoBehaviour
         if (c2d.CompareTag("Player") && this.CompareTag("Key"))
         {
             // TODO: Add logic for Key Pickup in a player class or a game manager.
+            PlayerManager.Instance.HasBossKey = true;
+            Debug.Log(PlayerManager.Instance.HasBossKey);
             DestroyParentGameObject();
         }
 

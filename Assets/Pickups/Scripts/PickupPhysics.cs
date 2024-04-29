@@ -5,8 +5,8 @@ using UnityEngine;
 public class PickupPhysics : MonoBehaviour
 {
     private Rigidbody2D itemRB;
-    [SerializeField] float dropForce = 5;
-    [SerializeField] int xAxisForce = 3;
+    [SerializeField] float dropForce = 4;
+    [SerializeField] int xAxisForce = 2;
     //TODO: add angles so that items can fly in different directions.
 
     // Start is called before the first frame update
