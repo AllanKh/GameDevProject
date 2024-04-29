@@ -15,6 +15,6 @@ public class EnemyProgressbarUI : MonoBehaviour
 
     private void Update()
     {
-        barImage.fillAmount = EnemyManager.Instance.Health;
+        //barImage.fillAmount = SkeletonManager.Health;
     }
 }
