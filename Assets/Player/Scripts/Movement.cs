@@ -22,8 +22,8 @@ public class Movement : MonoBehaviour
 
     // Fall damage variables
     private float lastGroundedYPos;
-    private const float minimumFallDistance = 5.0f; // Minimum distance to fall before applying damage
-    private const float safeFallDistance = 4.0f; // Fall distance at which player starts taking damage
+    private const float minimumFallDistance = 6.0f; // Minimum distance to fall before applying damage
+    private const float safeFallDistance = 5.0f; // Fall distance at which player starts taking damage
     private const float damageMultiplier = 5.0f; // Multiplier for fall damage calculation
 
     private Rigidbody2D player_body;
