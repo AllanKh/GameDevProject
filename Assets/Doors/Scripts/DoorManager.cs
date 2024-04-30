@@ -14,7 +14,8 @@ public class DoorManager : MonoBehaviour
     {
         doorCollider = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        //bossWalk = GetComponent<BossWalk>();
+        GameObject boss = GameObject.Find("Boss");
+        bossWalk = boss.GetComponent<BossWalk>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -25,7 +26,7 @@ public class DoorManager : MonoBehaviour
             {
                 Debug.Log("Player has key");
                 OpenDoor();
-                //StartCoroutine(bossWalk.WaitBeforeMoving());
+                bossWalk.StartBoss();
             }
             else
             {

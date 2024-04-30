@@ -24,7 +24,6 @@ public class BossWalk : MonoBehaviour
     {
         player = GameObject.FindWithTag("Player").transform;
         rb = GetComponent<Rigidbody2D>();
-        StartCoroutine(WaitBeforeMoving());
     }
 
     private void Update()
@@ -41,8 +40,13 @@ public class BossWalk : MonoBehaviour
 
     }
 
+    public void StartBoss()
+    {
+        StartCoroutine(WaitBeforeMoving());
+    }
+
     //Hold boss idle the first 5 seconds
-    public IEnumerator WaitBeforeMoving()
+    IEnumerator WaitBeforeMoving()
     {
         yield return new WaitForSeconds(5);
         startMoving = true;
