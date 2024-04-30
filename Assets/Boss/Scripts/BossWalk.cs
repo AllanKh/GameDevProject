@@ -42,7 +42,7 @@ public class BossWalk : MonoBehaviour
     }
 
     //Hold boss idle the first 5 seconds
-    IEnumerator WaitBeforeMoving()
+    public IEnumerator WaitBeforeMoving()
     {
         yield return new WaitForSeconds(5);
         startMoving = true;
