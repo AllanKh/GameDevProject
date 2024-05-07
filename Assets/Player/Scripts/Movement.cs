@@ -5,13 +5,13 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     // Walk/Run variables
-    private float walkSpeed = 4.0f;
+    private float walkSpeed = 6.0f;
     private float runSpeed = 9.0f;
     private float currentSpeed;
-    private float floatSpeed;
+    private bool facingRight = true;
 
     // Jump vairables
-    private float jumpForce = 8.0f;
+    private float jumpForce = 15.0f;
     private bool isOnGround = false;
     private bool hasJumped = false;
 
@@ -31,6 +31,7 @@ public class Movement : MonoBehaviour
     private PlayerColliders wallColliderLeft;
     private PlayerColliders wallColliderRight;
     private GameObject attackColliderObject;
+    private PolygonCollider2D playerCollider;
     private Attacking attacking;
     private Animator playerAnimator;
 
@@ -45,6 +46,7 @@ public class Movement : MonoBehaviour
         wallColliderRight = transform.Find("WallCollider_Right").GetComponent<PlayerColliders>();
 
         attackColliderObject = transform.Find("AttackCollider").gameObject;
+        playerCollider = GetComponent<PolygonCollider2D>();
         attacking = GetComponent<Attacking>();
         playerAnimator = GetComponent<Animator>();
     }
@@ -113,11 +115,21 @@ public class Movement : MonoBehaviour
             {
                 GetComponent<SpriteRenderer>().flipX = true;
                 FlipAttackCollider(true);
+                if (facingRight)
+                {
+                    MirrorPolygonCollider();
+                }
+                facingRight = false;
             }
             else if (inputXAxis > 0)
             {
                 GetComponent<SpriteRenderer>().flipX = false;
                 FlipAttackCollider(false);
+                if (!facingRight)
+                {
+                    MirrorPolygonCollider();
+                }
+                facingRight = true;
             }
 
             // Moves player accordingly if player is not charging a heavy attack
@@ -134,7 +146,9 @@ public class Movement : MonoBehaviour
         if (Input.GetKeyDown("space") && isOnGround && !PlayerManager.Instance.Blocking)
         {
             playerAnimator.SetTrigger("Player_Jump");
-            player_body.velocity = new Vector2(currentSpeed * Input.GetAxis("Horizontal"), jumpForce);
+
+            player_body.AddForce(new Vector2(Physics.gravity.y, jumpForce), ForceMode2D.Impulse);
+            //player_body.velocity = new Vector2(currentSpeed * Input.GetAxis("Horizontal"), jumpForce);
             isOnGround = false;
             hasJumped = true;
         }
@@ -225,4 +239,18 @@ public class Movement : MonoBehaviour
     {
         attackColliderObject.transform.localPosition = new Vector2(flip ? -1 : 1 , 1);
     }
+
+    private void MirrorPolygonCollider()
+    {
+        Vector2[] points = playerCollider.points;
+        Vector2[] mirroredPoints = new Vector2[points.Length];
+
+        for (int i = 0; i < points.Length; i++)
+        {
+            mirroredPoints[i] = new Vector2(-points[i].x, points[i].y);
+        }
+
+        playerCollider.points = mirroredPoints;
+    }
+
 }
