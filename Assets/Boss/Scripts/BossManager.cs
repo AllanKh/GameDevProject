@@ -6,7 +6,7 @@ public class BossManager : MonoBehaviour
 {
    public static BossManager Instance {  get; private set; }
 
-    [SerializeField] private float health = 100.0f; // Boss Health
+    [SerializeField] private float health = 500.0f; // Boss Health
     [SerializeField] private float attackDamage = 10.0f; // Boss damage on player
  
     private void Awake()
@@ -23,11 +23,11 @@ public class BossManager : MonoBehaviour
     }
 
     //get and set boss health
-    //Boss health is within 0 and 100
+    //Boss health is within 0 and 500
     public float Health
     {
         get { return health; }
-        set { health = Mathf.Clamp(value, 0, 100); }
+        set { health = Mathf.Clamp(value, 0, 500); }
     }
 
     //get and set boss attack damage
