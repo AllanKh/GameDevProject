@@ -9,6 +9,7 @@ public class FlyingEyeColliders : MonoBehaviour
     private float disableTimer = 0f;
     private bool attackColliderDetected;
     private bool detectionColliderDetected;
+    private bool groundColliderDetected;
 
     public bool SensorEnabledAndColliding()
     {
@@ -69,17 +70,24 @@ public class FlyingEyeColliders : MonoBehaviour
                 }
 
                 detectionColliderDetected = flyingEyeAI.DetectionColliderObject.GetComponent<Collider2D>().IsTouching(other);
+                groundColliderDetected = flyingEyeAI.GroundColliderObject.GetComponent<Collider2D>().IsTouching(other);
 
                 //Check if DetectionCollider collides with player
                 if (detectionColliderDetected && other.CompareTag("Player"))
                 {
-                    g.GetComponent<FlyingEyeManager>().FlyingEyeDetectPlayer = true;
+                    //g.GetComponent<FlyingEyeManager>().FlyingEyeDetectPlayer = true;
+                    TriggerDetection(g);
                 }
                 //Check if AttackCollider collides with player and register a hit
                 if (attackColliderDetected && other.CompareTag("Player"))
                 {
                     g.GetComponent<FlyingEyeAttacking>().FlyingEyeIsAttacking = true;
                     TriggerAttack(g);
+                }
+                //Check if GroundCollider collides with the ground
+                if (groundColliderDetected && other.CompareTag("Ground"))
+                {
+                    g.GetComponent<FlyingEyeManager>().FlyingEyeDetectGround = true;
                 }
             }
         }
@@ -99,10 +107,11 @@ public class FlyingEyeColliders : MonoBehaviour
 
                     if (flyingEyeAI != null && flyingEyeAttacking != null)
                     {
-                        if (flyingEyeAI.DetectionColliderObject && flyingEyeAI.AttackColliderObject)
+                        if (flyingEyeAI.DetectionColliderObject && flyingEyeAI.AttackColliderObject && flyingEyeAI.GroundColliderObject)
                         {
                             detectionColliderDetected = flyingEyeAI.DetectionColliderObject.GetComponent<Collider2D>().IsTouching(other);
                             attackColliderDetected = flyingEyeAI.AttackColliderObject.GetComponent<Collider2D>().IsTouching(other);
+                            groundColliderDetected = flyingEyeAI.GroundColliderObject.GetComponent<Collider2D>().IsTouching(other);
                         }
 
                         if (colliderCount > 0)
@@ -115,10 +124,15 @@ public class FlyingEyeColliders : MonoBehaviour
                         {
                             g.GetComponent<FlyingEyeManager>().FlyingEyeDetectPlayer = false;
                         }
-                        //Check if AttackCollide no longer collides with player
+                        //Check if AttackCollider no longer collides with player
                         if (!attackColliderDetected && other.CompareTag("Player"))
                         {
                             g.GetComponent<FlyingEyeAttacking>().FlyingEyeIsAttacking = false;
+                        }
+                        //Check if GroundCollider no longer collides with the ground
+                        if (!groundColliderDetected && other.CompareTag("Ground"))
+                        {
+                            g.GetComponent<FlyingEyeManager>().FlyingEyeDetectGround = false;
                         }
                     }
                     else
@@ -150,6 +164,20 @@ public class FlyingEyeColliders : MonoBehaviour
         if (flyingEyeAttacking != null)
         {
             flyingEyeAttacking.StartAttack();
+        }
+    }
+
+    public void TriggerDetection(GameObject g)
+    {
+        FlyingEyeManager flyingEyeManager = g.GetComponent<FlyingEyeManager>();
+        if (flyingEyeManager != null)
+        {
+            flyingEyeManager.FlyingEyeDetectPlayer = true;
+            FlyingEyeAI flyingEyeAI = g.GetComponent<FlyingEyeAI>();
+            if (flyingEyeAI.Speed == 0f)
+            {
+                flyingEyeAI.Speed = Random.Range(80f, 200f);
+            }
         }
     }
 }

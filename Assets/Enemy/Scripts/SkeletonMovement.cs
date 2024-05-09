@@ -40,8 +40,6 @@ public class SkeletonMovement : MonoBehaviour
             moveCounter++;
             Movement();
         }
-
-       
     }
 
     //Hold enemy idle the first 5 seconds

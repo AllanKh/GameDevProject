@@ -8,6 +8,7 @@ public class FlyingEyeManager : MonoBehaviour
     private float attackDamage; //Enemy damage
     private bool isDead; //Enemy state
     private bool playerDetected; //Player detecter
+    private bool groundDetected;
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +17,7 @@ public class FlyingEyeManager : MonoBehaviour
         attackDamage = 15.0f;
         isDead = false;
         playerDetected = false;
+        groundDetected = false;
     }
 
     //get and set Flying Eye health
@@ -51,5 +53,11 @@ public class FlyingEyeManager : MonoBehaviour
     {
         get { return playerDetected; }
         set { playerDetected = value; }
+    }
+
+    public bool FlyingEyeDetectGround
+    {
+        get { return groundDetected; }
+        set { groundDetected = value; }
     }
 }
