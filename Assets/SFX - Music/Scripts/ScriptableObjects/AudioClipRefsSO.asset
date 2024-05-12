@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afb411e72bd8612419aea6715625278a, type: 3}
+  m_Name: AudioClipRefsSO
+  m_EditorClassIdentifier: 
+  skeletonLightAttacked:
+  - {fileID: 8300000, guid: 3cf8062736385434d8386f742f017a27, type: 3}
+  flyingEyeLightAttacked:
+  - {fileID: 8300000, guid: 97f7becc3940e6847942e29de96aae27, type: 3}
+  playerWalk:
+  - {fileID: 8300000, guid: aef63b3ef0392224c8df2ff74841cfd7, type: 3}
+  - {fileID: 8300000, guid: 5309d6e3db29ddc4fbd0e29f08280993, type: 3}
+  playerDamageTaken:
+  - {fileID: 8300000, guid: 2aadf768779ee1e4ea723fd63f1bf4cf, type: 3}
+  - {fileID: 8300000, guid: b0142b40a9de43f498a966be0363aae6, type: 3}
+  potionPickUp:
+  - {fileID: 8300000, guid: fef28953f0501cc4b83bca553c9a08de, type: 3}
+  coinPickUp:
+  - {fileID: 8300000, guid: dc8a380581d983440ae0922d50b8af5e, type: 3}
+  barrelBreak:
+  - {fileID: 8300000, guid: ef8cae26d544fbb4187fe525120ffeab, type: 3}

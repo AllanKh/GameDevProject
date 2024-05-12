@@ -1,9 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SkeletonDamageHandler : MonoBehaviour
 {
+    
+    public static event EventHandler OnPlayerDamageTaken; //An event to tell when the player has taken damage.
+
     private SkeletonManager skeletonManager;
     private Animator skeletonAnimator;
 
@@ -40,6 +44,7 @@ public class SkeletonDamageHandler : MonoBehaviour
         {
             PlayerManager.Instance.DamagePlayer(skeletonManager.SkeletonAttackDamage);
             Debug.Log($"Player health: {PlayerManager.Instance.Health}");
+            OnPlayerDamageTaken?.Invoke(this, EventArgs.Empty); //Activate event for all listeners.
         }
     }
 

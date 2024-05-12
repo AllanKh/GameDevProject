@@ -1,12 +1,16 @@
 using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class PickupCollider : MonoBehaviour
-
 {
+    
+    public static event EventHandler OnAnyPotionPickUp; //An event to track when the player picks up any Potion
+    public static event EventHandler OnAnyCoinPickUp; //An event to track when the player picks up any Coin
+
     void Awake()
     {
         // Make Collider2D as a trigger
@@ -19,6 +23,7 @@ public class PickupCollider : MonoBehaviour
         //Destroy Potion if picked up.
         if (c2d.CompareTag("Player") && this.CompareTag("Potion"))
         {
+            OnAnyPotionPickUp?.Invoke(this, EventArgs.Empty); //Activate this event for all listeners.
             PlayerManager.Instance.Health += 15;
             DestroyParentGameObject();
             Debug.Log(PlayerManager.Instance.Health);
@@ -34,7 +39,7 @@ public class PickupCollider : MonoBehaviour
 
         if (c2d.CompareTag("Player") && this.CompareTag("Coin"))
         {
-
+            OnAnyCoinPickUp?.Invoke(this, EventArgs.Empty); //Activate this event for all listeners.
             DestroyParentGameObject();
         }
     }

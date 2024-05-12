@@ -1,9 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerColliders : MonoBehaviour
 {
+
+    public static event EventHandler OnAnySkeletonAttacked; //An event to track when the player hits any Skeleton
+    public static event EventHandler OnAnyFlyingEyeAttacked; //An event to track when the player hits any Flying Eye
+
     // colliderCound checks mount of colliders currently intersecting with player
     private GameObject[] skeletonGameObjects;
     private GameObject[] flyingEyeGameObjects;
@@ -27,6 +32,7 @@ public class PlayerColliders : MonoBehaviour
             if (gameObject.CompareTag("AttackCollider") && g.GetComponent<Collider2D>() == other)
             {
                 Debug.Log("Skeleton Hit");
+                OnAnySkeletonAttacked?.Invoke(this, EventArgs.Empty); //Activate this event for all listeners
                 g.GetComponent<SkeletonManager>().DamageSkeleton(PlayerManager.Instance.AttackDamage);
             }
         }
@@ -37,6 +43,7 @@ public class PlayerColliders : MonoBehaviour
             if (gameObject.CompareTag("AttackCollider") && g.GetComponent<Collider2D>() == other)
             {
                 Debug.Log("Flying Eye Hit");
+                OnAnyFlyingEyeAttacked?.Invoke(this, EventArgs.Empty); //Activate this event for all listeners
                 g.GetComponent<FlyingEyeManager>().DamageFlyingEye(PlayerManager.Instance.AttackDamage);
             }
         }
