@@ -32,10 +32,11 @@ public class SpawnPickups : MonoBehaviour
     }
     public void SpawnKeyEvent() // TODO: Implement into the game.
     {
-        GameObject go = GameObject.FindWithTag("Enemy");
-        if (go = null)
-        {
-            Instantiate(myPrefab[3], PlayerManager.Instance.gameObject.transform.position, Quaternion.identity);
-        }
+        //GameObject go = GameObject.FindWithTag("Skeleton");
+        //if (go = null)
+        //{
+            Instantiate(myPrefab[0],transform.position, Quaternion.identity);
+            Debug.Log("Key has been dropped!");
+        //}
     }
 }
