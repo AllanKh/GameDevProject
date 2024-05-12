@@ -11,7 +11,7 @@ public class Movement : MonoBehaviour
     private bool facingRight = true;
 
     // Jump vairables
-    private float jumpForce = 15.0f;
+    private float jumpForce = 16.5f;
     private bool isOnGround = false;
     private bool hasJumped = false;
 

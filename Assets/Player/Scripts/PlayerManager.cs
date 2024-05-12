@@ -10,13 +10,14 @@ public class PlayerManager : MonoBehaviour
     public static PlayerManager Instance { get; private set; }
 
     private float stamina = 100.0f; // Players stamina
-    private float health = 100.0f; // Players health
+    private float health = 40.0f; // Players health
     private float attackDamage; // Players attack damage
     private float damagePlayer = 0.0f;
     private bool isInvincible;
     private bool isBlocking;
     private bool isChargingHeavyAttack = false;
     private bool hasBossKey = true;
+    private int heldPotions = 3;
 
     // Called when instance is loaded and ensures there is only one instance of PlayerManager
     private void Awake()
@@ -105,6 +106,15 @@ public class PlayerManager : MonoBehaviour
         set
         {
             hasBossKey = value;
+        }
+    }
+
+    public int HeldPotions
+    {
+        get { return heldPotions; }
+        set
+        {
+            heldPotions = Mathf.Clamp(value, 0, 3);
         }
     }
 }
