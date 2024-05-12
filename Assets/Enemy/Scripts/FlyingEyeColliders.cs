@@ -47,7 +47,7 @@ public class FlyingEyeColliders : MonoBehaviour
 
                 if (flyingEyeAI != null && flyingEyeAI.AttackColliderObject != null)
                 {
-                    Collider2D collider = flyingEyeAI.AttackColliderObject.GetComponent<Collider2D>();
+                    Collider2D collider = flyingEyeAI.AttackColliderObject.GetComponent<BoxCollider2D>();
                     if (collider != null)
                     {
                         attackColliderDetected = collider.IsTouching(other);
@@ -69,13 +69,13 @@ public class FlyingEyeColliders : MonoBehaviour
                     }
                 }
 
-                detectionColliderDetected = flyingEyeAI.DetectionColliderObject.GetComponent<Collider2D>().IsTouching(other);
-                groundColliderDetected = flyingEyeAI.GroundColliderObject.GetComponent<Collider2D>().IsTouching(other);
+                detectionColliderDetected = flyingEyeAI.DetectionColliderObject.GetComponent<CircleCollider2D>().IsTouching(other);
+                groundColliderDetected = flyingEyeAI.GroundColliderObject.GetComponent<BoxCollider2D>().IsTouching(other);
 
                 //Check if DetectionCollider collides with player
                 if (detectionColliderDetected && other.CompareTag("Player"))
                 {
-                    //g.GetComponent<FlyingEyeManager>().FlyingEyeDetectPlayer = true;
+                    g.GetComponent<FlyingEyeManager>().FlyingEyeDetectPlayer = true;
                     TriggerDetection(g);
                 }
                 //Check if AttackCollider collides with player and register a hit
@@ -87,7 +87,7 @@ public class FlyingEyeColliders : MonoBehaviour
                 //Check if GroundCollider collides with the ground
                 if (groundColliderDetected && other.CompareTag("Ground"))
                 {
-                    g.GetComponent<FlyingEyeManager>().FlyingEyeDetectGround = true;
+                    TriggerGroundCollision(g);
                 }
             }
         }
@@ -129,11 +129,6 @@ public class FlyingEyeColliders : MonoBehaviour
                         {
                             g.GetComponent<FlyingEyeAttacking>().FlyingEyeIsAttacking = false;
                         }
-                        //Check if GroundCollider no longer collides with the ground
-                        if (!groundColliderDetected && other.CompareTag("Ground"))
-                        {
-                            g.GetComponent<FlyingEyeManager>().FlyingEyeDetectGround = false;
-                        }
                     }
                     else
                     {
@@ -157,7 +152,7 @@ public class FlyingEyeColliders : MonoBehaviour
         }
     }
 
-    //Trigger the attack
+    //Trigger the attack on player
     public void TriggerAttack(GameObject g)
     {
         FlyingEyeAttacking flyingEyeAttacking = g.GetComponent<FlyingEyeAttacking>();
@@ -166,18 +161,22 @@ public class FlyingEyeColliders : MonoBehaviour
             flyingEyeAttacking.StartAttack();
         }
     }
-
+    //Trigger the detection on player
     public void TriggerDetection(GameObject g)
+    {
+        FlyingEyeAI flyingEyeAI = g.GetComponent<FlyingEyeAI>();
+        if (flyingEyeAI.Speed == 0f)
+        {
+            flyingEyeAI.Speed = 100f;
+        }
+    }
+    //Trigger the detection on ground
+    public void TriggerGroundCollision(GameObject g)
     {
         FlyingEyeManager flyingEyeManager = g.GetComponent<FlyingEyeManager>();
         if (flyingEyeManager != null)
         {
-            flyingEyeManager.FlyingEyeDetectPlayer = true;
-            FlyingEyeAI flyingEyeAI = g.GetComponent<FlyingEyeAI>();
-            if (flyingEyeAI.Speed == 0f)
-            {
-                flyingEyeAI.Speed = Random.Range(80f, 200f);
-            }
+            g.GetComponent<Rigidbody2D>().AddForce(new Vector2(1, 1), ForceMode2D.Impulse);
         }
     }
 }

@@ -25,7 +25,7 @@ public class FlyingEyeDamageHandler : MonoBehaviour
         flyingEyeAnimator.SetTrigger("Death_Trigger");
         flyingEyeManager.FlyingEyeIsDead = true;
 
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(0.9f);
 
         Destroy(gameObject);
     }

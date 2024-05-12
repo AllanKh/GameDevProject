@@ -10,10 +10,13 @@ public class FlyingEyeAI : MonoBehaviour
     private GameObject attackColliderObject;
     private GameObject detectionColliderObject;
     private GameObject groundColliderObject;
-    private float speed;
+    private float speed = 200f;
     private float nextWaypointDistance = 3f;
+    private float distance;
+    private Vector2 direction;
+    private Vector2 force;
     private Path path;
-    private int curretnWaypoint = 0;
+    private int currentWaypoint = 0;
     private bool reachedEndOfPath = false;
     private Seeker seeker;
     private Rigidbody2D rb;
@@ -41,50 +44,59 @@ public class FlyingEyeAI : MonoBehaviour
         gameObjects = GameObject.FindGameObjectsWithTag("FlyingEye");
         foreach (GameObject g in gameObjects)
         {
-            g.GetComponent<FlyingEyeAI>().speed = Random.Range(80f, 200f);
-            if (g.GetComponent<FlyingEyeAI>().path == null)
+            //Update pathfinding for flying eye if player is detected
+            if (g.GetComponent<FlyingEyeManager>().FlyingEyeDetectPlayer)
             {
-                return;
-            }
+                //Check if the path is not found
+                if (g.GetComponent<FlyingEyeAI>().path == null)
+                {
+                    return;
+                }
 
-            if (g.GetComponent<FlyingEyeAI>().curretnWaypoint >= g.GetComponent<FlyingEyeAI>().path.vectorPath.Count)
-            {
-                g.GetComponent<FlyingEyeAI>().reachedEndOfPath = true;
-                return;
-            }
-            else
-            {
-                g.GetComponent<FlyingEyeAI>().reachedEndOfPath = false;
-            }
+                //Check if the flying eye has reached the end of the path
+                if (g.GetComponent<FlyingEyeAI>().currentWaypoint >= g.GetComponent<FlyingEyeAI>().path.vectorPath.Count)
+                {
+                    g.GetComponent<FlyingEyeAI>().reachedEndOfPath = true;
+                    return;
+                }
+                else
+                {
+                    g.GetComponent<FlyingEyeAI>().reachedEndOfPath = false;
+                }
 
-            Vector2 direction = ((Vector2)g.GetComponent<FlyingEyeAI>().path.vectorPath[g.GetComponent<FlyingEyeAI>().curretnWaypoint] - g.GetComponent<Rigidbody2D>().position).normalized;
-            Vector2 force = direction * speed * Time.deltaTime;
-            g.GetComponent<Rigidbody2D>().AddForce(force);
+                //Apply force to flying eye for movement
+                g.GetComponent<FlyingEyeAI>().direction = ((Vector2)g.GetComponent<FlyingEyeAI>().path.vectorPath[g.GetComponent<FlyingEyeAI>().currentWaypoint] - g.GetComponent<Rigidbody2D>().position).normalized;
+                g.GetComponent<FlyingEyeAI>().force = g.GetComponent<FlyingEyeAI>().direction * speed * Time.deltaTime;
+                g.GetComponent<Rigidbody2D>().AddForce(g.GetComponent<FlyingEyeAI>().force);
 
-            float distance = Vector2.Distance(g.GetComponent<Rigidbody2D>().position, g.GetComponent<FlyingEyeAI>().path.vectorPath[g.GetComponent<FlyingEyeAI>().curretnWaypoint]);
-            if (distance < nextWaypointDistance)
-            {
-                g.GetComponent<FlyingEyeAI>().curretnWaypoint++;
-            }
-            
-            if (force.x < 0)
-            {
-                g.GetComponent<SpriteRenderer>().flipX = true;
-                FlipAttackCollider(true);
-                FlipGroundCollider(true);
-                FlipHitboxCollider(true);
-            }
-            else if (force.x > 0)
-            {
-                g.GetComponent<SpriteRenderer>().flipX = false;
-                FlipAttackCollider(false);
-                FlipGroundCollider(false);
-                FlipHitboxCollider(false);
-            }
+                //Stops movement while attacking
+                if (g.GetComponent<FlyingEyeAttacking>().FlyingEyeIsAttacking)
+                {
+                    g.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                }
 
-            if (g.GetComponent<FlyingEyeManager>().FlyingEyeDetectGround)
-            {
-                g.GetComponent<Rigidbody2D>().AddForce(new Vector2(2, 2), ForceMode2D.Force);
+                //Calculate current waypoint on path
+                g.GetComponent<FlyingEyeAI>().distance = Vector2.Distance(g.GetComponent<Rigidbody2D>().position, g.GetComponent<FlyingEyeAI>().path.vectorPath[g.GetComponent<FlyingEyeAI>().currentWaypoint]);
+                if (g.GetComponent<FlyingEyeAI>().distance < nextWaypointDistance)
+                {
+                    g.GetComponent<FlyingEyeAI>().currentWaypoint++;
+                }
+
+                //Flip sprite and colliders with the direction the flying eye is moving in
+                if (g.GetComponent<FlyingEyeAI>().force.x < 0)
+                {
+                    g.GetComponent<SpriteRenderer>().flipX = true;
+                    FlipAttackCollider(true);
+                    FlipGroundCollider(true);
+                    FlipHitboxCollider(true);
+                }
+                else if (g.GetComponent<FlyingEyeAI>().force.x > 0)
+                {
+                    g.GetComponent<SpriteRenderer>().flipX = false;
+                    FlipAttackCollider(false);
+                    FlipGroundCollider(false);
+                    FlipHitboxCollider(false);
+                }
             }
         }
     }
@@ -94,13 +106,16 @@ public class FlyingEyeAI : MonoBehaviour
         gameObjects = GameObject.FindGameObjectsWithTag("FlyingEye");
         foreach (GameObject g in gameObjects)
         {
+            //Generates a path if flying eye is still alive and detects the player
             if (!g.GetComponent<FlyingEyeManager>().FlyingEyeIsDead && g.GetComponent<FlyingEyeManager>().FlyingEyeDetectPlayer)
             {
+                //Check if current path is done or returned null
                 if (g.GetComponent<Seeker>().IsDone())
                 {
                     g.GetComponent<Seeker>().StartPath(g.GetComponent<Rigidbody2D>().position, playerTarget.position, OnPathComplete);
                 }
             }
+            //Stops the current path if flying eye is still alive and no longer detect the player
             else if (!g.GetComponent<FlyingEyeManager>().FlyingEyeIsDead && !g.GetComponent<FlyingEyeManager>().FlyingEyeDetectPlayer)
             {
                 g.GetComponent<Seeker>().CancelCurrentPathRequest(true);
@@ -114,25 +129,26 @@ public class FlyingEyeAI : MonoBehaviour
         gameObjects = GameObject.FindGameObjectsWithTag("FlyingEye");
         foreach (GameObject g in gameObjects)
         {
+            //Mark current path as complete if not failed
             if (!p.error)
             {
                 g.GetComponent<FlyingEyeAI>().path = p;
-                g.GetComponent<FlyingEyeAI>().curretnWaypoint = 0;
+                g.GetComponent<FlyingEyeAI>().currentWaypoint = 0;
             }
         }
     }
 
+    //Check if attack collider flips
     private void FlipAttackCollider(bool flip)
     {
-        //attackColliderObject.transform.localPosition = new Vector2(flip ? -0.51f : -0.8f, 0);
         attackColliderObject.GetComponent<BoxCollider2D>().offset = new Vector2(flip ? -0.22f : 0.22f, 0);
     }
-
+    //Check if ground collider flips
     private void FlipGroundCollider(bool flip)
     {
-        groundColliderObject.GetComponent<BoxCollider2D>().offset = new Vector2(flip ? -0.05f : 0.05f, -0.15f);
+        groundColliderObject.GetComponent<BoxCollider2D>().offset = new Vector2(flip ? -0.05f : 0.05f, -0.2f);
     }
-
+    //Check if hitbox colldider flips
     private void FlipHitboxCollider(bool flip)
     {
         gameObject.GetComponent<CircleCollider2D>().offset = new Vector2(flip ? -0.04f : 0.04f, 0);
