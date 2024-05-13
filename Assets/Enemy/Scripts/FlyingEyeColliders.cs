@@ -176,7 +176,7 @@ public class FlyingEyeColliders : MonoBehaviour
         FlyingEyeManager flyingEyeManager = g.GetComponent<FlyingEyeManager>();
         if (flyingEyeManager != null)
         {
-            g.GetComponent<Rigidbody2D>().AddForce(new Vector2(1, 1), ForceMode2D.Impulse);
+            g.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1), ForceMode2D.Impulse);
         }
     }
 }

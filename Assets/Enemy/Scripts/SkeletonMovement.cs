@@ -60,7 +60,7 @@ public class SkeletonMovement : MonoBehaviour
             if (!skeletonManager.SkeletonDetectPlayer)
             {
                 moveCounter++;
-                Movement();
+                StandByMovement();
             }
             gameObjects = GameObject.FindGameObjectsWithTag("Skeleton");
             foreach (GameObject g in gameObjects)
@@ -114,7 +114,7 @@ public class SkeletonMovement : MonoBehaviour
                         g.GetComponent<SkeletonMovement>().currentWaypoint++;
                     }
 
-                    //Flip sprite and colliders with the direction the skeleton is moving in
+                    //Flip sprite and colliders with skeleton direction
                     if (g.GetComponent<SkeletonMovement>().force.x < 0)
                     {
                         g.GetComponent<SpriteRenderer>().flipX = true;
@@ -165,31 +165,31 @@ public class SkeletonMovement : MonoBehaviour
         }
     }
 
-    //Hold enemy idle the first 5 seconds
+    //Hold skeleton idle the first 5 seconds
     IEnumerator WaitBeforeMoving()
     {
         yield return new WaitForSeconds(5);
         startMoving = true;
     }
     
-    //Handle horizontal movement
-    private void Movement()
+    //Handle movement for skeleton
+    private void StandByMovement()
     {
         if (Mathf.Abs(rb.velocity.x) > Mathf.Epsilon && startMoving)
         {
-            //Start walking animation
+            //Start skeleton walk animation
             skeletonAnimator.SetInteger("Anim_State", 1);
         }
         else
         {
-            //Stops walking animation
+            //Stops skeleton walk animation
             skeletonAnimator.SetInteger("Anim_State", 0);
         }
 
-        //Moves enemy
+        //Moves skeleton
         rb.velocity = new Vector2(movementSpeed, rb.velocity.y);
 
-        //Moves enemy back and forth
+        //Moves skeleton back and forth
         if (rb.velocity.x > 0 && moveCounter >= 1000)
         {
             movementSpeed = -1.5f;
@@ -201,7 +201,7 @@ public class SkeletonMovement : MonoBehaviour
             moveCounter = 0;
         }
 
-        //Flip asset according to direction
+        //Flip sprite and colliders with skeleton direction
         if (rb.velocity.x < 0)
         {
             GetComponent<SpriteRenderer>().flipX = true;
