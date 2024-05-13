@@ -16,12 +16,19 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 3cf8062736385434d8386f742f017a27, type: 3}
   flyingEyeLightAttacked:
   - {fileID: 8300000, guid: 97f7becc3940e6847942e29de96aae27, type: 3}
+  bossAttackNormal: []
+  bossAttackFast: []
+  bossDamageTaken: []
   playerWalk:
   - {fileID: 8300000, guid: aef63b3ef0392224c8df2ff74841cfd7, type: 3}
   - {fileID: 8300000, guid: 5309d6e3db29ddc4fbd0e29f08280993, type: 3}
   playerDamageTaken:
   - {fileID: 8300000, guid: 2aadf768779ee1e4ea723fd63f1bf4cf, type: 3}
   - {fileID: 8300000, guid: b0142b40a9de43f498a966be0363aae6, type: 3}
+  playerBlock:
+  - {fileID: 8300000, guid: 09e7ee99b9e9b664db28cfc1ec16263f, type: 3}
+  - {fileID: 8300000, guid: 08ace5e62b5c14e49b3c60575fcb1536, type: 3}
+  - {fileID: 8300000, guid: f5968ffaff7cad74789f2ebc57f22f0a, type: 3}
   potionPickUp:
   - {fileID: 8300000, guid: fef28953f0501cc4b83bca553c9a08de, type: 3}
   coinPickUp:
