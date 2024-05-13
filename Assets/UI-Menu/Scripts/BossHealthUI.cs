@@ -24,7 +24,7 @@ public class BossHealthUI : MonoBehaviour
     private void Update()
     {
         
-        barImage.fillAmount = BossManager.Instance.Health / 100;   
+        barImage.fillAmount = BossManager.Instance.Health / 500;   
         
 
         

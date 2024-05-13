@@ -16,7 +16,8 @@ public class MainMenuUI : MonoBehaviour
     {
         playButton.onClick.AddListener(() =>  //When play is pressed, do this
         {
-            Loader.Load(Loader.Scene.Allan); //Tell the loader which scene it should load after hitting the PlayButton!
+            Loader.Load(Loader.Scene.Paulo); //Tell the loader which scene it should load after hitting the PlayButton!
+            
         });
 
         quitButton.onClick.AddListener(() => //When quit is pressed, do this

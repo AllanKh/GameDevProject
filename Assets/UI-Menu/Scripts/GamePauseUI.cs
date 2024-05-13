@@ -21,6 +21,7 @@ public class GamePauseUI : MonoBehaviour
         mainMenuButton.onClick.AddListener(() => //When "mainMenuButton" is pressed, do this!
         {
             Loader.Load(Loader.Scene.MainMenuScene); //Go back to the Main Menu Scene.
+            BossManager.Instance.DestroyBoss();
         });
         optionsButton.onClick.AddListener(() => 
         {

@@ -11,15 +11,7 @@ public class BossManager : MonoBehaviour
  
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject); //Destroys GameObject script it is attatched to if there is a duplicate
-        }
-        else
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject); //Prevents BossManager from being destroyed when changing scenes
-        }
+        Instance = this;
     }
 
     //get and set boss health
@@ -37,6 +29,9 @@ public class BossManager : MonoBehaviour
         set { attackDamage = value; }
     }
 
-
-    
+    public void DestroyBoss()
+    {
+        Destroy(gameObject);
+    }
+   
 }
