@@ -20,16 +20,15 @@ public static class Loader
 
     public static void Load(Scene targetScene)
     {
-        Loader.targetScene = targetScene; 
+        Loader.targetScene = targetScene;
 
         SceneManager.LoadScene(Scene.LoadingScene.ToString()); //Initiate the loading scene so the game is not just frozen on the main menu
-
     }
 
 
 
     public static void LoaderCallback()
-    {
+    {       
         SceneManager.LoadScene(targetScene.ToString()); //After the loaderScene has been initiated, load the actual scene that we want to get to.
     }
 
