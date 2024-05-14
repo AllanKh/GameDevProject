@@ -8,6 +8,7 @@ public class Attacking : MonoBehaviour
     private float chargeTimer = 0f; // Add a timer to track the charging time
     private bool isCharging = false; // Track if currently charging
     private float heavyAttackChargeTime = 2.0f;
+    private float blockStamina = 25.0f;
 
     void Start()
     {
@@ -33,7 +34,7 @@ public class Attacking : MonoBehaviour
 
     private void BlockManager()
     {
-        if (Input.GetKeyDown(KeyCode.Q) && !IsAttacking && !IsHeavyAttacking && !isCharging)
+        if (Input.GetKeyDown(KeyCode.Q) && !IsAttacking && !IsHeavyAttacking && !isCharging && PlayerManager.Instance.Stamina > blockStamina)
         {
             playerAnimator.SetBool("Player_Block", true);
             PlayerManager.Instance.Invincible = true;

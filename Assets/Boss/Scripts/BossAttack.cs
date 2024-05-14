@@ -72,7 +72,11 @@ public class BossAttack : MonoBehaviour
     {
         if (PlayerInSight()) 
         {
-            if (!PlayerManager.Instance.Invincible)
+            if (PlayerManager.Instance.Invincible)
+            {
+                PlayerManager.Instance.Stamina -= 50.0f;
+            }
+            else if (!PlayerManager.Instance.Invincible)
             {
                 PlayerManager.Instance.DamagePlayer(BossManager.Instance.AttackDamage);
 
