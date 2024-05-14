@@ -15,18 +15,18 @@ public class BossHealthUI : MonoBehaviour
     {
         instance = this;
         Hide();
+
+        
     }
 
     private void Start()
     {
-        BossWalk.secondPhase += BossWalk_secondPhase; //listen to this event
+        BossAttack.secondPhase += BossAttack_secondPhase; //Listen to this event
     }
 
-    private void BossWalk_secondPhase(object sender, System.EventArgs e)
+    private void BossAttack_secondPhase(object sender, System.EventArgs e)
     {
-        //When the boss enters second phase, do this:
-
-        barImage.color = Color.red;
+        barImage.color = Color.red; //Do this when event happens
     }
 
     private void Update()

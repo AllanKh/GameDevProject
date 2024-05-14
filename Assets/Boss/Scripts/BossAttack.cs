@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class BossAttack : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class BossAttack : MonoBehaviour
     private bool phase2Activated = false;
     private float phase2AttackCooldownMulti = 0.5f;
     private float phase2Threshold = 300f;
+    public static event EventHandler secondPhase; //Event for boss phase2
 
 
 
@@ -90,6 +92,7 @@ public class BossAttack : MonoBehaviour
         {
             attackCooldown *= phase2AttackCooldownMulti;
             phase2Activated = true;
+            secondPhase?.Invoke(this, EventArgs.Empty); //Event activated
         }
     }
 }
