@@ -11,10 +11,11 @@ GameObject:
   - component: {fileID: 3996627965393858109}
   - component: {fileID: 8572425866626919191}
   - component: {fileID: 6164662428737727524}
-  - component: {fileID: 6271506681966101762}
+  - component: {fileID: -1252578981457355095}
+  - component: {fileID: -7973433104583938359}
   m_Layer: 0
   m_Name: Key
-  m_TagString: Key
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 3044299166894828051}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 82.655, y: 5.055, z: 0}
+  m_LocalPosition: {x: 0.0206, y: 0.0335, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -130,9 +131,36 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.1, y: 0.24}
+  m_Size: {x: 0.2, y: 0.2}
   m_EdgeRadius: 0
---- !u!114 &6271506681966101762
+--- !u!50 &-1252578981457355095
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3044299166894828051}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &-7973433104583938359
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -141,9 +169,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3044299166894828051}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcd6f562d60ccbe408c1a6f8afb4245f, type: 3}
+  m_Script: {fileID: 11500000, guid: c15551dee24ff204b9fb3b6ed139b64c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dropForce: 4
+  xAxisForce: 2
 --- !u!1 &4411768509539357409
 GameObject:
   m_ObjectHideFlags: 0
@@ -157,7 +187,7 @@ GameObject:
   - component: {fileID: 8694819321220639836}
   m_Layer: 0
   m_Name: KeyCollider
-  m_TagString: Untagged
+  m_TagString: Key
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
