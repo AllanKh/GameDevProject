@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerColliders : MonoBehaviour
@@ -7,6 +8,7 @@ public class PlayerColliders : MonoBehaviour
     // colliderCound checks mount of colliders currently intersecting with player
     private GameObject[] skeletonGameObjects;
     private GameObject[] flyingEyeGameObjects;
+    private GameObject[] detectionColliders;
     private int colliderCount = 0;
     private float disableTimer = 0f;
 
@@ -15,13 +17,10 @@ public class PlayerColliders : MonoBehaviour
     {
         // if disableTimer <= 0, sensor is enabled
         return disableTimer <= 0 && colliderCount > 0;
-        Debug.Log("Colliding");
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Trigger Enter");
-
         colliderCount++;
         // Check if AttackCollider is touching a skeleton and register a hit
         skeletonGameObjects = GameObject.FindGameObjectsWithTag("Skeleton");
@@ -54,8 +53,6 @@ public class PlayerColliders : MonoBehaviour
     {
         if (colliderCount > 0)
         {
-            Debug.Log("Trigger Exit");
-
             colliderCount--;
         }
     }
