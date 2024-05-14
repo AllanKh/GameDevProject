@@ -15,10 +15,13 @@ public class PlayerColliders : MonoBehaviour
     {
         // if disableTimer <= 0, sensor is enabled
         return disableTimer <= 0 && colliderCount > 0;
+        Debug.Log("Colliding");
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log("Trigger Enter");
+
         colliderCount++;
         // Check if AttackCollider is touching a skeleton and register a hit
         skeletonGameObjects = GameObject.FindGameObjectsWithTag("Skeleton");
@@ -26,7 +29,6 @@ public class PlayerColliders : MonoBehaviour
         {
             if (gameObject.CompareTag("AttackCollider") && g.GetComponent<Collider2D>() == other)
             {
-                Debug.Log("Skeleton Hit");
                 g.GetComponent<SkeletonManager>().DamageSkeleton(PlayerManager.Instance.AttackDamage);
             }
         }
@@ -36,7 +38,6 @@ public class PlayerColliders : MonoBehaviour
         {
             if (gameObject.CompareTag("AttackCollider") && g.GetComponent<Collider2D>() == other)
             {
-                Debug.Log("Flying Eye Hit");
                 g.GetComponent<FlyingEyeManager>().DamageFlyingEye(PlayerManager.Instance.AttackDamage);
             }
         }
@@ -44,7 +45,6 @@ public class PlayerColliders : MonoBehaviour
         if (gameObject.CompareTag("AttackCollider") && other.CompareTag("Boss"))
         {
             BossDamageDieHandler.Instance.DamageBoss(PlayerManager.Instance.AttackDamage);
-            Debug.Log(BossManager.Instance.Health);
         }
 
     }
@@ -54,6 +54,8 @@ public class PlayerColliders : MonoBehaviour
     {
         if (colliderCount > 0)
         {
+            Debug.Log("Trigger Exit");
+
             colliderCount--;
         }
     }

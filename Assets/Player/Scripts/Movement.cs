@@ -8,7 +8,9 @@ public class Movement : MonoBehaviour
     private float walkSpeed = 6.0f;
     private float runSpeed = 9.0f;
     private float currentSpeed;
+    private float runStamCost = 0.5f;
     private bool facingRight = true;
+    private bool isRunning;
 
     // Jump vairables
     private float jumpForce = 16.5f;
@@ -18,6 +20,7 @@ public class Movement : MonoBehaviour
     // Dodge variables
     private float dodgeSpeed = 5.0f;
     private float dodgeLength;
+    private float dodgeStamCost = 25.0f;
     private bool isDodging = false;
 
     // Fall damage variables
@@ -77,6 +80,18 @@ public class Movement : MonoBehaviour
 
     }
 
+    private void FixedUpdate()
+    {
+        if (isRunning)
+        {
+            PlayerManager.Instance.Stamina -= runStamCost;
+        }
+        else if (PlayerManager.Instance.Stamina < 100)
+        {
+            PlayerManager.Instance.Stamina += 0.35f;
+        }
+    }
+
 
 
     // Handle horizontal movement
@@ -85,9 +100,9 @@ public class Movement : MonoBehaviour
         if (!PlayerManager.Instance.Blocking)
         {
             // Check if player is running
-            bool isRunning = Input.GetKey(KeyCode.LeftShift);
+            isRunning = Input.GetKey(KeyCode.LeftShift);
             // Set movement speed to running speed if player is running
-            currentSpeed = isRunning && !attacking.IsAttacking ? runSpeed : walkSpeed;
+            currentSpeed = isRunning && !attacking.IsAttacking && PlayerManager.Instance.Stamina > runStamCost ? runSpeed : walkSpeed;
             // Check which horizontal movement direction key is pressed
             float inputXAxis = Input.GetAxis("Horizontal") * currentSpeed;
 
@@ -157,7 +172,7 @@ public class Movement : MonoBehaviour
     // Handle dodging
     private void DodgeManagement()
     {
-        if (Input.GetKeyDown(KeyCode.LeftControl) && !isDodging && isOnGround && !PlayerManager.Instance.IsChargingHeavyAttack)
+        if (Input.GetKeyDown(KeyCode.LeftControl) && !isDodging && isOnGround && !PlayerManager.Instance.IsChargingHeavyAttack && PlayerManager.Instance.Stamina >= dodgeStamCost)
         {
             // Starts the coroutine
             StartCoroutine(TriggerDodge());
@@ -167,6 +182,7 @@ public class Movement : MonoBehaviour
     // Coroutine to handle handle dodge mechanic
     private IEnumerator TriggerDodge()
     {
+        PlayerManager.Instance.Stamina -= dodgeStamCost;
         isDodging = true;
         // Determine dodge direction based on where the sprite is facing
         float dodgeDirection = GetComponent<SpriteRenderer>().flipX ? -1 : 1;
