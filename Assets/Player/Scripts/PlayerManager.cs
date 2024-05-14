@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine;
 // Ensures there is only one instance of PlayerManager throughout game lifecyle
 public class PlayerManager : MonoBehaviour
 {
-
+   
     public static PlayerManager Instance { get; private set; }
 
     private float stamina = 100.0f; // Players stamina

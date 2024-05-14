@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LoaderCallback : MonoBehaviour
 {
@@ -9,13 +10,32 @@ public class LoaderCallback : MonoBehaviour
 
     private bool isFirstUpdate = true;
 
+    public static float delayTimer = 12;
+    
+    private bool startTimer = false;
+
     private void Update()
     {
-        if (isFirstUpdate)
-        {
-            isFirstUpdate = false;
+        startTimer = true;
 
-            Loader.LoaderCallback();
+
+        if (startTimer)
+        {
+            delayTimer -= 1.0f * Time.deltaTime;
+
+            if (delayTimer <= 0.0f)
+            {
+
+                if (isFirstUpdate)
+                {
+                    isFirstUpdate = false;
+
+                    Loader.LoaderCallback();
+                }
+
+                startTimer = false;
+                delayTimer = 12;
+            }
         }
     }
 

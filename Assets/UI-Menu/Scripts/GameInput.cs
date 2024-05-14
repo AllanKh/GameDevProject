@@ -52,13 +52,13 @@ public class GameInput : MonoBehaviour
 
         if (isGamePause)
         {
-            Debug.Log("Game -Paused-, almost");
+            Debug.Log("Game -Paused-, I think");
             Time.timeScale = 0f;  //If all movement, animations and countdowns were "int * Time.deltaTime; this would work.
             OnGamePaused?.Invoke(this, EventArgs.Empty);  //Activate the Pause Event.
         }
         else
         {
-            Debug.Log("Game -UnPaused-, almost");
+            Debug.Log("Game -UnPaused-,I hope");
             Time.timeScale = 1f;
             OnGameUnpaused?.Invoke(this, EventArgs.Empty); //Activate the Unpause Event.
         }

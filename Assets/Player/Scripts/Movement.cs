@@ -1,9 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+
+    public static event EventHandler OnWalking; //An event to know when the player is walking.
+
     // Walk/Run variables
     private float walkSpeed = 6.0f;
     private float runSpeed = 9.0f;
@@ -117,6 +121,10 @@ public class Movement : MonoBehaviour
                 else
                 {
                     playerAnimator.SetInteger("Anim_State", 1);
+
+                    ActivateFootSteps();
+                    
+
                 }
             }
             else
@@ -267,6 +275,13 @@ public class Movement : MonoBehaviour
         }
 
         playerCollider.points = mirroredPoints;
+	}
+
+    public void ActivateFootSteps()
+    {
+        //Logic to prevent the walking sound to be spammed.
+
+        //OnWalking?.Invoke(this, EventArgs.Empty); //Activate event for all listeners.
     }
 
 }
