@@ -61,6 +61,8 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(isOnGround);
+
         CheckIfOnGround();
         if (!isDodging || isOnGround) // Prevent movement and jumping while dodging
         {
@@ -230,21 +232,8 @@ public class Movement : MonoBehaviour
             lastGroundedYPos = transform.position.y; // Reset fall distance calculation base
         }
 
-        if ((!isOnGround && wallColliderLeft.IsEnabledAndColliding()) || (!isOnGround && wallColliderRight.IsEnabledAndColliding()))
-        {
-            playerAnimator.SetTrigger("Player_Falling");
-            isOnGround = false;
-            playerAnimator.SetBool("On_Ground", isOnGround);
-            player_body.velocity = new Vector2(Input.GetAxis("Horizontal"), -4);
-        }
 
-        if (isOnGround && !groundCollider.IsEnabledAndColliding())
-        {
-            lastGroundedYPos = transform.position.y;
-            playerAnimator.SetTrigger("Player_Falling");
-            isOnGround = false;
-            hasJumped = false;  // Ensure jumped is false when genuinely falling
-        }
+
 
     }
 

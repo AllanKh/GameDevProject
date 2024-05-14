@@ -18,7 +18,6 @@ GameObject:
   - component: {fileID: 1191312433806051965}
   - component: {fileID: 5388620319462374380}
   - component: {fileID: 3468335887965385188}
-  - component: {fileID: -8045536735634035582}
   m_Layer: 7
   m_Name: Enemy1.1
   m_TagString: Skeleton
@@ -109,7 +108,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 100
   m_LinearDrag: 1.5
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -167,7 +166,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.3, y: 0.53}
+  m_Size: {x: 1.04, y: 0.53}
   m_EdgeRadius: 0
 --- !u!114 &4411499549304234276
 MonoBehaviour:
@@ -267,20 +266,6 @@ MonoBehaviour:
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   graphMask:
     value: -1
---- !u!114 &-8045536735634035582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2246092903113028433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4603b56a4c9c10843aa282b153fc5a2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myPrefab:
-  - {fileID: 9154349363640561975, guid: 36ba8c1637b2df847a143bd43aa513b6, type: 3}
 --- !u!1 &2903367153860070430
 GameObject:
   m_ObjectHideFlags: 0

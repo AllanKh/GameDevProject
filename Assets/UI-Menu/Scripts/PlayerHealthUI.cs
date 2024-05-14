@@ -16,7 +16,7 @@ public class PlayerHealthUI : MonoBehaviour
     {
         healthBarImage.fillAmount = PlayerManager.Instance.Health / 100;
         staminaBarImage.fillAmount = PlayerManager.Instance.Stamina / 100;
-        potionAmount.text = "You have no potions";
+        potionAmount.text = $"{PlayerManager.Instance.HeldPotions}";
         //then mana?
     }
 }
