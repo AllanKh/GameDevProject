@@ -79721,7 +79721,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad1b17b50c91cd84b94ebd6762314270, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  barImage: {fileID: 360756425}
+  healthBarImage: {fileID: 360756425}
+  staminaBarImage: {fileID: 527758005}
+  manaBarImage: {fileID: 2018357375}
 --- !u!114 &1165182277
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,11 +5,15 @@ using UnityEngine.UI;
 public class PlayerHealthUI : MonoBehaviour
 {
 
-    [SerializeField] private Image barImage;
+    [SerializeField] private Image healthBarImage;
+    [SerializeField] private Image staminaBarImage;
+    [SerializeField] private Image manaBarImage;
 
 
     private void Update()
     {
-        barImage.fillAmount = PlayerManager.Instance.Health / 100;
+        healthBarImage.fillAmount = PlayerManager.Instance.Health / 100;
+        staminaBarImage.fillAmount = PlayerManager.Instance.Stamina / 100;
+        //then mana?
     }
 }
