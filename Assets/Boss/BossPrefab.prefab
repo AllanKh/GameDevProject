@@ -17,8 +17,8 @@ GameObject:
   - component: {fileID: 6910681641193687686}
   - component: {fileID: 1024554073388572700}
   - component: {fileID: 7370764956761248076}
-  m_Layer: 7
-  m_Name: Boss
+  m_Layer: 13
+  m_Name: BossPrefab
   m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -124,7 +124,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1000
+  m_Mass: 1000000
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1

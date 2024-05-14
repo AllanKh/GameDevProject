@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class BossWalk : MonoBehaviour
 {
+
     [SerializeField] private float speed = 1.5f;
     [SerializeField] private Animator animator;
 
@@ -17,13 +18,16 @@ public class BossWalk : MonoBehaviour
     //Boss phase 2
     private bool phase2Activated = false;
     private float phase2SpeedMulti = 2f;
-    private float phase2Threshold = 30f;
+    private float phase2Threshold =300f;
 
 
     private void Start()
     {
         player = GameObject.FindWithTag("Player").transform;
         rb = GetComponent<Rigidbody2D>();
+
+        StartBoss();
+        
     }
 
     private void Update()
@@ -43,6 +47,8 @@ public class BossWalk : MonoBehaviour
     public void StartBoss()
     {
         StartCoroutine(WaitBeforeMoving());
+        Debug.Log("start boss");
+
     }
 
     //Hold boss idle the first 5 seconds
@@ -51,12 +57,20 @@ public class BossWalk : MonoBehaviour
         yield return new WaitForSeconds(5);
         startMoving = true;
 
-        BossHealthUI.instance.Show();   //ADDED BY DENNIS, this activates the HP Bar to show on the screen.
+        //ADDED BY DENNIS, this activates the HP Bar to show on the screen.
+
+        BossHealthUI.instance.Show();
     }
     
     //Boss moves towars player position
     private void Movement()
     {
+        if (player == null)
+        {
+            Debug.Log("player is null");
+            return;
+        }
+
         Vector2 target = new Vector2(player.position.x, rb.position.y);
         Vector2 newPos = Vector2.MoveTowards(rb.position, target, speed * Time.fixedDeltaTime);
         rb.MovePosition(newPos);

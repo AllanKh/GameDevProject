@@ -18,7 +18,7 @@ public class BossAttack : MonoBehaviour
     //Phase 2
     private bool phase2Activated = false;
     private float phase2AttackCooldownMulti = 0.5f;
-    private float phase2Threshold = 30f;
+    private float phase2Threshold = 300f;
 
 
 
