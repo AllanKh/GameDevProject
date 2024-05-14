@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -18,8 +19,9 @@ public class BossWalk : MonoBehaviour
     //Boss phase 2
     private bool phase2Activated = false;
     private float phase2SpeedMulti = 2f;
-    private float phase2Threshold =300f;
+    private float phase2Threshold = 300f;
 
+    public static event EventHandler secondPhase;
 
     private void Start()
     {
@@ -106,6 +108,7 @@ public class BossWalk : MonoBehaviour
     {
         phase2Activated = true;
         speed *= phase2SpeedMulti;
+        secondPhase?.Invoke(this, EventArgs.Empty);
     }
     
 }
