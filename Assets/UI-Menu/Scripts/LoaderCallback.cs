@@ -18,7 +18,7 @@ public class LoaderCallback : MonoBehaviour
     {
         startTimer = true;
 
-
+        if (isFirstUpdate)
         if (startTimer)
         {
             delayTimer -= 1.0f * Time.deltaTime;
@@ -26,15 +26,14 @@ public class LoaderCallback : MonoBehaviour
             if (delayTimer <= 0.0f)
             {
 
-                if (isFirstUpdate)
-                {
+                //if (isFirstUpdate)
+                //{
                     isFirstUpdate = false;
 
                     Loader.LoaderCallback();
-                }
+                //}
 
                 startTimer = false;
-                delayTimer = 12;
             }
         }
     }

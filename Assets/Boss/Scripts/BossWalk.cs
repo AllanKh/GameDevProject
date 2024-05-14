@@ -47,7 +47,6 @@ public class BossWalk : MonoBehaviour
     public void StartBoss()
     {
         StartCoroutine(WaitBeforeMoving());
-        Debug.Log("start boss");
 
     }
 
@@ -67,7 +66,6 @@ public class BossWalk : MonoBehaviour
     {
         if (player == null)
         {
-            Debug.Log("player is null");
             return;
         }
 
