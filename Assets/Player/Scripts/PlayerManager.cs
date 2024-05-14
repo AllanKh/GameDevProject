@@ -31,6 +31,7 @@ public class PlayerManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject); // Prevents PlayerManager from being destroyed when changing scenes
         }
+        health = 100.0f;
     }
 
     // get and set player stamina
