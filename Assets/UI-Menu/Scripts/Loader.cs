@@ -18,11 +18,15 @@ public static class Loader
 
     private static Scene targetScene;
 
+    public static float delayTime = 5f;
+    public static float timer = 0;
+
     public static void Load(Scene targetScene)
     {
         Loader.targetScene = targetScene;
 
         SceneManager.LoadScene(Scene.LoadingScene.ToString()); //Initiate the loading scene so the game is not just frozen on the main menu
+        
     }
 
 
