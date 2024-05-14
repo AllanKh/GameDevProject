@@ -197,7 +197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 500
-  attackDamage: 10
+  attackDamage: 20
 --- !u!114 &6910681641193687686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,6 +231,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1
   animator: {fileID: 143238065483257861}
+  phase2Activated: 0
 --- !u!114 &7370764956761248076
 MonoBehaviour:
   m_ObjectHideFlags: 0
