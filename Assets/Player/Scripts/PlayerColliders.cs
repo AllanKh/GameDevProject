@@ -26,6 +26,13 @@ public class PlayerColliders : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+
+        if (other.CompareTag("DetectionCollider") || other.CompareTag("Potion") || other.CompareTag("BarrelCollider"))
+        {
+            Debug.Log("A");
+            return;
+        }
+        
         colliderCount++;
         // Check if AttackCollider is touching a skeleton and register a hit
         skeletonGameObjects = GameObject.FindGameObjectsWithTag("Skeleton");
