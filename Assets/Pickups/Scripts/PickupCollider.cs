@@ -24,7 +24,10 @@ public class PickupCollider : MonoBehaviour
         if (c2d.CompareTag("Player") && this.CompareTag("Potion"))
         {
             OnAnyPotionPickUp?.Invoke(this, EventArgs.Empty); //Activate this event for all listeners.
-            PlayerManager.Instance.Health += 15;
+            if  (PlayerManager.Instance.HeldPotions < 3)
+            {
+                PlayerManager.Instance.HeldPotions += 1;
+            }
             DestroyParentGameObject();
             Debug.Log(PlayerManager.Instance.Health);
         }

@@ -13,7 +13,7 @@ public class SpawnKey : MonoBehaviour
         keyHasSpawned = false;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         go = GameObject.FindWithTag("Skeleton");
         if (go == null && keyHasSpawned == false)
