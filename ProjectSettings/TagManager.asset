@@ -18,6 +18,8 @@ TagManager:
   - Barrel
   - Boss
   - GroundCollider
+  - PlatformCollider
+  - PlatformEdge
   layers:
   - Default
   - TransparentFX

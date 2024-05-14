@@ -8,6 +8,7 @@ public class SkeletonManager : MonoBehaviour
     private float attackDamage; //Enemy attack damage
     private bool isDead; //Enemy state
     private bool playerDetected; //Player detecter
+    private bool platformDetected; //Platform detecter
 
     void Start()
     {
@@ -43,6 +44,12 @@ public class SkeletonManager : MonoBehaviour
     {
         get { return playerDetected; }
         set { playerDetected = value; }
+    }
+
+    public bool SkeletonDetectPlatform
+    {
+        get { return platformDetected; }
+        set { platformDetected = value; }
     }
 
     //Check if skeleton is dead

@@ -16,6 +16,7 @@ public class SkeletonMovement : MonoBehaviour
     private GameObject attackColliderObject;
     private GameObject detectionColliderObject;
     private GameObject groundColliderObject;
+    private GameObject platformColliderObject;
     private float speed = 30f;
     private float nextWaypointDistance = 3f;
     private float distance;
@@ -32,6 +33,7 @@ public class SkeletonMovement : MonoBehaviour
     public GameObject AttackColliderObject { get { return attackColliderObject; } set { attackColliderObject = value; } }
     public GameObject DetectionColliderObject { get { return detectionColliderObject; } set { detectionColliderObject = value; } }
     public GameObject GroundColliderObject { get { return groundColliderObject; } set { groundColliderObject = value; } }
+    public GameObject PlatformColliderObject { get { return platformColliderObject; } set { platformColliderObject = value; } }
 
     // Start is called before the first frame update
     void Start()
@@ -47,6 +49,7 @@ public class SkeletonMovement : MonoBehaviour
         attackColliderObject = transform.Find("AttackCollider").gameObject;
         detectionColliderObject = transform.Find("DetectionCollider").gameObject;
         groundColliderObject = transform.Find("GroundCollider").gameObject;
+        platformColliderObject = transform.Find("PlatformCollider").gameObject;
         InvokeRepeating("UpdatePath", 0f, 0.05f);
     }
 
@@ -121,6 +124,7 @@ public class SkeletonMovement : MonoBehaviour
                         FlipAttackCollider(true);
                         FlipGroundCollider(true);
                         FlipHitboxCollider(true);
+                        FlipPlatformCollider(true);
                     }
                     else if (g.GetComponent<SkeletonMovement>().force.x > 0)
                     {
@@ -128,6 +132,7 @@ public class SkeletonMovement : MonoBehaviour
                         FlipAttackCollider(false);
                         FlipGroundCollider(false);
                         FlipHitboxCollider(false);
+                        FlipPlatformCollider(false);
                     }
                 }
             }
@@ -190,14 +195,21 @@ public class SkeletonMovement : MonoBehaviour
         rb.velocity = new Vector2(movementSpeed, rb.velocity.y);
 
         //Moves skeleton back and forth
-        if (rb.velocity.x > 0 && moveCounter >= 1000)
+        if (rb.velocity.x > 0 && moveCounter >= 1000 && !skeletonManager.SkeletonDetectPlatform)
         {
             movementSpeed = -1.5f;
             moveCounter = 0;
         }
-        else if (rb.velocity.x < 0 && moveCounter >= 1000)
+        else if (rb.velocity.x < 0 && moveCounter >= 1000 && !skeletonManager.SkeletonDetectPlatform)
         {
             movementSpeed = 1.5f;
+            moveCounter = 0;
+        }
+
+        //Check if skeleton is about to walk of the platform
+        if (skeletonManager.SkeletonDetectPlatform)
+        {
+            rb.velocity = new Vector2(-movementSpeed, rb.velocity.y);
             moveCounter = 0;
         }
 
@@ -208,6 +220,7 @@ public class SkeletonMovement : MonoBehaviour
             FlipAttackCollider(true);
             FlipGroundCollider(true);
             FlipHitboxCollider(true);
+            FlipPlatformCollider(true);
         }
         else if (rb.velocity.x > 0)
         {
@@ -215,6 +228,7 @@ public class SkeletonMovement : MonoBehaviour
             FlipAttackCollider(false);
             FlipGroundCollider(false);
             FlipHitboxCollider(false);
+            FlipPlatformCollider(false);
         }
     }
 
@@ -232,5 +246,10 @@ public class SkeletonMovement : MonoBehaviour
     private void FlipHitboxCollider(bool flip)
     {
         gameObject.GetComponent<BoxCollider2D>().offset = new Vector2(flip ? -0.03f : 0.03f, 0);
+    }
+    //Check if platform collider flips
+    private void FlipPlatformCollider(bool flip)
+    {
+        platformColliderObject.GetComponent<BoxCollider2D>().offset = new Vector2(flip ? -0.13f : 0.13f, -0.3f);
     }
 }
