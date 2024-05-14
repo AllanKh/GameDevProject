@@ -17,6 +17,9 @@ TagManager:
   - BarrelCollider
   - Barrel
   - Boss
+  - GroundCollider
+  - PlatformCollider
+  - PlatformEdge
   layers:
   - Default
   - TransparentFX
@@ -32,6 +35,24 @@ TagManager:
   - UI
   - Player
   - Boss
+  - Walls
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   m_SortingLayers:
   - name: Default
     uniqueID: 0
