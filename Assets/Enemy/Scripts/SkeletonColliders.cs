@@ -73,7 +73,7 @@ public class SkeletonColliders : MonoBehaviour
                     }
                 }
 
-                detectionColliderDetected = skeletonMovement.DetectionColliderObject.GetComponent<CircleCollider2D>().IsTouching(other);
+                //detectionColliderDetected = skeletonMovement.DetectionColliderObject.GetComponent<CircleCollider2D>().IsTouching(other);
                 groundColliderDetected = skeletonMovement.GroundColliderObject.GetComponent<Collider2D>().IsTouching(other);
                 platformColliderDetected = skeletonMovement.PlatformColliderObject.GetComponent<Collider2D>().IsTouching(other);
 

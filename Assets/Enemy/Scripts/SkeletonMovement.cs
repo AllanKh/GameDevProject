@@ -5,7 +5,7 @@ using Pathfinding;
 
 public class SkeletonMovement : MonoBehaviour
 {
-    [SerializeField]private Transform playerTarget;
+    private Transform playerTarget;
     private GameObject[] gameObjects;
     private SkeletonManager skeletonManager;
     private float movementSpeed = 1.5f;
@@ -28,6 +28,7 @@ public class SkeletonMovement : MonoBehaviour
     private Seeker seeker;
     private Rigidbody2D rb;
 
+    public Transform PlayerTarget { get { return playerTarget; } set { playerTarget = value; } }
     public float MovementSpeed { get { return movementSpeed; } set { movementSpeed = value; } }
     public bool StartMoving { get { return startMoving; } set { startMoving = value; } }
     public GameObject AttackColliderObject { get { return attackColliderObject; } set { attackColliderObject = value; } }
@@ -38,13 +39,14 @@ public class SkeletonMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerTarget = GameObject.FindGameObjectWithTag("Player").transform;
         gameObjects = GameObject.FindGameObjectsWithTag("Skeleton");
         skeletonManager = GetComponent<SkeletonManager>();
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
         skeletonAnimator = GetComponent<Animator>();
-        skeletonAnimator.SetInteger("Anim_State", 0);
-        StartCoroutine(WaitBeforeMoving());
+        skeletonAnimator.SetTrigger("Spawn_Trigger");
+        StartCoroutine(WaitForSpawn());
         skeletonAttacking = GetComponent<SkeletonAttacking>();
         attackColliderObject = transform.Find("AttackCollider").gameObject;
         detectionColliderObject = transform.Find("DetectionCollider").gameObject;
@@ -57,83 +59,65 @@ public class SkeletonMovement : MonoBehaviour
     void Update()
     {
         //Update movement for skeleton while alive
-        if (startMoving && !skeletonManager.SkeletonIsDead)
+        if (!skeletonManager.SkeletonIsDead)
         {
-            //Move back and fourth if player is not detected
-            if (!skeletonManager.SkeletonDetectPlayer)
-            {
-                moveCounter++;
-                StandByMovement();
-            }
             gameObjects = GameObject.FindGameObjectsWithTag("Skeleton");
             foreach (GameObject g in gameObjects)
             {
-                //Update pathfinding for skeleton if player is detected
-                if (g.GetComponent<SkeletonManager>().SkeletonDetectPlayer)
+                if (Mathf.Abs(g.GetComponent<Rigidbody2D>().velocity.x) > Mathf.Epsilon && !g.GetComponent<SkeletonAttacking>().SkeletonIsAttacking)
                 {
-                    if (Mathf.Abs(g.GetComponent<Rigidbody2D>().velocity.x) > Mathf.Epsilon && !g.GetComponent<SkeletonAttacking>().SkeletonIsAttacking)
-                    {
-                        //Start walking animation
-                        g.GetComponent<SkeletonMovement>().skeletonAnimator.SetInteger("Anim_State", 1);
-                    }
-                    else
-                    {
-                        //Start idle animation
-                        g.GetComponent<SkeletonMovement>().skeletonAnimator.SetInteger("Anim_State", 0);
-                    }
+                    //Start walking animation
+                    g.GetComponent<SkeletonMovement>().skeletonAnimator.SetInteger("Anim_State", 1);
+                }
+                else
+                {
+                    //Start idle animation
+                    g.GetComponent<SkeletonMovement>().skeletonAnimator.SetInteger("Anim_State", 0);
+                }
 
-                    //Check if the path is not found
-                    if (g.GetComponent<SkeletonMovement>().path == null)
-                    {
-                        return;
-                    }
+                //Check if the path is not found
+                if (g.GetComponent<SkeletonMovement>().path == null)
+                {
+                    return;
+                }
 
-                    //Check if skeleton has reached the end of the path
-                    if (g.GetComponent<SkeletonMovement>().currentWaypoint >= g.GetComponent<SkeletonMovement>().path.vectorPath.Count)
-                    {
-                        g.GetComponent<SkeletonMovement>().reachedEndOfPath = true;
-                        return;
-                    }
-                    else
-                    {
-                        g.GetComponent<SkeletonMovement>().reachedEndOfPath = false;
-                    }
+                //Check if skeleton has reached the end of the path
+                if (g.GetComponent<SkeletonMovement>().currentWaypoint >= g.GetComponent<SkeletonMovement>().path.vectorPath.Count)
+                {
+                    g.GetComponent<SkeletonMovement>().reachedEndOfPath = true;
+                    return;
+                }
+                else
+                {
+                    g.GetComponent<SkeletonMovement>().reachedEndOfPath = false;
+                }
 
-                    //Apply force to skeleton for movement
-                    g.GetComponent<SkeletonMovement>().direction = ((Vector2)g.GetComponent<SkeletonMovement>().path.vectorPath[g.GetComponent<SkeletonMovement>().currentWaypoint] - g.GetComponent<Rigidbody2D>().position).normalized;
-                    g.GetComponent<SkeletonMovement>().force = g.GetComponent<SkeletonMovement>().direction * speed * Time.deltaTime;
-                    g.GetComponent<Rigidbody2D>().AddForce(g.GetComponent<SkeletonMovement>().force);
+                //Apply force to skeleton for movement
+                g.GetComponent<SkeletonMovement>().direction = ((Vector2)g.GetComponent<SkeletonMovement>().path.vectorPath[g.GetComponent<SkeletonMovement>().currentWaypoint] - g.GetComponent<Rigidbody2D>().position).normalized;
+                g.GetComponent<SkeletonMovement>().force = g.GetComponent<SkeletonMovement>().direction * speed * Time.deltaTime;
+                g.GetComponent<Rigidbody2D>().AddForce(g.GetComponent<SkeletonMovement>().force);
 
-                    //Stops movement while attacking
-                    if (g.GetComponent<SkeletonAttacking>().SkeletonIsAttacking)
-                    {
-                        g.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                    }
+                //Stops movement while attacking
+                if (g.GetComponent<SkeletonAttacking>().SkeletonIsAttacking)
+                {
+                    g.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                }
 
-                    //Calculate current waypoint on path
-                    g.GetComponent<SkeletonMovement>().distance = Vector2.Distance(g.GetComponent<Rigidbody2D>().position, g.GetComponent<SkeletonMovement>().path.vectorPath[g.GetComponent<SkeletonMovement>().currentWaypoint]);
-                    if (g.GetComponent<SkeletonMovement>().distance < nextWaypointDistance)
-                    {
-                        g.GetComponent<SkeletonMovement>().currentWaypoint++;
-                    }
+                //Calculate current waypoint on path
+                g.GetComponent<SkeletonMovement>().distance = Vector2.Distance(g.GetComponent<Rigidbody2D>().position, g.GetComponent<SkeletonMovement>().path.vectorPath[g.GetComponent<SkeletonMovement>().currentWaypoint]);
+                if (g.GetComponent<SkeletonMovement>().distance < nextWaypointDistance)
+                {
+                    g.GetComponent<SkeletonMovement>().currentWaypoint++;
+                }
 
-                    //Flip sprite and colliders with skeleton direction
-                    if (g.GetComponent<SkeletonMovement>().force.x < 0)
-                    {
-                        g.GetComponent<SpriteRenderer>().flipX = true;
-                        FlipAttackCollider(true);
-                        FlipGroundCollider(true);
-                        FlipHitboxCollider(true);
-                        FlipPlatformCollider(true);
-                    }
-                    else if (g.GetComponent<SkeletonMovement>().force.x > 0)
-                    {
-                        g.GetComponent<SpriteRenderer>().flipX = false;
-                        FlipAttackCollider(false);
-                        FlipGroundCollider(false);
-                        FlipHitboxCollider(false);
-                        FlipPlatformCollider(false);
-                    }
+                //Flip sprite and colliders with skeleton direction
+                if (g.GetComponent<SkeletonMovement>().force.x > 0)
+                {
+                    g.GetComponent<SkeletonMovement>().FlipSkeletonTrue();
+                }
+                else if (g.GetComponent<SkeletonMovement>().force.x < 0)
+                {
+                    g.GetComponent<SkeletonMovement>().FlipSkeletonFalse();
                 }
             }
         }
@@ -176,6 +160,12 @@ public class SkeletonMovement : MonoBehaviour
         yield return new WaitForSeconds(5);
         startMoving = true;
     }
+
+    IEnumerator WaitForSpawn()
+    {
+        yield return new WaitForSeconds(1.2f);
+        skeletonAnimator.SetInteger("Anim_State", 0);
+    }
     
     //Handle movement for skeleton
     private void StandByMovement()
@@ -214,42 +204,52 @@ public class SkeletonMovement : MonoBehaviour
         }
 
         //Flip sprite and colliders with skeleton direction
-        if (rb.velocity.x < 0)
+        if (rb.velocity.x > 0)
         {
-            GetComponent<SpriteRenderer>().flipX = true;
-            FlipAttackCollider(true);
-            FlipGroundCollider(true);
-            FlipHitboxCollider(true);
-            FlipPlatformCollider(true);
+            FlipSkeletonTrue();
         }
-        else if (rb.velocity.x > 0)
+        else if (rb.velocity.x < 0)
         {
-            GetComponent<SpriteRenderer>().flipX = false;
-            FlipAttackCollider(false);
-            FlipGroundCollider(false);
-            FlipHitboxCollider(false);
-            FlipPlatformCollider(false);
+            FlipSkeletonFalse();
         }
     }
 
     //Check if attack collider flips
-    private void FlipAttackCollider(bool flip)
+    public void FlipAttackCollider(bool flip)
     {
-        attackColliderObject.GetComponent<BoxCollider2D>().offset = new Vector2(flip ? -0.3f : 0.3f, 0.16f);
+        attackColliderObject.GetComponent<BoxCollider2D>().offset = new Vector2(flip ? 0.3f : -0.3f, 0.16f);
     }
     //Check if ground collider flips
-    private void FlipGroundCollider(bool flip)
+    public void FlipGroundCollider(bool flip)
     {
-        groundColliderObject.GetComponent<BoxCollider2D>().offset = new Vector2(flip ? -0.03f : 0.03f, -0.26f);
+        groundColliderObject.GetComponent<BoxCollider2D>().offset = new Vector2(flip ? 0.03f : -0.03f, -0.26f);
     }
     //Check if hitbox collider flips
-    private void FlipHitboxCollider(bool flip)
+    public void FlipHitboxCollider(bool flip)
     {
-        gameObject.GetComponent<BoxCollider2D>().offset = new Vector2(flip ? -0.03f : 0.03f, 0);
+        gameObject.GetComponent<BoxCollider2D>().offset = new Vector2(flip ? 0.03f : -0.03f, 0);
     }
     //Check if platform collider flips
-    private void FlipPlatformCollider(bool flip)
+    public void FlipPlatformCollider(bool flip)
     {
         platformColliderObject.GetComponent<BoxCollider2D>().offset = new Vector2(flip ? -0.13f : 0.13f, -0.3f);
+    }
+    //Flip skeleton returning true
+    public void FlipSkeletonTrue()
+    {
+        GetComponent<SpriteRenderer>().flipX = true;
+        FlipAttackCollider(true);
+        FlipGroundCollider(true);
+        FlipHitboxCollider(true);
+        FlipPlatformCollider(true);
+    }
+    //Flip skeleton returning false
+    public void FlipSkeletonFalse()
+    {
+        GetComponent<SpriteRenderer>().flipX = false;
+        FlipAttackCollider(false);
+        FlipGroundCollider(false);
+        FlipHitboxCollider(false);
+        FlipPlatformCollider(false);
     }
 }
