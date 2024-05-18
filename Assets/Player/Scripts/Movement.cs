@@ -61,7 +61,6 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(isOnGround);
 
         CheckIfOnGround();
         if (!isDodging || isOnGround) // Prevent movement and jumping while dodging
