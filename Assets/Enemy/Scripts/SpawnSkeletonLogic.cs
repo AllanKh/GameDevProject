@@ -5,7 +5,6 @@ using UnityEngine;
 public class SpawnSkeletonLogic : MonoBehaviour
 {
     private bool colliderDetect = false;
-    private SkeletonMovement skeletonMovement;
 
     private void OnTriggerEnter2D(Collider2D other)
     {

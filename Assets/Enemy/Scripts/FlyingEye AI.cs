@@ -11,7 +11,7 @@ public class FlyingEyeAI : MonoBehaviour
     private GameObject attackColliderObject;
     private GameObject detectionColliderObject;
     private GameObject groundColliderObject;
-    private float speed = 100f;
+    private float speed = 30f;
     private float nextWaypointDistance = 3f;
     private float distance;
     private Vector2 direction;

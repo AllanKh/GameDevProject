@@ -43,7 +43,6 @@ public class FlyingEyeColliders : MonoBehaviour
                 }
 
                 FlyingEyeAI flyingEyeAI = g.GetComponent<FlyingEyeAI>();
-                FlyingEyeAttacking flyingEyeAttacking = g.GetComponent<FlyingEyeAttacking>();
 
                 if (flyingEyeAI != null && flyingEyeAI.AttackColliderObject != null)
                 {
@@ -76,7 +75,6 @@ public class FlyingEyeColliders : MonoBehaviour
                 if (detectionColliderDetected && other.CompareTag("Player"))
                 {
                     g.GetComponent<FlyingEyeManager>().FlyingEyeDetectPlayer = true;
-                    TriggerDetection(g);
                 }
                 //Check if AttackCollider collides with player and register a hit
                 if (attackColliderDetected && other.CompareTag("Player"))
@@ -103,15 +101,13 @@ public class FlyingEyeColliders : MonoBehaviour
                 if (g != null)
                 {
                     FlyingEyeAI flyingEyeAI = g.GetComponent<FlyingEyeAI>();
-                    FlyingEyeAttacking flyingEyeAttacking = g.GetComponent<FlyingEyeAttacking>();
 
-                    if (flyingEyeAI != null && flyingEyeAttacking != null)
+                    if (flyingEyeAI != null)
                     {
                         if (flyingEyeAI.DetectionColliderObject && flyingEyeAI.AttackColliderObject && flyingEyeAI.GroundColliderObject)
                         {
                             detectionColliderDetected = flyingEyeAI.DetectionColliderObject.GetComponent<Collider2D>().IsTouching(other);
                             attackColliderDetected = flyingEyeAI.AttackColliderObject.GetComponent<Collider2D>().IsTouching(other);
-                            groundColliderDetected = flyingEyeAI.GroundColliderObject.GetComponent<Collider2D>().IsTouching(other);
                         }
 
                         if (colliderCount > 0)
@@ -176,7 +172,7 @@ public class FlyingEyeColliders : MonoBehaviour
         FlyingEyeManager flyingEyeManager = g.GetComponent<FlyingEyeManager>();
         if (flyingEyeManager != null)
         {
-            g.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1), ForceMode2D.Impulse);
+            g.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1));
         }
     }
 }
