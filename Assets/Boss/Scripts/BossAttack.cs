@@ -11,7 +11,10 @@ public class BossAttack : MonoBehaviour
     [SerializeField] private BoxCollider2D boxCollider;
     [SerializeField] private LayerMask playerLayer;
     private float cooldownTimer = 0;
-    
+
+    public static event EventHandler bossSwingAttack;
+
+
     //References
     private Animator anim;
     private BossWalk bossWalk;
@@ -42,6 +45,7 @@ public class BossAttack : MonoBehaviour
                 cooldownTimer = 0;
 
                 anim.SetTrigger("attack");
+                bossSwingAttack?.Invoke(this, EventArgs.Empty);  //Let all event listeners know that the boss just attacked.
             }
         }
         //When player is not in sight keep moving when player is in sight attack and stop moving

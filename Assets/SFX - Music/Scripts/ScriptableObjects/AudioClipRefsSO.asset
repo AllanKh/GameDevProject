@@ -16,7 +16,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 3cf8062736385434d8386f742f017a27, type: 3}
   flyingEyeLightAttacked:
   - {fileID: 8300000, guid: 97f7becc3940e6847942e29de96aae27, type: 3}
-  bossAttackNormal: []
+  bossAttackNormal:
+  - {fileID: 8300000, guid: 4f46a24a4ebe006408ce9f0e9503b0a3, type: 3}
+  - {fileID: 8300000, guid: df1602d390d9d594cbdc998aa20937a1, type: 3}
+  - {fileID: 8300000, guid: 2c062349a2d5eda4781c9d1f9dde51ec, type: 3}
+  - {fileID: 8300000, guid: a62b5700c3cd55d48bc1a3b8592f1b65, type: 3}
   bossAttackFast: []
   bossDamageTaken: []
   playerWalk:

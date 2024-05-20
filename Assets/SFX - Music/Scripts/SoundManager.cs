@@ -25,9 +25,15 @@ public class SoundManager : MonoBehaviour
         PickupCollider.OnAnyCoinPickUp += PickupCollider_OnAnyCoinPickUp;
         BarrelLogic.OnAnyBarrelBreak += BarrelLogic_OnAnyBarrelBreak;
         Movement.OnWalking += Movement_onWalking;
+        BossAttack.bossSwingAttack += BossAttack_bossSwingAttack;
 
     }
 
+    private void BossAttack_bossSwingAttack(object sender, System.EventArgs e)
+    {
+        BossAttack bossAttack = sender as BossAttack;
+        PlaySound(audioClipRefsSO.bossAttackNormal, bossAttack.transform.position);
+    }
 
     private void Movement_onWalking(object sender, System.EventArgs e)
     {
