@@ -54,6 +54,8 @@ public class BossDamageDieHandler : MonoBehaviour
                 dead = true;
 
                 StartCoroutine(WaitBeforeDeletingBoss());
+                Time.timeScale = 0f;
+                GameWinUI.Instance.Show();
             }
         }
     }
@@ -61,5 +63,6 @@ public class BossDamageDieHandler : MonoBehaviour
     {
         yield return new WaitForSeconds(1.2f);
         Destroy(gameObject);
+        
     }
 }

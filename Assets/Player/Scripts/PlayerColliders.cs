@@ -66,7 +66,7 @@ public class PlayerColliders : MonoBehaviour
     private void OnTriggerExit2D(Collider2D other)
     {
 
-        Debug.Log("Exit");
+        //Debug.Log("Exit");
         if (colliderCount > 0)
         {
             colliderCount--;
