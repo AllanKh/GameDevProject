@@ -33,7 +33,6 @@ public class PlayerHealthUI : MonoBehaviour
     {
         healthBarImage.fillAmount = PlayerManager.Instance.Health / 100;
         staminaBarImage.fillAmount = PlayerManager.Instance.Stamina / 100;
-        Debug.Log(PlayerManager.Instance.HeldPotions);
         
         if (PlayerManager.Instance.HeldPotions > 5)
         {
