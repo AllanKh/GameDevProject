@@ -8,10 +8,7 @@ public class SkeletonColliders : MonoBehaviour
     private GameObject[] gameObjects;
     private int colliderCount = 0;
     private float disableTimer = 0f;
-    private bool detectionColliderDetected;
     private bool attackColliderDetected;
-    private bool groundColliderDetected;
-    private bool platformColliderDetected;
 
     public bool AttackColliderDetected { get; set; }
 
@@ -47,7 +44,6 @@ public class SkeletonColliders : MonoBehaviour
                 }
 
                 SkeletonMovement skeletonMovement = g.GetComponent<SkeletonMovement>();
-                SkeletonAttacking skeletonAttacking = g.GetComponent<SkeletonAttacking>();
 
                 if (skeletonMovement != null && skeletonMovement.AttackColliderObject != null)
                 {
@@ -73,30 +69,11 @@ public class SkeletonColliders : MonoBehaviour
                     }
                 }
 
-                detectionColliderDetected = skeletonMovement.DetectionColliderObject.GetComponent<CircleCollider2D>().IsTouching(other);
-                groundColliderDetected = skeletonMovement.GroundColliderObject.GetComponent<Collider2D>().IsTouching(other);
-                platformColliderDetected = skeletonMovement.PlatformColliderObject.GetComponent<Collider2D>().IsTouching(other);
-
-                //Check if DetectionCollider collides with the player
-                if (detectionColliderDetected && other.CompareTag("Player"))
-                {
-                    g.GetComponent<SkeletonManager>().SkeletonDetectPlayer = true;
-                }
                 //Check if AttackCollider collides with player and register a hit
                 if (attackColliderDetected && other.CompareTag("Player"))
                 {
                     g.GetComponent<SkeletonAttacking>().SkeletonIsAttacking = true;
                     TriggerAttack(g);
-                }
-                //Check if hitbox collides with the ground
-                if (groundColliderDetected && other.CompareTag("Ground"))
-                {
-                    g.GetComponent<Rigidbody2D>().gravityScale = 0;
-                }
-                //Check if Platform collider collides with the ground
-                if (platformColliderDetected && other.CompareTag("PlatformEdge"))
-                {
-                    g.GetComponent<SkeletonManager>().SkeletonDetectPlatform = true;
                 }
             }
         }
@@ -112,16 +89,12 @@ public class SkeletonColliders : MonoBehaviour
                 if (g != null)
                 {
                     SkeletonMovement skeletonMovement = g.GetComponent<SkeletonMovement>();
-                    SkeletonAttacking skeletonAttacking = g.GetComponent<SkeletonAttacking>();
 
-                    if (skeletonMovement != null && skeletonAttacking != null)
+                    if (skeletonMovement != null)
                     {
-                        if (skeletonMovement.DetectionColliderObject && skeletonMovement.AttackColliderObject && skeletonMovement.GroundColliderObject && skeletonMovement.PlatformColliderObject)
+                        if (skeletonMovement.AttackColliderObject)
                         {
-                            detectionColliderDetected = skeletonMovement.DetectionColliderObject.GetComponent<CircleCollider2D>().IsTouching(other);
                             attackColliderDetected = skeletonMovement.AttackColliderObject.GetComponent<Collider2D>().IsTouching(other);
-                            groundColliderDetected = skeletonMovement.GroundColliderObject.GetComponent<Collider2D>().IsTouching(other);
-                            platformColliderDetected = skeletonMovement.PlatformColliderObject.GetComponent<Collider2D>().IsTouching(other);
                         }
 
                         if (colliderCount > 0)
@@ -129,25 +102,10 @@ public class SkeletonColliders : MonoBehaviour
                             colliderCount--;
                         }
 
-                        //Check if DetectionCollider no longer collides with player
-                        if (!detectionColliderDetected && other.CompareTag("Player"))
-                        {
-                            g.GetComponent<SkeletonManager>().SkeletonDetectPlayer = false;
-                        }
                         //Check if AttackCollider no longer collides with player
                         if (!attackColliderDetected && other.CompareTag("Player"))
                         {
                             g.GetComponent<SkeletonAttacking>().SkeletonIsAttacking = false;
-                        }
-                        //Check if hitbox no longer collides with the ground
-                        if (!groundColliderDetected && other.CompareTag("Ground"))
-                        {
-                            g.GetComponent<Rigidbody2D>().gravityScale = 1;
-                        }
-                        //Check if Platform collider no longer collides with the ground
-                        if (!platformColliderDetected && other.CompareTag("PlatformEdge"))
-                        {
-                            g.GetComponent<SkeletonManager>().SkeletonDetectPlatform = false;
                         }
                     }
                     else
