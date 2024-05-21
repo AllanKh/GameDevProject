@@ -15,8 +15,6 @@ public class BossHealthUI : MonoBehaviour
     {
         instance = this;
         Hide();
-
-        
     }
 
     private void Start()

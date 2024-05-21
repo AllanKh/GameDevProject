@@ -17,6 +17,5 @@ public class BossStarter : MonoBehaviour
     public void SpawnBoss()
     {
         Instantiate(bossPrefab, spawnPoint, Quaternion.identity);
-        BossManager.Instance.Health = 500.0f;
     }
 }
