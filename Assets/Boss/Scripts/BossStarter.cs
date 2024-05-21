@@ -8,14 +8,12 @@ public class BossStarter : MonoBehaviour
 
     [SerializeField] private GameObject bossPrefab;
 
-    private Vector2 spawnPoint = new Vector2(373.0f, -37.0f);
-
     public void Awake()
     {
         Instance = this;
     }
     public void SpawnBoss()
     {
-        Instantiate(bossPrefab, spawnPoint, Quaternion.identity);
+        Instantiate(bossPrefab, transform.position, Quaternion.identity);
     }
 }
