@@ -98,6 +98,7 @@ public class SkeletonMovement : MonoBehaviour
             }
             else if (force.x > 0)
             {
+                Debug.Log(force.x);
                 FlipSkeletonFalse();
             }
         }

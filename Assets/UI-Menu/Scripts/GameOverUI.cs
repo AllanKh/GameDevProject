@@ -16,9 +16,9 @@ public class GameOverUI : MonoBehaviour
         Hide();
         mainMenuButton.onClick.AddListener(() => //When "mainMenuButton" is pressed, do this!
         {
+            PlayerManager.Instance.Health = 100;
             Loader.Load(Loader.Scene.MainMenuScene); //Go back to the Main Menu Scene.
             BossManager.Instance.DestroyBoss();
-            PlayerManager.Instance.Health = 100;
             Hide();
         });
 

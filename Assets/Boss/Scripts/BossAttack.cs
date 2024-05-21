@@ -94,6 +94,7 @@ public class BossAttack : MonoBehaviour
     {
         if (!phase2Activated && BossManager.Instance.Health <= phase2Threshold)
         {
+            Debug.Log("BossSecondPhase");
             attackCooldown *= phase2AttackCooldownMulti;
             phase2Activated = true;
             secondPhase?.Invoke(this, EventArgs.Empty); //Event activated
