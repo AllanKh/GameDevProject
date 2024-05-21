@@ -92,11 +92,11 @@ public class SkeletonMovement : MonoBehaviour
             }
 
             //Flip sprite and colliders with skeleton direction
-            if (force.x < 0)
+            if (rb.velocity.x < 0)
             {
                 FlipSkeletonTrue();
             }
-            else if (force.x > 0)
+            else if (rb.velocity.x > 0)
             {
                 FlipSkeletonFalse();
             }
