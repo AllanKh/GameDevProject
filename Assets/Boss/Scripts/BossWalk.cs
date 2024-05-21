@@ -13,7 +13,7 @@ public class BossWalk : MonoBehaviour
     private Transform player;
     private Rigidbody2D rb;
 
-    private bool startMoving = false;
+    public bool startMoving = false;
     private bool isFlipped = false;
 
     //Boss phase 2
@@ -21,21 +21,29 @@ public class BossWalk : MonoBehaviour
     private float phase2SpeedMulti = 2f;
     private float phase2Threshold = 300f;
 
+    private BossCastSpell bossCastSpell;
+
 
     private void Start()
     {
         player = GameObject.FindWithTag("Player").transform;
         rb = GetComponent<Rigidbody2D>();
 
+        bossCastSpell = GetComponent<BossCastSpell>();
+
         StartBoss();
-        
+
     }
 
     private void Update()
     {
-        if (startMoving == true)
+        if (startMoving)
         {
             Movement();
+        }
+        else if (startMoving == false)
+        {
+            animator.SetBool("moving", false);
         }
 
         if (!phase2Activated && BossManager.Instance.Health <= phase2Threshold)
@@ -52,10 +60,12 @@ public class BossWalk : MonoBehaviour
     }
 
     //Hold boss idle the first 5 seconds
-    IEnumerator WaitBeforeMoving()
+    private IEnumerator WaitBeforeMoving()
     {
         yield return new WaitForSeconds(5);
         startMoving = true;
+
+        bossCastSpell.EnableSpellCasting();
 
         //ADDED BY DENNIS, this activates the HP Bar to show on the screen.
 
@@ -81,6 +91,7 @@ public class BossWalk : MonoBehaviour
     private void OnDisable()
     {
         animator.SetBool("moving", false);
+    
     }
 
     //makes the boss look at the player using the boss scale 
@@ -108,5 +119,5 @@ public class BossWalk : MonoBehaviour
         phase2Activated = true;
         speed *= phase2SpeedMulti;
     }
-    
+
 }
