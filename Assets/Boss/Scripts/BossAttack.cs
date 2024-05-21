@@ -14,7 +14,6 @@ public class BossAttack : MonoBehaviour
 
     public static event EventHandler bossSwingAttack;
 
-
     //References
     private Animator anim;
     private BossWalk bossWalk;
