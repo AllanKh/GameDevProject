@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7967438078444187977}
   - component: {fileID: 1012529478667331318}
   - component: {fileID: 8679894639895594001}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Barrel
   m_TagString: BarrelCollider
   m_Icon: {fileID: 0}
@@ -171,7 +171,7 @@ GameObject:
   - component: {fileID: 7381437641464742579}
   - component: {fileID: 2975233591055621942}
   - component: {fileID: 7063879585566663295}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: BarrelCollider
   m_TagString: BarrelCollider
   m_Icon: {fileID: 0}
@@ -208,7 +208,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
