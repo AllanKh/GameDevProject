@@ -11,7 +11,8 @@ public static class Loader
         MainMenuScene,
         LoadingScene,
         Allan,
-        Dennis
+        Dennis,
+        Liz
     }
 
 

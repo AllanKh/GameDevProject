@@ -31,7 +31,7 @@ public class SkeletonDamageHandler : MonoBehaviour
         skeletonManager.SkeletonIsDead = true;
 
         yield return new WaitForSeconds(0.7f);
-        //GetComponent<SpawnPickups>().SpawnNowEnemy();
+        GetComponent<SpawnPickups>().SpawnNowEnemy();
         Destroy(gameObject);
     }
 
