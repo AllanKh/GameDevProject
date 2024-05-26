@@ -19,7 +19,7 @@ public class SoundManager : MonoBehaviour
     {
         PlayerColliders.OnAnySkeletonAttacked += PlayerColliders_OnAnySkeletonAttacked;
         PlayerColliders.OnAnyFlyingEyeAttacked += PlayerColliders_OnAnyFlyingEyeAttacked;
-        SkeletonDamageHandler.OnPlayerDamageTaken += SkeletonDamageHandler_OnPlayerDamageTaken;
+        PlayerManager.OnPlayerDamageTaken += PlayerManager_OnPlayerDamageTaken;
         SkeletonDamageHandler.OnPlayerBlockedAttack += SkeletonDamageHandler_OnPlayerBlockedAttack;
         PickupCollider.OnAnyPotionPickUp += PickupCollider_OnAnyPotionPickUp;
         PickupCollider.OnAnyCoinPickUp += PickupCollider_OnAnyCoinPickUp;
@@ -27,6 +27,13 @@ public class SoundManager : MonoBehaviour
         Movement.OnWalking += Movement_onWalking;
         BossAttack.bossSwingAttack += BossAttack_bossSwingAttack;
 
+    }
+
+    private void PlayerManager_OnPlayerDamageTaken(object sender, System.EventArgs e)
+    {
+
+        PlaySound(audioClipRefsSO.playerDamageTaken, Camera.main.transform.position);   //Untill I find a better sender position
+        Debug.Log("You are taking damage!");
     }
 
     private void BossAttack_bossSwingAttack(object sender, System.EventArgs e)
@@ -42,12 +49,6 @@ public class SoundManager : MonoBehaviour
         PlaySound(audioClipRefsSO.playerWalk, movement.transform.position);
     }
 
-    private void SkeletonDamageHandler_OnPlayerDamageTaken(object sender, System.EventArgs e)
-    {
-        //When the player takes damage, play these sounds.
-        SkeletonDamageHandler skeletonDamageHandler = sender as SkeletonDamageHandler;
-        PlaySound(audioClipRefsSO.playerDamageTaken, skeletonDamageHandler.transform.position);
-    }
     private void SkeletonDamageHandler_OnPlayerBlockedAttack(object sender, System.EventArgs e)
     {
         //When the player blocks a skeleton attack, play these sounds.

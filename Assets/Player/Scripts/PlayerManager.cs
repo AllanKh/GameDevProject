@@ -7,7 +7,7 @@ using UnityEngine;
 // Ensures there is only one instance of PlayerManager throughout game lifecyle
 public class PlayerManager : MonoBehaviour
 {
-   
+    public static event EventHandler OnPlayerDamageTaken;
     public static PlayerManager Instance { get; private set; }
 
     private float stamina = 100.0f; // Players stamina
@@ -70,6 +70,7 @@ public class PlayerManager : MonoBehaviour
     // Apply damage to player and reduce health
     public void DamagePlayer(float damageAmount)
     {
+        OnPlayerDamageTaken?.Invoke(this, EventArgs.Empty);
         Health -= damageAmount;
     }
 
