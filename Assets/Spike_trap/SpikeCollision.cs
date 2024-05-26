@@ -29,7 +29,7 @@ public class SpikeCollision : MonoBehaviour
         if (other.CompareTag("Player"))
         {
 
-            PlayerManager.Instance.DamagePlayer(100);
+            PlayerManager.Instance.DamagePlayer(10);
 
     
         }
