@@ -25,7 +25,7 @@ public static class Loader
     public static void Load(Scene targetScene)
     {
         Loader.targetScene = targetScene;
-
+        
         SceneManager.LoadScene(Scene.LoadingScene.ToString()); //Initiate the loading scene so the game is not just frozen on the main menu
         
     }

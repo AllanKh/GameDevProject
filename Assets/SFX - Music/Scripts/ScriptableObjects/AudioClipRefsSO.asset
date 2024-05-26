@@ -39,3 +39,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: dc8a380581d983440ae0922d50b8af5e, type: 3}
   barrelBreak:
   - {fileID: 8300000, guid: ef8cae26d544fbb4187fe525120ffeab, type: 3}
+  UI_HighLight:
+  - {fileID: 8300000, guid: 88ac9a3cc40d0f944b485403ee60c4d9, type: 3}
+  UI_PlayGame:
+  - {fileID: 8300000, guid: 7a1ad2bd74bf52e4b99b14c5c04a2ee9, type: 3}
+  UI_Select:
+  - {fileID: 8300000, guid: 2977d7738e8392749a58c5dd24f27f4c, type: 3}
+  UI_StepBack:
+  - {fileID: 8300000, guid: b9dc5ec7ea036924b943aa406344f74d, type: 3}

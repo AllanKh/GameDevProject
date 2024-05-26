@@ -24,4 +24,11 @@ public class AudioClipRefsSO : ScriptableObject
     public AudioClip[] coinPickUp;
     public AudioClip[] barrelBreak;
 
+
+    //UI
+    public AudioClip[] UI_HighLight;
+    public AudioClip[] UI_PlayGame;
+    public AudioClip[] UI_Select;
+    public AudioClip[] UI_StepBack;
+    
 }

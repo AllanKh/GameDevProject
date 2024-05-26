@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour
@@ -14,9 +15,11 @@ public class SoundManager : MonoBehaviour
     {
         Instance = this;
     }
+    
 
     private void Start()
     {
+
         PlayerColliders.OnAnySkeletonAttacked += PlayerColliders_OnAnySkeletonAttacked;
         PlayerColliders.OnAnyFlyingEyeAttacked += PlayerColliders_OnAnyFlyingEyeAttacked;
         PlayerManager.OnPlayerDamageTaken += PlayerManager_OnPlayerDamageTaken;
@@ -26,7 +29,24 @@ public class SoundManager : MonoBehaviour
         BarrelLogic.OnAnyBarrelBreak += BarrelLogic_OnAnyBarrelBreak;
         Movement.OnWalking += Movement_onWalking;
         BossAttack.bossSwingAttack += BossAttack_bossSwingAttack;
+        ButtonSoundCollider.ButtonHovered += ButtonSoundCollider_ButtonHovered;
+        ButtonSoundCollider.ButtonPressed += ButtonSoundCollider_ButtonPressed;
+        
+        
+    }
 
+    private void ButtonSoundCollider_ButtonPressed(object sender, System.EventArgs e)
+    {
+        ButtonSoundCollider buttonSoundCollider = sender as ButtonSoundCollider;
+        PlaySound(audioClipRefsSO.UI_Select, Camera.main.transform.position);
+        Debug.Log("ButtonPress Sound should play!");
+    }
+
+    private void ButtonSoundCollider_ButtonHovered(object sender, System.EventArgs e)
+    {
+        ButtonSoundCollider buttonSoundCollider = sender as ButtonSoundCollider;
+        PlaySound(audioClipRefsSO.UI_HighLight, Camera.main.transform.position);
+        Debug.Log("ButtonHover sound should play!");
     }
 
     private void PlayerManager_OnPlayerDamageTaken(object sender, System.EventArgs e)
@@ -102,6 +122,12 @@ public class SoundManager : MonoBehaviour
         AudioSource.PlayClipAtPoint(audioClip, position, volumeMultiplier * volume);
     }
 
+
+    public void PlayButtonSouns()
+    {
+
+    }
+
     public void ChangeVolume() //Change the game effects volume
     {
         volume += 0.1f;
@@ -114,6 +140,11 @@ public class SoundManager : MonoBehaviour
     public float GetVolume()
     {
         return volume;
+    }
+
+    public void DestroySoundManager()
+    {
+        Destroy(gameObject);
     }
 
 }
