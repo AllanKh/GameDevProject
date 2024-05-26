@@ -15,7 +15,6 @@ public class SoundManager : MonoBehaviour
     {
         Instance = this;
     }
-    
 
     private void Start()
     {
@@ -33,6 +32,22 @@ public class SoundManager : MonoBehaviour
         ButtonSoundCollider.ButtonPressed += ButtonSoundCollider_ButtonPressed;
         
         
+    }
+    private void OnDestroy()
+    {
+        PlayerColliders.OnAnySkeletonAttacked -= PlayerColliders_OnAnySkeletonAttacked;
+        PlayerColliders.OnAnyFlyingEyeAttacked -= PlayerColliders_OnAnyFlyingEyeAttacked;
+        PlayerManager.OnPlayerDamageTaken -= PlayerManager_OnPlayerDamageTaken;
+        SkeletonDamageHandler.OnPlayerBlockedAttack -= SkeletonDamageHandler_OnPlayerBlockedAttack;
+        PickupCollider.OnAnyPotionPickUp -= PickupCollider_OnAnyPotionPickUp;
+        PickupCollider.OnAnyCoinPickUp -= PickupCollider_OnAnyCoinPickUp;
+        BarrelLogic.OnAnyBarrelBreak -= BarrelLogic_OnAnyBarrelBreak;
+        Movement.OnWalking -= Movement_onWalking;
+        BossAttack.bossSwingAttack -= BossAttack_bossSwingAttack;
+        ButtonSoundCollider.ButtonHovered -= ButtonSoundCollider_ButtonHovered;
+        ButtonSoundCollider.ButtonPressed -= ButtonSoundCollider_ButtonPressed;
+
+        //playerInputActions.Dispose();
     }
 
     private void ButtonSoundCollider_ButtonPressed(object sender, System.EventArgs e)
