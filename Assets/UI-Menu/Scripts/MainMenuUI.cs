@@ -21,7 +21,8 @@ public class MainMenuUI : MonoBehaviour
         playButton.onClick.AddListener(() =>  //When play is pressed, do this
         {
             SoundManager.Instance.DestroySoundManager();
-            Loader.Load(Loader.Scene.Allan); //Tell the loader which scene it should load after hitting the PlayButton!      
+            Loader.Load(Loader.Scene.Allan); //Tell the loader which scene it should load after hitting the PlayButton!
+            Time.timeScale = 1;
         });
 
         

@@ -47,7 +47,7 @@ public class SoundManager : MonoBehaviour
         ButtonSoundCollider.ButtonHovered -= ButtonSoundCollider_ButtonHovered;
         ButtonSoundCollider.ButtonPressed -= ButtonSoundCollider_ButtonPressed;
 
-        //playerInputActions.Dispose();
+ 
     }
 
     private void ButtonSoundCollider_ButtonPressed(object sender, System.EventArgs e)
@@ -133,7 +133,7 @@ public class SoundManager : MonoBehaviour
     }
 
     private void PlaySound(AudioClip audioClip, Vector3 position, float volumeMultiplier = 1f)
-    {
+    {       
         AudioSource.PlayClipAtPoint(audioClip, position, volumeMultiplier * volume);
     }
 
