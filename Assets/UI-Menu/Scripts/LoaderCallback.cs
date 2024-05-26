@@ -12,6 +12,7 @@ public class LoaderCallback : MonoBehaviour
 
 
     [SerializeField] private TextMeshProUGUI continueText;
+    [SerializeField] private TextMeshProUGUI loadingText;
 
     private bool isFirstUpdate = true;
 
@@ -21,7 +22,8 @@ public class LoaderCallback : MonoBehaviour
 
     private void Awake()
     {
-        continueText.gameObject.SetActive(false);
+        continueText.gameObject.SetActive(true);
+        loadingText.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -29,27 +31,19 @@ public class LoaderCallback : MonoBehaviour
         startTimer = true;
 
         if (isFirstUpdate)
-        if (startTimer)
         {
-            delayTimer -= 1.0f * Time.deltaTime;
-
-                if (delayTimer <= 9.0f)
-                {
-                    continueText.gameObject.SetActive(true);
-                }
-    
-
-            if (delayTimer <= 0.0f || Input.GetKeyDown("space"))
+                
+            if (Input.GetKeyDown("space"))
             {
 
-                //if (isFirstUpdate)
-                //{
+                if (isFirstUpdate)
+                {
                     isFirstUpdate = false;
-
+                    continueText.gameObject.SetActive(false);
+                    loadingText.gameObject.SetActive(true);
                     Loader.LoaderCallback();
-                //}
+                }
 
-                startTimer = false;
                 
             }
         }
