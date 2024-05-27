@@ -17,7 +17,7 @@ public class PlayerManager : MonoBehaviour
     private bool isInvincible;
     private bool isBlocking;
     private bool isChargingHeavyAttack = false;
-    private bool hasBossKey = true;
+    private bool hasBossKey = false;
     private int heldPotions = 0;
 
     // Called when instance is loaded and ensures there is only one instance of PlayerManager

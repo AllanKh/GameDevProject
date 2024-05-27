@@ -20,6 +20,7 @@ TagManager:
   - GroundCollider
   - PlatformCollider
   - PlatformEdge
+  - SkeletonSpawner
   layers:
   - Default
   - TransparentFX
