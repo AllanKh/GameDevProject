@@ -8,7 +8,7 @@ public class SkeletonManager : MonoBehaviour
     private float attackDamage; //Enemy attack damage
     private bool isDead; //Enemy state
     private bool playerDetected; //Player detecter
-    private bool platformDetected; //Platform detecter
+    private bool skeletonInvincible; //Invunerable directly after taking a hit
 
     void Start()
     {
@@ -46,10 +46,11 @@ public class SkeletonManager : MonoBehaviour
         set { playerDetected = value; }
     }
 
-    public bool SkeletonDetectPlatform
+    //Check if skeleten is invunerable
+    public bool SkeletonInvincible
     {
-        get { return platformDetected; }
-        set { platformDetected = value; }
+        get { return skeletonInvincible; }
+        set { skeletonInvincible = value; }
     }
 
     //Check if skeleton is dead

@@ -11,11 +11,13 @@ public class SkeletonDamageHandler : MonoBehaviour
 
     private SkeletonManager skeletonManager;
     private Animator skeletonAnimator;
+    private SkeletonMovement skeletonMovement;
 
     void Start()
     {
         skeletonManager = GetComponent<SkeletonManager>();
         skeletonAnimator = GetComponent<Animator>();
+        skeletonMovement = GetComponent<SkeletonMovement>();
     }
 
     // Update is called once per frame
@@ -35,8 +37,18 @@ public class SkeletonDamageHandler : MonoBehaviour
         Destroy(gameObject);
     }
 
+    //Play take hit animation and make skeleton invunerable for a certain amount of time
+    IEnumerator SkeletonTakeHit()
+    {
+        skeletonAnimator.SetTrigger("TakeHit_Trigger");
+        skeletonManager.SkeletonInvincible = true;
+        skeletonMovement.Rb.velocity = Vector2.zero;
+        yield return new WaitForSeconds(1.5f);
+        skeletonManager.SkeletonInvincible = false;
+    }
+
     //Animation event
-    //Apply damage to player when an attack have succesfully landed
+    //Apply damage to player when an attack have successfully landed
     private void ApplyDamageToPlayer()
     {
         SkeletonAttacking skeletonAttacking = GetComponent<SkeletonAttacking>();
@@ -61,5 +73,11 @@ public class SkeletonDamageHandler : MonoBehaviour
         {
             StartCoroutine(WaitBeforeDestroy());
         }
+    }
+
+    //Play take hit and make skeleton invunerable
+    public void PlayTakeHit()
+    {
+        StartCoroutine(SkeletonTakeHit());
     }
 }

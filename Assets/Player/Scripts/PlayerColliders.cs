@@ -38,10 +38,11 @@ public class PlayerColliders : MonoBehaviour
         skeletonGameObjects = GameObject.FindGameObjectsWithTag("Skeleton");
         foreach (GameObject g in skeletonGameObjects)
         {
-            if (gameObject.CompareTag("AttackCollider") && g.GetComponent<Collider2D>() == other)
+            if (gameObject.CompareTag("AttackCollider") && g.GetComponent<Collider2D>() == other && !g.GetComponent<SkeletonManager>().SkeletonInvincible)
             {
                 OnAnySkeletonAttacked?.Invoke(this, EventArgs.Empty); //Activate this event for all listeners
                 g.GetComponent<SkeletonManager>().DamageSkeleton(PlayerManager.Instance.AttackDamage);
+                g.GetComponent<SkeletonDamageHandler>().PlayTakeHit();
             }
         }
         //Check if AttackCollider is touching a flying eye and register a hit
@@ -52,6 +53,7 @@ public class PlayerColliders : MonoBehaviour
             {
                 OnAnyFlyingEyeAttacked?.Invoke(this, EventArgs.Empty); //Activate this event for all listeners
                 g.GetComponent<FlyingEyeManager>().DamageFlyingEye(PlayerManager.Instance.AttackDamage);
+                g.GetComponent<FlyingEyeDamageHandler>().PlayTakeHit();
             }
         }
 
@@ -61,7 +63,6 @@ public class PlayerColliders : MonoBehaviour
         }
 
     }
-
 
     private void OnTriggerExit2D(Collider2D other)
     {
@@ -81,5 +82,4 @@ public class PlayerColliders : MonoBehaviour
             disableTimer -= Time.deltaTime;
         }
     }
-
 }

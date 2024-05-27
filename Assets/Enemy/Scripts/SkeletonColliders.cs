@@ -4,13 +4,10 @@ using UnityEngine;
 
 public class SkeletonColliders : MonoBehaviour
 {
-    //Checks the amount of colliders currently intersecting with enemy
     private GameObject[] gameObjects;
     private int colliderCount = 0;
     private float disableTimer = 0f;
     private bool attackColliderDetected;
-
-    public bool AttackColliderDetected { get; set; }
 
     public bool SensorEnabledAndColliding()
     {
@@ -25,7 +22,7 @@ public class SkeletonColliders : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        gameObjects = GameObject.FindGameObjectsWithTag("Skeleton");
+        gameObjects = GameObject.FindGameObjectsWithTag("Skeleton");    //Find all active skeleton gameObjects and apply collider logic
         foreach (GameObject g in gameObjects)
         {
             if (!g.GetComponent<SkeletonManager>().SkeletonIsDead)
@@ -50,7 +47,7 @@ public class SkeletonColliders : MonoBehaviour
                     Collider2D collider = skeletonMovement.AttackColliderObject.GetComponent<Collider2D>();
                     if (collider != null)
                     {
-                        attackColliderDetected = collider.IsTouching(other);
+                        attackColliderDetected = collider.IsTouching(other);    //Will return true if attack collider collides with a certain collider
                     }
                     else
                     {
@@ -81,7 +78,7 @@ public class SkeletonColliders : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        gameObjects = GameObject.FindGameObjectsWithTag("Skeleton");
+        gameObjects = GameObject.FindGameObjectsWithTag("Skeleton");    //Find all active skeleton gameObjects and apply collider logic
         foreach (GameObject g in gameObjects)
         {
             if (!g.GetComponent<SkeletonManager>().SkeletonIsDead)
@@ -94,7 +91,7 @@ public class SkeletonColliders : MonoBehaviour
                     {
                         if (skeletonMovement.AttackColliderObject)
                         {
-                            attackColliderDetected = skeletonMovement.AttackColliderObject.GetComponent<Collider2D>().IsTouching(other);
+                            attackColliderDetected = skeletonMovement.AttackColliderObject.GetComponent<Collider2D>().IsTouching(other);    //Will return true if attack collider collides with a certain collider
                         }
 
                         if (colliderCount > 0)

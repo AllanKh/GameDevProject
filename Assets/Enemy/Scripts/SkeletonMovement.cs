@@ -23,6 +23,7 @@ public class SkeletonMovement : MonoBehaviour
     private Rigidbody2D rb;
 
     public GameObject AttackColliderObject { get { return attackColliderObject; } set { attackColliderObject = value; } }
+    public Rigidbody2D Rb { get { return rb; } set { rb = value; } }
 
     // Start is called before the first frame update
     void Start()
@@ -98,12 +99,12 @@ public class SkeletonMovement : MonoBehaviour
             }
             else if (rb.velocity.x > 0)
             {
-                Debug.Log(force.x);
                 FlipSkeletonFalse();
             }
         }
     }
 
+    //Generate a new path
     private void UpdatePath()
     {
         if (!skeletonManager.SkeletonIsDead)
@@ -116,8 +117,10 @@ public class SkeletonMovement : MonoBehaviour
         }
     }
 
+    //Callback method
     private void OnPathComplete(Path p)
     {
+        //Mark current path as complete if not failed
         if (!p.error)
         {
             path = p;
@@ -125,6 +128,7 @@ public class SkeletonMovement : MonoBehaviour
         }
     }
 
+    //Apply movement to skeleton after spawn
     IEnumerator WaitForSpawn()
     {
         yield return new WaitForSeconds(1.2f);

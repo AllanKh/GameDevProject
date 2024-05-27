@@ -8,7 +8,8 @@ public class FlyingEyeManager : MonoBehaviour
     private float attackDamage; //Enemy damage
     private bool isDead; //Enemy state
     private bool playerDetected; //Player detecter
-    private bool groundDetected;
+    private bool groundDetected; //Ground detecter
+    private bool flyingEyeInvincible; //Invunerable directly after taking a hit
 
     // Start is called before the first frame update
     void Start()
@@ -55,9 +56,17 @@ public class FlyingEyeManager : MonoBehaviour
         set { playerDetected = value; }
     }
 
+    //Check if Flying Eye detect ground
     public bool FlyingEyeDetectGround
     {
         get { return groundDetected; }
         set { groundDetected = value; }
+    }
+
+    //Check if FLying Eye have taken a hit
+    public bool FlyingEyeInvincible
+    {
+        get { return flyingEyeInvincible; }
+        set { flyingEyeInvincible = value; }
     }
 }

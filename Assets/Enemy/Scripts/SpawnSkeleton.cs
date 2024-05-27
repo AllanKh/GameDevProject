@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class SpawnSkeleton : MonoBehaviour
 {
-    public GameObject myPrefab;
+    public GameObject myPrefab;     //Skeleto prefab
 
+    //Spawn skeleton prefab
     public void SpawnEnemyObject()
     {
         Instantiate(myPrefab, transform.parent.position, Quaternion.identity);
