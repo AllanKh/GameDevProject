@@ -87347,6 +87347,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Barrel
       objectReference: {fileID: 0}
+    - target: {fileID: 1343185718714975072, guid: 47b8ccbe6b9671b46a0ad20c993d238b, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4457491878961772902, guid: 47b8ccbe6b9671b46a0ad20c993d238b, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7967438078444187977, guid: 47b8ccbe6b9671b46a0ad20c993d238b, type: 3}
+      propertyPath: m_SortingLayer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7967438078444187977, guid: 47b8ccbe6b9671b46a0ad20c993d238b, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 209940755
+      objectReference: {fileID: 0}
     - target: {fileID: 8646505366707681084, guid: 47b8ccbe6b9671b46a0ad20c993d238b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 206.10976
@@ -91448,7 +91464,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -888744269
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_RenderMode: 0
   m_MeshDistribution: 0

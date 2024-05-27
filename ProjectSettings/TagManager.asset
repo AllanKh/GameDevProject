@@ -36,7 +36,7 @@ TagManager:
   - Player
   - Boss
   - Walls
-  - 
+  - Barrel
   - 
   - 
   - 
@@ -65,6 +65,9 @@ TagManager:
     locked: 0
   - name: Door
     uniqueID: 3114295073
+    locked: 0
+  - name: staticEntities
+    uniqueID: 209940755
     locked: 0
   - name: Game Objects
     uniqueID: 3406223027
