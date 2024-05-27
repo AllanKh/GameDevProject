@@ -7,7 +7,7 @@ public class FlyingEyeAttacking : MonoBehaviour
     private Animator flyingEyeAnimator;
     private AnimatorStateInfo animStateInfo;
     private bool flyingEyeIsAttacking = false;
-    private float cooldown = 1f;
+    private float cooldown = 1.5f;
     private float lastAttackAt = -9999f;
 
     public bool FlyingEyeIsAttacking { get { return flyingEyeIsAttacking; } set { flyingEyeIsAttacking = value; } }

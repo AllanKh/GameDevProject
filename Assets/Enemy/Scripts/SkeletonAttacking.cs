@@ -7,7 +7,7 @@ public class SkeletonAttacking : MonoBehaviour
     private Animator skeletonAnimator;
     private AnimatorStateInfo animStateInfo;
     private bool skeletonIsAttacking = false;
-    private float cooldown = 1.2f;
+    private float cooldown = 2f;
     private float lastAttackAt = -9999f;
 
     public bool SkeletonIsAttacking { get { return skeletonIsAttacking; } set { skeletonIsAttacking = value; } }
