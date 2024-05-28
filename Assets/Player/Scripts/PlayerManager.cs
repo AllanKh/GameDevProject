@@ -3,11 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Singleton to manage player stats globally across the game
-// Ensures there is only one instance of PlayerManager throughout game lifecyle
 public class PlayerManager : MonoBehaviour
 {
-   
     public static PlayerManager Instance { get; private set; }
 
     private float stamina = 100.0f; // Players stamina
@@ -20,7 +17,9 @@ public class PlayerManager : MonoBehaviour
     private bool hasBossKey = true;
     private int heldPotions = 0;
 
-    // Called when instance is loaded and ensures there is only one instance of PlayerManager
+    private SpriteRenderer playerSpriteRenderer;
+    private Color originalColor;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -33,6 +32,16 @@ public class PlayerManager : MonoBehaviour
             DontDestroyOnLoad(gameObject); // Prevents PlayerManager from being destroyed when changing scenes
         }
         health = 100.0f;
+    }
+
+    private void Start()
+    {
+        playerSpriteRenderer = GetComponent<SpriteRenderer>();
+        if (playerSpriteRenderer != null)
+        {
+            Debug.Log("Null");
+            originalColor = playerSpriteRenderer.color;
+        }
     }
 
     // get and set player stamina
@@ -71,6 +80,7 @@ public class PlayerManager : MonoBehaviour
     public void DamagePlayer(float damageAmount)
     {
         Health -= damageAmount;
+        StartCoroutine(FlashRed());
     }
 
     public bool Invincible
@@ -98,7 +108,6 @@ public class PlayerManager : MonoBehaviour
         {
             isChargingHeavyAttack = value;
         }
-
     }
 
     // Get and set if player has boss key
@@ -117,6 +126,16 @@ public class PlayerManager : MonoBehaviour
         set
         {
             heldPotions = Mathf.Clamp(value, 0, 3);
+        }
+    }
+
+    private IEnumerator FlashRed()
+    {
+        if (playerSpriteRenderer != null)
+        {
+            playerSpriteRenderer.color = Color.red;
+            yield return new WaitForSeconds(0.1f);
+            playerSpriteRenderer.color = originalColor;
         }
     }
 }
