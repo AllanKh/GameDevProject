@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    public static event EventHandler OnWalking; //An event to know when the player is walking.
+    public static event EventHandler OnWalking; // An event to know when the player is walking.
 
     // Walk/Run variables
     private float walkSpeed = 6.0f;
@@ -20,6 +20,10 @@ public class Movement : MonoBehaviour
     private int maxJumps = 2; // Maximum number of jumps
     private int jumpCount = 0; // Number of jumps performed
     private bool isOnGround = false;
+
+    // Wall slide variables
+    private bool isWallSliding = false;
+    private float wallSlideSpeed = -6.5f;
 
     // Dodge variables
     private float dodgeSpeed = 5.0f;
@@ -62,6 +66,8 @@ public class Movement : MonoBehaviour
     void Update()
     {
         CheckIfOnGround();
+        CheckWallSliding();
+
         if (!isDodging || isOnGround) // Prevent movement and jumping while dodging
         {
             MovementManagement();
@@ -72,7 +78,7 @@ public class Movement : MonoBehaviour
             DodgeManagement();
         }
 
-        if (!isOnGround)
+        if (!isOnGround && !isWallSliding)
         {
             currentSpeed -= 100.5f * Time.deltaTime;
         }
@@ -92,6 +98,11 @@ public class Movement : MonoBehaviour
         else if (PlayerManager.Instance.Stamina < 100)
         {
             PlayerManager.Instance.Stamina += 0.35f;
+        }
+
+        if (isWallSliding)
+        {
+            player_body.velocity = new Vector2(player_body.velocity.x, wallSlideSpeed);
         }
     }
 
@@ -201,6 +212,11 @@ public class Movement : MonoBehaviour
             jumpCount = 0;  // Reset jump count
             lastGroundedYPos = transform.position.y; // Reset fall distance calculation base
         }
+
+        if (isOnGround && jumpCount > 0)
+        {
+            jumpCount = 0;
+        }
     }
 
     private void ApplyFallDamage(float fallDistance)
@@ -231,10 +247,21 @@ public class Movement : MonoBehaviour
         playerCollider.points = mirroredPoints;
     }
 
+    private void CheckWallSliding()
+    {
+        bool isTouchingWallLeft = wallColliderLeft.IsEnabledAndColliding();
+        bool isTouchingWallRight = wallColliderRight.IsEnabledAndColliding();
+        isWallSliding = !isOnGround && (isTouchingWallLeft || isTouchingWallRight) && player_body.velocity.y < 0;
+
+        if (isWallSliding)
+        {
+            player_body.velocity = new Vector2(player_body.velocity.x, wallSlideSpeed);
+        }
+    }
+
     public void ActivateFootSteps()
     {
-        //Logic to prevent the walking sound to be spammed.
-
-        //OnWalking?.Invoke(this, EventArgs.Empty); //Activate event for all listeners.
+        // Logic to prevent the walking sound to be spammed.
+        // OnWalking?.Invoke(this, EventArgs.Empty); // Activate event for all listeners.
     }
 }

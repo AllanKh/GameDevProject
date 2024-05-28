@@ -39,7 +39,6 @@ public class PlayerManager : MonoBehaviour
         playerSpriteRenderer = GetComponent<SpriteRenderer>();
         if (playerSpriteRenderer != null)
         {
-            Debug.Log("Null");
             originalColor = playerSpriteRenderer.color;
         }
     }
