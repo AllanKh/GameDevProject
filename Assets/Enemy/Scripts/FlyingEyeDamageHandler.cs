@@ -7,6 +7,7 @@ public class FlyingEyeDamageHandler : MonoBehaviour
 {
     private FlyingEyeManager flyingEyeManager;
     private Animator flyingEyeAnimator;
+    private FlyingEyeAI flyingEyeAI;
 
 
     public static event EventHandler PlayerBlockedEyeAttack;
@@ -16,6 +17,7 @@ public class FlyingEyeDamageHandler : MonoBehaviour
     {
         flyingEyeManager = GetComponent<FlyingEyeManager>();
         flyingEyeAnimator = GetComponent<Animator>();
+        flyingEyeAI = GetComponent<FlyingEyeAI>();
     }
 
     // Update is called once per frame
@@ -24,6 +26,7 @@ public class FlyingEyeDamageHandler : MonoBehaviour
         CheckIfFlyingEyeDead();
     }
 
+    //Destroy gameObject after death animation
     IEnumerator WaitBeforeDestroy()
     {
         flyingEyeAnimator.SetTrigger("Death_Trigger");
@@ -33,6 +36,18 @@ public class FlyingEyeDamageHandler : MonoBehaviour
         Destroy(gameObject);
     }
 
+    //Play take hit animation and make flying eye invunerable for a certain amount of time
+    IEnumerator FlyingEyeTakeHit()
+    {
+        flyingEyeAnimator.SetTrigger("TakeHit_Trigger");
+        flyingEyeManager.FlyingEyeInvincible = true;
+        flyingEyeAI.Rb.velocity = Vector2.zero;
+        yield return new WaitForSeconds(1.4f);
+        flyingEyeManager.FlyingEyeInvincible = false;
+    }
+
+    //Animation event
+    //Apply damage to player when an attack have successfully landed 
     private void ApplyDamageToPlayer()
     {
         FlyingEyeAttacking flyingEyeAttacking = GetComponent<FlyingEyeAttacking>();
@@ -48,11 +63,18 @@ public class FlyingEyeDamageHandler : MonoBehaviour
         }
     }
 
+    //Trigger the death animation if on or below 0 health
     private void CheckIfFlyingEyeDead()
     {
         if (flyingEyeManager.FlyingEyeHealth <= 0)
         {
             StartCoroutine(WaitBeforeDestroy());
         }
+    }
+
+    //Play take hit and make flying eye invunerable
+    public void PlayTakeHit()
+    {
+        StartCoroutine(FlyingEyeTakeHit());
     }
 }

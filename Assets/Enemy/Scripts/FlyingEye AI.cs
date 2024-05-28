@@ -32,6 +32,7 @@ public class FlyingEyeAI : MonoBehaviour
     public GameObject DetectionColliderObject { get { return detectionColliderObject; } set { detectionColliderObject = value; } }
     public GameObject GroundColliderObject { get { return groundColliderObject; } set { groundColliderObject = value; } }
     public float Speed { get { return speed; } set { speed = value; } }
+    public Rigidbody2D Rb { get { return rb; } set { rb = value; } }
 
     // Start is called before the first frame update
     void Start()
@@ -122,6 +123,7 @@ public class FlyingEyeAI : MonoBehaviour
         }
     }
 
+    //Generate a new path
     private void UpdatePath()
     {
         gameObjects = GameObject.FindGameObjectsWithTag("FlyingEye");
@@ -139,6 +141,7 @@ public class FlyingEyeAI : MonoBehaviour
         }
     }
 
+    //Callback method
     private void OnPathComplete(Path p)
     {
         gameObjects = GameObject.FindGameObjectsWithTag("FlyingEye");

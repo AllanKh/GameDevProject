@@ -24,7 +24,7 @@ public class FlyingEyeColliders : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        gameObjects = GameObject.FindGameObjectsWithTag("FlyingEye");
+        gameObjects = GameObject.FindGameObjectsWithTag("FlyingEye");   //Find all active flying eye gameObjects and apply collider logic
         foreach (GameObject g in gameObjects)
         {
             if (!g.GetComponent<FlyingEyeManager>().FlyingEyeIsDead)
@@ -49,7 +49,7 @@ public class FlyingEyeColliders : MonoBehaviour
                     Collider2D collider = flyingEyeAI.AttackColliderObject.GetComponent<BoxCollider2D>();
                     if (collider != null)
                     {
-                        attackColliderDetected = collider.IsTouching(other);
+                        attackColliderDetected = collider.IsTouching(other);    //Will return true if attack collider collides with a certain collider
                     }
                     else
                     {
@@ -68,9 +68,9 @@ public class FlyingEyeColliders : MonoBehaviour
                     }
                 }
 
-                detectionColliderDetected = flyingEyeAI.DetectionColliderObject.GetComponent<CircleCollider2D>().IsTouching(other);
-                groundColliderDetected = flyingEyeAI.GroundColliderObject.GetComponent<BoxCollider2D>().IsTouching(other);
-
+                detectionColliderDetected = flyingEyeAI.DetectionColliderObject.GetComponent<CircleCollider2D>().IsTouching(other);     //Will return true if detection collider collides with a certain collider
+                groundColliderDetected = flyingEyeAI.GroundColliderObject.GetComponent<BoxCollider2D>().IsTouching(other);      //Will return true if ground collider collides with a certain collider
+                
                 //Check if DetectionCollider collides with player
                 if (detectionColliderDetected && other.CompareTag("Player"))
                 {
@@ -93,7 +93,7 @@ public class FlyingEyeColliders : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        gameObjects = GameObject.FindGameObjectsWithTag("FlyingEye");
+        gameObjects = GameObject.FindGameObjectsWithTag("FlyingEye");   //Find all active flying eye gameObjects and apply collider logic
         foreach (GameObject g in gameObjects)
         {
             if (!g.GetComponent<FlyingEyeManager>().FlyingEyeIsDead)
@@ -106,8 +106,8 @@ public class FlyingEyeColliders : MonoBehaviour
                     {
                         if (flyingEyeAI.DetectionColliderObject && flyingEyeAI.AttackColliderObject && flyingEyeAI.GroundColliderObject)
                         {
-                            detectionColliderDetected = flyingEyeAI.DetectionColliderObject.GetComponent<Collider2D>().IsTouching(other);
-                            attackColliderDetected = flyingEyeAI.AttackColliderObject.GetComponent<Collider2D>().IsTouching(other);
+                            detectionColliderDetected = flyingEyeAI.DetectionColliderObject.GetComponent<Collider2D>().IsTouching(other);   //Will return true if detection collider collides with a certain collider
+                            attackColliderDetected = flyingEyeAI.AttackColliderObject.GetComponent<Collider2D>().IsTouching(other);     //Will return true if attack collider collides with a certain collider
                         }
 
                         if (colliderCount > 0)
