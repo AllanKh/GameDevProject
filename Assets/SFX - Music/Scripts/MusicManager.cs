@@ -11,21 +11,26 @@ public class MusicManager : MonoBehaviour
     public static MusicManager Instance {  get; private set; }
 
 
-    private AudioSource audioSource;
+    public AudioSource audioSource;
     private float volume = 0.3f;
 
     private void Awake()
     {
         Instance = this;
-        audioSource = GetComponent<AudioSource>();
     }
     private void Start()
     {
         BossAttack.secondPhase += BossAttack_secondPhase;
     }
 
+    private void OnDestroy()
+    {
+        BossAttack.secondPhase -= BossAttack_secondPhase;
+    }
+
     private void BossAttack_secondPhase(object sender, System.EventArgs e)
     {
+        if (audioSource != null)
         ChangeMusic(musicClip);
     }
 
@@ -52,7 +57,5 @@ public class MusicManager : MonoBehaviour
         audioSource.clip = music;
         audioSource.Play();
     }
-
-
-
+    
 }
