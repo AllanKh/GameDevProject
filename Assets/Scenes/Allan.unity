@@ -401,6 +401,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 9045943186631220671, guid: a777c49928dae93469fb4140c70aa05d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1981729111}
+    - targetCorrespondingSourceObject: {fileID: 9045943186631220671, guid: a777c49928dae93469fb4140c70aa05d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1981729124}
   m_SourcePrefab: {fileID: 100100000, guid: a777c49928dae93469fb4140c70aa05d, type: 3}
 --- !u!4 &86791202 stripped
 Transform:
@@ -80441,7 +80444,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.12, y: 0}
+  m_Offset: {x: 0.08, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -80854,7 +80857,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.008, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -80865,7 +80868,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.1, y: 0.1}
+  m_Size: {x: 0.08, y: 0.1}
   m_EdgeRadius: 0
 --- !u!114 &1346617067
 MonoBehaviour:
@@ -91560,6 +91563,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healingParticles: {fileID: 0}
+--- !u!114 &1981729124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1981729093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f26c46f2a5e316e44a3acaaf0fb260a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1985695292
 GameObject:
   m_ObjectHideFlags: 0

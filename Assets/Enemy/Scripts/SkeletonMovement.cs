@@ -98,7 +98,6 @@ public class SkeletonMovement : MonoBehaviour
             }
             else if (rb.velocity.x > 0)
             {
-                
                 FlipSkeletonFalse();
             }
         }

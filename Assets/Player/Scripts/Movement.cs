@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-
-    public static event EventHandler OnWalking; //An event to know when the player is walking.
+    public static event EventHandler OnWalking; // An event to know when the player is walking.
 
     // Walk/Run variables
     private float walkSpeed = 6.0f;
@@ -16,10 +15,15 @@ public class Movement : MonoBehaviour
     private bool facingRight = true;
     private bool isRunning;
 
-    // Jump vairables
-    private float jumpForce = 16.5f;
+    // Jump variables
+    private float jumpForce = 12.5f;
+    private int maxJumps = 2; // Maximum number of jumps
+    private int jumpCount = 0; // Number of jumps performed
     private bool isOnGround = false;
-    private bool hasJumped = false;
+
+    // Wall slide variables
+    private bool isWallSliding = false;
+    private float wallSlideSpeed = -6.5f;
 
     // Dodge variables
     private float dodgeSpeed = 5.0f;
@@ -61,9 +65,9 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(isOnGround);
-
         CheckIfOnGround();
+        CheckWallSliding();
+
         if (!isDodging || isOnGround) // Prevent movement and jumping while dodging
         {
             MovementManagement();
@@ -74,7 +78,7 @@ public class Movement : MonoBehaviour
             DodgeManagement();
         }
 
-        if (!isOnGround)
+        if (!isOnGround && !isWallSliding)
         {
             currentSpeed -= 100.5f * Time.deltaTime;
         }
@@ -83,7 +87,6 @@ public class Movement : MonoBehaviour
         {
             currentSpeed = walkSpeed;
         }
-
     }
 
     private void FixedUpdate()
@@ -96,46 +99,32 @@ public class Movement : MonoBehaviour
         {
             PlayerManager.Instance.Stamina += 0.35f;
         }
+
+        if (isWallSliding)
+        {
+            player_body.velocity = new Vector2(player_body.velocity.x, wallSlideSpeed);
+        }
     }
-
-
 
     // Handle horizontal movement
     private void MovementManagement()
     {
         if (!PlayerManager.Instance.Blocking)
         {
-            // Check if player is running
             isRunning = Input.GetKey(KeyCode.LeftShift);
-            // Set movement speed to running speed if player is running
             currentSpeed = isRunning && !attacking.IsAttacking && PlayerManager.Instance.Stamina > runStamCost ? runSpeed : walkSpeed;
-            // Check which horizontal movement direction key is pressed
             float inputXAxis = Input.GetAxis("Horizontal") * currentSpeed;
 
-            // Checks for slight movement on X axis to start walk animation
             if (Mathf.Abs(inputXAxis) > Mathf.Epsilon)
             {
-                // Starts the walking animation
-                if (isRunning)
-                {
-                    playerAnimator.SetInteger("Anim_State", 2);
-                }
-                else
-                {
-                    playerAnimator.SetInteger("Anim_State", 1);
-
-                    ActivateFootSteps();
-                    
-
-                }
+                playerAnimator.SetInteger("Anim_State", isRunning ? 2 : 1);
+                ActivateFootSteps();
             }
             else
             {
-                // Stops the walking animation
                 playerAnimator.SetInteger("Anim_State", 0);
             }
 
-            // Handle inputs and asset flipping
             if (inputXAxis < 0)
             {
                 GetComponent<SpriteRenderer>().flipX = true;
@@ -157,7 +146,6 @@ public class Movement : MonoBehaviour
                 facingRight = true;
             }
 
-            // Moves player accordingly if player is not charging a heavy attack
             if (!PlayerManager.Instance.IsChargingHeavyAttack)
             {
                 player_body.velocity = new Vector2(inputXAxis, player_body.velocity.y);
@@ -168,14 +156,12 @@ public class Movement : MonoBehaviour
     // Handle jumping
     private void JumpManagement()
     {
-        if (Input.GetKeyDown("space") && isOnGround && !PlayerManager.Instance.Blocking)
+        if (Input.GetKeyDown("space") && jumpCount < maxJumps && !PlayerManager.Instance.Blocking)
         {
             playerAnimator.SetTrigger("Player_Jump");
-
-            player_body.AddForce(new Vector2(Physics.gravity.y, jumpForce), ForceMode2D.Impulse);
-            //player_body.velocity = new Vector2(currentSpeed * Input.GetAxis("Horizontal"), jumpForce);
+            player_body.velocity = new Vector2(player_body.velocity.x, jumpForce);
             isOnGround = false;
-            hasJumped = true;
+            jumpCount++;
         }
     }
 
@@ -184,27 +170,22 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftControl) && !isDodging && isOnGround && !PlayerManager.Instance.IsChargingHeavyAttack && PlayerManager.Instance.Stamina >= dodgeStamCost)
         {
-            // Starts the coroutine
             StartCoroutine(TriggerDodge());
         }
     }
 
-    // Coroutine to handle handle dodge mechanic
+    // Coroutine to handle dodge mechanic
     private IEnumerator TriggerDodge()
     {
         PlayerManager.Instance.Stamina -= dodgeStamCost;
         isDodging = true;
-        // Determine dodge direction based on where the sprite is facing
         float dodgeDirection = GetComponent<SpriteRenderer>().flipX ? -1 : 1;
 
         playerAnimator.SetTrigger("Player_Dodge");
-        // Sets dodgeLength to length of the dodge animation
         dodgeLength = playerAnimator.GetCurrentAnimatorStateInfo(0).length;
         PlayerManager.Instance.Invincible = true;
         player_body.velocity = new Vector2((dodgeSpeed * 10.0f) * dodgeDirection, player_body.velocity.y);
 
-
-        // Pausing the coroutine by waiting for duration of dodgeLength before moving to next line
         yield return new WaitForSeconds(dodgeLength);
 
         PlayerManager.Instance.Invincible = false;
@@ -218,7 +199,7 @@ public class Movement : MonoBehaviour
 
         if (!isOnGround && groundCollider.IsEnabledAndColliding())
         {
-            if (!hasJumped) // Calculate fall damage only if the fall wasn't initiated by a jump
+            if (jumpCount == 0) // Calculate fall damage only if the fall wasn't initiated by a jump
             {
                 float fallDistance = lastGroundedYPos - transform.position.y;
                 if (fallDistance > minimumFallDistance)
@@ -228,13 +209,14 @@ public class Movement : MonoBehaviour
             }
             isOnGround = true;
             playerAnimator.SetBool("On_Ground", isOnGround);
-            hasJumped = false;  // Reset jump status
+            jumpCount = 0;  // Reset jump count
             lastGroundedYPos = transform.position.y; // Reset fall distance calculation base
         }
 
-
-
-
+        if (isOnGround && jumpCount > 0)
+        {
+            jumpCount = 0;
+        }
     }
 
     private void ApplyFallDamage(float fallDistance)
@@ -246,11 +228,10 @@ public class Movement : MonoBehaviour
         }
     }
 
-
     // Method to flip the attack collider when changing directions
     private void FlipAttackCollider(bool flip)
     {
-        attackColliderObject.transform.localPosition = new Vector2(flip ? -1 : 1 , 1);
+        attackColliderObject.transform.localPosition = new Vector2(flip ? -1 : 1, 1);
     }
 
     private void MirrorPolygonCollider()
@@ -264,13 +245,23 @@ public class Movement : MonoBehaviour
         }
 
         playerCollider.points = mirroredPoints;
-	}
+    }
+
+    private void CheckWallSliding()
+    {
+        bool isTouchingWallLeft = wallColliderLeft.IsEnabledAndColliding();
+        bool isTouchingWallRight = wallColliderRight.IsEnabledAndColliding();
+        isWallSliding = !isOnGround && (isTouchingWallLeft || isTouchingWallRight) && player_body.velocity.y < 0;
+
+        if (isWallSliding)
+        {
+            player_body.velocity = new Vector2(player_body.velocity.x, wallSlideSpeed);
+        }
+    }
 
     public void ActivateFootSteps()
     {
-        //Logic to prevent the walking sound to be spammed.
-
-        //OnWalking?.Invoke(this, EventArgs.Empty); //Activate event for all listeners.
+        // Logic to prevent the walking sound to be spammed.
+        // OnWalking?.Invoke(this, EventArgs.Empty); // Activate event for all listeners.
     }
-
 }
