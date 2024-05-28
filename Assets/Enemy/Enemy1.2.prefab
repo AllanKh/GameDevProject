@@ -108,6 +108,7 @@ GameObject:
   - component: {fileID: 8883774055632413274}
   - component: {fileID: 817236098205267304}
   - component: {fileID: 7471599650151626301}
+  - component: {fileID: 7325373888964515672}
   m_Layer: 7
   m_Name: Enemy1.2
   m_TagString: FlyingEye
@@ -172,7 +173,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -888744269
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: -4795363162621231457, guid: 6d7cd4f7505dc674c891ca8946cfd98b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -345,6 +346,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b34babaf804a47daafe4efd15e2c0b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7325373888964515672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2359478924174697275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4603b56a4c9c10843aa282b153fc5a2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myPrefab:
+  - {fileID: 9154349363640561975, guid: 36ba8c1637b2df847a143bd43aa513b6, type: 3}
 --- !u!1 &5211686813336493662
 GameObject:
   m_ObjectHideFlags: 0
