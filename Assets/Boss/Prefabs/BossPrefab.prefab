@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 1024554073388572700}
   - component: {fileID: 7370764956761248076}
   - component: {fileID: 5858009064812244122}
+  - component: {fileID: 1121205433614787427}
   m_Layer: 13
   m_Name: BossPrefab
   m_TagString: Boss
@@ -198,7 +199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 500
-  attackDamage: 20
+  attackDamage: 15
 --- !u!114 &6910681641193687686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,7 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 972756c3d3cb58248955eb41bc5a9c23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCooldown: 2.5
+  attackCooldown: 3
   range: -1.89
   colliderDistance: 0.22
   boxCollider: {fileID: 1272084602998239195}
@@ -249,6 +250,7 @@ MonoBehaviour:
   components:
   - {fileID: 1024554073388572700}
   - {fileID: 6910681641193687686}
+  hurtFlashEffect: {fileID: 1121205433614787427}
 --- !u!114 &5858009064812244122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,3 +266,18 @@ MonoBehaviour:
   spellPrefab: {fileID: 7269969679079026859, guid: 954744fd470845544b303eada1d1e0dc, type: 3}
   min: 5
   max: 15
+--- !u!114 &1121205433614787427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461909729083144458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cc9c26b12ce00045b2730fc80a2e188, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashColor: {r: 1, g: 0, b: 0, a: 1}
+  flashMaterial: {fileID: 2100000, guid: 4598ea4f3f1e2d04eb9b897fa3a58e38, type: 2}
+  duration: 0.15

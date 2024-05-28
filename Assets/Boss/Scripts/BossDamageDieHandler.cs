@@ -8,6 +8,7 @@ public class BossDamageDieHandler : MonoBehaviour
     public static BossDamageDieHandler Instance { get; private set; }
 
     [SerializeField] private Behaviour[] components;
+    [SerializeField] private HurtFlash hurtFlashEffect;
 
     private Animator anim;
     private bool dead;
@@ -33,12 +34,10 @@ public class BossDamageDieHandler : MonoBehaviour
     {
         BossManager.Instance.Health -= amountOfDamage;
 
-        /*
         if (BossManager.Instance.Health > 0)
         {
-            anim.SetTrigger("hurt");
+            hurtFlashEffect.Flash();
         }
-        */
 
         if (BossManager.Instance.Health <= 0)
         {
@@ -59,7 +58,9 @@ public class BossDamageDieHandler : MonoBehaviour
             }
         }
     }
-    IEnumerator WaitBeforeDeletingBoss()
+
+    //When boss dies start this so that boss die animation has time to run before the object gets deleted
+    private IEnumerator WaitBeforeDeletingBoss()
     {
         yield return new WaitForSeconds(1.2f);
         Destroy(gameObject);
