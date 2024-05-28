@@ -16,7 +16,7 @@ public class PlayerManager : MonoBehaviour
     private bool isInvincible;
     private bool isBlocking;
     private bool isChargingHeavyAttack = false;
-    private bool hasBossKey = true;
+    private bool hasBossKey = false;
     private int heldPotions = 0;
 
     private SpriteRenderer playerSpriteRenderer;
