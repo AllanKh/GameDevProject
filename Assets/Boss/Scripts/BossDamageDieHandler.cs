@@ -53,8 +53,7 @@ public class BossDamageDieHandler : MonoBehaviour
                 dead = true;
 
                 StartCoroutine(WaitBeforeDeletingBoss());
-                Time.timeScale = 0f;
-                GameWinUI.Instance.Show();
+                
             }
         }
     }
@@ -62,8 +61,10 @@ public class BossDamageDieHandler : MonoBehaviour
     //When boss dies start this so that boss die animation has time to run before the object gets deleted
     private IEnumerator WaitBeforeDeletingBoss()
     {
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(2f);
         Destroy(gameObject);
-        
+        Time.timeScale = 0f;
+        GameWinUI.Instance.Show();
+
     }
 }

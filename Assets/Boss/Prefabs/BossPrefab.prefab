@@ -212,7 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 972756c3d3cb58248955eb41bc5a9c23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCooldown: 3
+  attackCooldown: 2.2
   range: -1.89
   colliderDistance: 0.22
   boxCollider: {fileID: 1272084602998239195}

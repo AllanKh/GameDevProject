@@ -20,7 +20,6 @@ public class GameWinUI : MonoBehaviour
         {
             PlayerManager.Instance.Health = 100;
             Loader.Load(Loader.Scene.MainMenuScene); //Go back to the Main Menu Scene.
-            BossManager.Instance.DestroyBoss();
             Hide();
         });
 
