@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
+
+    public static event EventHandler OnPlayerDamageTaken;
     public static PlayerManager Instance { get; private set; }
 
     private float stamina = 100.0f; // Players stamina
@@ -79,6 +81,7 @@ public class PlayerManager : MonoBehaviour
     public void DamagePlayer(float damageAmount)
     {
         Health -= damageAmount;
+        OnPlayerDamageTaken?.Invoke(this, EventArgs.Empty);
         StartCoroutine(FlashRed());
     }
 
@@ -133,7 +136,7 @@ public class PlayerManager : MonoBehaviour
         if (playerSpriteRenderer != null)
         {
             playerSpriteRenderer.color = Color.red;
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(1f);
             playerSpriteRenderer.color = originalColor;
         }
     }
