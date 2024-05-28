@@ -23,6 +23,7 @@ public class MainMenuUI : MonoBehaviour
             SoundManager.Instance.DestroySoundManager();
             Loader.Load(Loader.Scene.GameScene); //Tell the loader which scene it should load after hitting the PlayButton!
             Time.timeScale = 1;
+            PlayerManager.Instance.HeldPotions = 0;
         });
 
         
