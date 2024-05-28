@@ -7,12 +7,15 @@ using UnityEngine;
 public class BossWalk : MonoBehaviour
 {
 
-    [SerializeField] private float speed = 1.5f;
-    [SerializeField] private Animator animator;
 
+    //Refrences
+    private BossCastSpell bossCastSpell;
+    [SerializeField] private Animator animator;
     private Transform player;
     private Rigidbody2D rb;
 
+    //Variables
+    [SerializeField] private float speed = 1.5f;
     public bool startMoving = false;
     private bool isFlipped = false;
 
@@ -20,8 +23,6 @@ public class BossWalk : MonoBehaviour
     public bool phase2Activated = false;
     private float phase2SpeedMulti = 2f;
     private float phase2Threshold = 300f;
-
-    private BossCastSpell bossCastSpell;
 
 
     private void Start()
@@ -53,6 +54,8 @@ public class BossWalk : MonoBehaviour
 
     }
 
+    
+    //call this to make the boss start walking
     public void StartBoss()
     {
         StartCoroutine(WaitBeforeMoving());
@@ -72,7 +75,7 @@ public class BossWalk : MonoBehaviour
         BossHealthUI.instance.Show();
     }
     
-    //Boss moves towars player position
+    //Boss moves towards player position
     private void Movement()
     {
         if (player == null)
@@ -114,6 +117,7 @@ public class BossWalk : MonoBehaviour
         }
     }
 
+    //call this to activate boss phase2
     private void Phase2()
     {
         phase2Activated = true;

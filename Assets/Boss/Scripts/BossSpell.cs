@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class BossSpell : MonoBehaviour
 {
+    //Variables
     private bool hit;
+
+    //References
     private BoxCollider2D boxCollider;
     private Animator anim;
 
@@ -20,6 +23,7 @@ public class BossSpell : MonoBehaviour
         CallSpell();
     }
 
+    //Check collision between spell and player
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -29,6 +33,7 @@ public class BossSpell : MonoBehaviour
         }
     }
 
+    //Check when player exits spell collider
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -38,6 +43,7 @@ public class BossSpell : MonoBehaviour
         }
     }
 
+    //hit player if hit is true
     private void PlayerHit()
     {
         if (hit)
@@ -45,6 +51,8 @@ public class BossSpell : MonoBehaviour
             PlayerManager.Instance.DamagePlayer(BossManager.Instance.AttackDamage);
         }
     }
+
+    //Method to call spell
     public void CallSpell()
     {
         anim.SetTrigger("Spell");
