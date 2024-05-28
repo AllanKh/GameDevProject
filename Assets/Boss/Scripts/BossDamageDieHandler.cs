@@ -7,10 +7,12 @@ public class BossDamageDieHandler : MonoBehaviour
 {
     public static BossDamageDieHandler Instance { get; private set; }
 
+    //References
     [SerializeField] private Behaviour[] components;
     [SerializeField] private HurtFlash hurtFlashEffect;
-
     private Animator anim;
+
+    //Variables
     private bool dead;
 
 

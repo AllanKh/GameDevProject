@@ -5,6 +5,8 @@ using System;
 
 public class BossAttack : MonoBehaviour
 {
+
+    //Variables
     [SerializeField] private float attackCooldown;
     [SerializeField] private float range;
     [SerializeField] private float colliderDistance;
@@ -89,6 +91,7 @@ public class BossAttack : MonoBehaviour
         }
     }
 
+    //Call this to activate boss phase 2
     private void Phase2()
     {
         if (!phase2Activated && BossManager.Instance.Health <= phase2Threshold)

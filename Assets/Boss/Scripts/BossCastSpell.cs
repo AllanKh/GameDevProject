@@ -11,14 +11,14 @@ public class BossCastSpell : MonoBehaviour
     private BossWalk bossWalk;
     [SerializeField] private GameObject spellPrefab;
     private Transform player;
+    private GameObject currentSpell;
 
     //Bools
     private bool isEnabled = false;
     private bool isCasting = false;
-
-    //
     [SerializeField] public float min, max;
-    private GameObject currentSpell;
+
+    
 
     private void Awake()
     {
@@ -28,11 +28,13 @@ public class BossCastSpell : MonoBehaviour
         player = GameObject.FindWithTag("Player").transform;
     }
 
+    //create a spell
     private void CastSpell()
     {
         currentSpell = Instantiate(spellPrefab, new Vector2(player.position.x, player.position.y + 2.6f), Quaternion.identity);
     }
 
+    //method for the boss the be still att random times
     private void BossRandomStationary()
     {
         float randTime = Random.Range(min, max);
@@ -40,6 +42,7 @@ public class BossCastSpell : MonoBehaviour
 
     }
 
+    //Do spell
     private void ExecuteSpellCast()
     {
         if (isEnabled)
@@ -51,6 +54,7 @@ public class BossCastSpell : MonoBehaviour
         }
     }
 
+    //Wait before destroying spell
     private IEnumerator WaitAndResume()
     {
         yield return new WaitForSeconds(3);
@@ -66,7 +70,8 @@ public class BossCastSpell : MonoBehaviour
             BossRandomStationary();
         }
     }
-      
+    
+    //Spell casting is active
     public void EnableSpellCasting()
     {
         if (!isEnabled)
@@ -76,6 +81,7 @@ public class BossCastSpell : MonoBehaviour
         }
     }
 
+    //Spell casting is inactive
     public void DisableSpellCasting() 
     {
         isEnabled = false;
