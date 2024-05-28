@@ -12,7 +12,7 @@ public class MusicManager : MonoBehaviour
 
 
     public AudioSource audioSource;
-    private float volume = 0.3f;
+    private float volume = 0.1f;
 
     private void Awake()
     {
