@@ -52980,6 +52980,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemySpawn
       objectReference: {fileID: 0}
+    - target: {fileID: 2540398803927964385, guid: 6632ed812bc8d44c18ce72562e92d504, type: 3}
+      propertyPath: m_TagString
+      value: SkeletonSpawner
+      objectReference: {fileID: 0}
     - target: {fileID: 7022134038563746839, guid: 6632ed812bc8d44c18ce72562e92d504, type: 3}
       propertyPath: m_LocalPosition.x
       value: 77.63
@@ -53121,6 +53125,10 @@ PrefabInstance:
     - target: {fileID: 2540398803927964385, guid: 6632ed812bc8d44c18ce72562e92d504, type: 3}
       propertyPath: m_Name
       value: EnemySpawn (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2540398803927964385, guid: 6632ed812bc8d44c18ce72562e92d504, type: 3}
+      propertyPath: m_TagString
+      value: SkeletonSpawner
       objectReference: {fileID: 0}
     - target: {fileID: 7022134038563746839, guid: 6632ed812bc8d44c18ce72562e92d504, type: 3}
       propertyPath: m_LocalPosition.x
@@ -54137,6 +54145,10 @@ PrefabInstance:
     - target: {fileID: 2540398803927964385, guid: 6632ed812bc8d44c18ce72562e92d504, type: 3}
       propertyPath: m_Name
       value: EnemySpawn (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2540398803927964385, guid: 6632ed812bc8d44c18ce72562e92d504, type: 3}
+      propertyPath: m_TagString
+      value: SkeletonSpawner
       objectReference: {fileID: 0}
     - target: {fileID: 7022134038563746839, guid: 6632ed812bc8d44c18ce72562e92d504, type: 3}
       propertyPath: m_LocalPosition.x
@@ -88412,6 +88424,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemySpawn
       objectReference: {fileID: 0}
+    - target: {fileID: 2540398803927964385, guid: 6632ed812bc8d44c18ce72562e92d504, type: 3}
+      propertyPath: m_TagString
+      value: SkeletonSpawner
+      objectReference: {fileID: 0}
     - target: {fileID: 7022134038563746839, guid: 6632ed812bc8d44c18ce72562e92d504, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.12
@@ -91652,6 +91668,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemySpawn
       objectReference: {fileID: 0}
+    - target: {fileID: 2540398803927964385, guid: 6632ed812bc8d44c18ce72562e92d504, type: 3}
+      propertyPath: m_TagString
+      value: SkeletonSpawner
+      objectReference: {fileID: 0}
     - target: {fileID: 7022134038563746839, guid: 6632ed812bc8d44c18ce72562e92d504, type: 3}
       propertyPath: m_LocalPosition.x
       value: 15.41
@@ -93058,7 +93078,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -888744269
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_RenderMode: 0
   m_MeshDistribution: 0
