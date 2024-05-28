@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class SkeletonDamageHandler : MonoBehaviour
 {
-    
     public static event EventHandler OnPlayerBlockedAttack; //An event to tell when the player has blocked an attack.
 
     private SkeletonManager skeletonManager;
@@ -45,10 +44,9 @@ public class SkeletonDamageHandler : MonoBehaviour
             PlayerManager.Instance.DamagePlayer(skeletonManager.SkeletonAttackDamage);
             Debug.Log($"Player health: {PlayerManager.Instance.Health}");
         }
-        else
+        else if (PlayerManager.Instance.Invincible && skeletonAttacking.SkeletonIsAttacking)
         {
-            Debug.Log("Player blocked!");
-            OnPlayerBlockedAttack?.Invoke(this, EventArgs.Empty); //Activate event for all listeners.
+            OnPlayerBlockedAttack?.Invoke(this, EventArgs.Empty);
         }
     }
 

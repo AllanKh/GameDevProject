@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,9 @@ public class FlyingEyeDamageHandler : MonoBehaviour
 {
     private FlyingEyeManager flyingEyeManager;
     private Animator flyingEyeAnimator;
+
+
+    public static event EventHandler PlayerBlockedEyeAttack;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +41,10 @@ public class FlyingEyeDamageHandler : MonoBehaviour
         {
             PlayerManager.Instance.DamagePlayer(flyingEyeManager.FlyingEyeAttackDamage);
             Debug.Log($"Player health: {PlayerManager.Instance.Health}");
+        }
+        else if (PlayerManager.Instance.Invincible && flyingEyeAttacking.FlyingEyeIsAttacking)
+        {
+            PlayerBlockedEyeAttack?.Invoke(this, EventArgs.Empty);
         }
     }
 

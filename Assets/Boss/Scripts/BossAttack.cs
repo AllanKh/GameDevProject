@@ -13,6 +13,7 @@ public class BossAttack : MonoBehaviour
     private float cooldownTimer = 0;
 
     public static event EventHandler bossSwingAttack;
+    public static event EventHandler bossattackBlocked;
 
     //References
     private Animator anim;
@@ -80,6 +81,7 @@ public class BossAttack : MonoBehaviour
             if (PlayerManager.Instance.Invincible)
             {
                 PlayerManager.Instance.Stamina -= 50.0f;
+                bossattackBlocked?.Invoke(this, EventArgs.Empty);
             }
             else if (!PlayerManager.Instance.Invincible)
             {

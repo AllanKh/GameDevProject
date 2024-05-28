@@ -72,6 +72,7 @@ public class PlayerManager : MonoBehaviour
     {
         OnPlayerDamageTaken?.Invoke(this, EventArgs.Empty);
         Health -= damageAmount;
+
     }
 
     public bool Invincible
@@ -117,7 +118,7 @@ public class PlayerManager : MonoBehaviour
         get { return heldPotions; }
         set
         {
-            heldPotions = Mathf.Clamp(value, 0, 3);
+            heldPotions = Mathf.Clamp(value, 0, 10);
         }
     }
 }

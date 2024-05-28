@@ -30,9 +30,13 @@ public class SoundManager : MonoBehaviour
         BossAttack.bossSwingAttack += BossAttack_bossSwingAttack;
         ButtonSoundCollider.ButtonHovered += ButtonSoundCollider_ButtonHovered;
         ButtonSoundCollider.ButtonPressed += ButtonSoundCollider_ButtonPressed;
+        BossAttack.bossattackBlocked += BossAttack_bossattackBlocked;
+        FlyingEyeDamageHandler.PlayerBlockedEyeAttack += FlyingEyeDamageHandler_PlayerBlockedEyeAttack;
         
         
     }
+
+
     private void OnDestroy()
     {
         PlayerColliders.OnAnySkeletonAttacked -= PlayerColliders_OnAnySkeletonAttacked;
@@ -50,6 +54,23 @@ public class SoundManager : MonoBehaviour
  
     }
 
+    private void FlyingEyeDamageHandler_PlayerBlockedEyeAttack(object sender, System.EventArgs e)
+    {
+        FlyingEyeDamageHandler flyingEyeDamageHandler = sender as FlyingEyeDamageHandler;
+        PlaySound(audioClipRefsSO.playerBlock, flyingEyeDamageHandler.transform.position);
+    }
+
+    private void BossAttack_bossattackBlocked(object sender, System.EventArgs e)
+    {
+       BossAttack bossAttack = sender as BossAttack;
+        PlaySound(audioClipRefsSO.playerBlock, bossAttack.transform.position);
+    }
+
+    private void SkeletonDamageHandler_OnPlayerBlockedAttack(object sender, System.EventArgs e)
+    {
+       SkeletonDamageHandler skeletonDamageHandler = sender as SkeletonDamageHandler;
+        PlaySound(audioClipRefsSO.playerBlock, skeletonDamageHandler.transform.position);
+    }
     private void ButtonSoundCollider_ButtonPressed(object sender, System.EventArgs e)
     {
         ButtonSoundCollider buttonSoundCollider = sender as ButtonSoundCollider;
@@ -65,10 +86,10 @@ public class SoundManager : MonoBehaviour
     }
 
     private void PlayerManager_OnPlayerDamageTaken(object sender, System.EventArgs e)
-    {
+    {       
+        PlaySound(audioClipRefsSO.playerDamageTaken, Camera.main.transform.position);
+        Debug.Log("Damage Taken should play!");
 
-        PlaySound(audioClipRefsSO.playerDamageTaken, Camera.main.transform.position);   //Untill I find a better sender position
-        Debug.Log("You are taking damage!");
     }
 
     private void BossAttack_bossSwingAttack(object sender, System.EventArgs e)
@@ -84,12 +105,6 @@ public class SoundManager : MonoBehaviour
         PlaySound(audioClipRefsSO.playerWalk, movement.transform.position);
     }
 
-    private void SkeletonDamageHandler_OnPlayerBlockedAttack(object sender, System.EventArgs e)
-    {
-        //When the player blocks a skeleton attack, play these sounds.
-        SkeletonDamageHandler skeletonDamageHandler = sender as SkeletonDamageHandler;
-        PlaySound(audioClipRefsSO.playerBlock, skeletonDamageHandler.transform.position);
-    }
 
     private void BarrelLogic_OnAnyBarrelBreak(object sender, System.EventArgs e)
     {
