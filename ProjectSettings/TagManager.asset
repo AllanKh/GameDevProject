@@ -21,6 +21,8 @@ TagManager:
   - PlatformCollider
   - PlatformEdge
   - SkeletonSpawner
+  - FireTrap
+  - ledgeCheck
   layers:
   - Default
   - TransparentFX
@@ -38,7 +40,7 @@ TagManager:
   - Boss
   - Walls
   - Barrel
-  - 
+  - Ledge
   - 
   - 
   - 

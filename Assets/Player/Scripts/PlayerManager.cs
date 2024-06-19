@@ -136,7 +136,7 @@ public class PlayerManager : MonoBehaviour
         if (playerSpriteRenderer != null)
         {
             playerSpriteRenderer.color = Color.red;
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.2f);
             playerSpriteRenderer.color = originalColor;
         }
     }

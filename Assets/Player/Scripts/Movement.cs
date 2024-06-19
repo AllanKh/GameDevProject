@@ -46,6 +46,11 @@ public class Movement : MonoBehaviour
     private Attacking attacking;
     private Animator playerAnimator;
 
+    //ledge climb variables
+    public Transform ledgeCheck;
+    private bool isTouchingLedge = false;
+    private bool isHanging = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -87,6 +92,9 @@ public class Movement : MonoBehaviour
         {
             currentSpeed = walkSpeed;
         }
+        CheckSurroundings();
+        CheckLedgeClimb();
+        CheckToStopHanging();
     }
 
     private void FixedUpdate()
@@ -104,6 +112,13 @@ public class Movement : MonoBehaviour
         {
             player_body.velocity = new Vector2(player_body.velocity.x, wallSlideSpeed);
         }
+
+
+    }
+
+    private void CheckSurroundings()
+    {
+        isTouchingLedge = Physics2D.OverlapCircle(ledgeCheck.position, 0.1f, LayerMask.GetMask("Ledge"));
     }
 
     // Handle horizontal movement
@@ -129,6 +144,8 @@ public class Movement : MonoBehaviour
             {
                 GetComponent<SpriteRenderer>().flipX = true;
                 FlipAttackCollider(true);
+                FlipLedgeChecker(true);
+                isHanging = false;
                 if (facingRight)
                 {
                     MirrorPolygonCollider();
@@ -139,6 +156,8 @@ public class Movement : MonoBehaviour
             {
                 GetComponent<SpriteRenderer>().flipX = false;
                 FlipAttackCollider(false);
+                FlipLedgeChecker(false);
+                isHanging = false;
                 if (!facingRight)
                 {
                     MirrorPolygonCollider();
@@ -151,6 +170,12 @@ public class Movement : MonoBehaviour
                 player_body.velocity = new Vector2(inputXAxis, player_body.velocity.y);
             }
         }
+        else 
+        {
+            //set horizontal velocity to zero when blocking
+            player_body.velocity = new Vector2(0, player_body.velocity.y); 
+            playerAnimator.SetInteger("Anim_State", 0); 
+        }
     }
 
     // Handle jumping
@@ -158,10 +183,18 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKeyDown("space") && jumpCount < maxJumps && !PlayerManager.Instance.Blocking)
         {
-            playerAnimator.SetTrigger("Player_Jump");
-            player_body.velocity = new Vector2(player_body.velocity.x, jumpForce);
-            isOnGround = false;
-            jumpCount++;
+            if (isHanging)
+            {
+                // Stop hanging
+                isHanging = false;
+            }
+            else // If not hanging, perform a normal jump
+            {
+                playerAnimator.SetTrigger("Player_Jump");
+                player_body.velocity = new Vector2(player_body.velocity.x, jumpForce);
+                isOnGround = false;
+                jumpCount++;
+            }
         }
     }
 
@@ -234,6 +267,14 @@ public class Movement : MonoBehaviour
         attackColliderObject.transform.localPosition = new Vector2(flip ? -1 : 1, 1);
     }
 
+    private void FlipLedgeChecker(bool flip)
+    {
+        float scaleFactor = flip ? -1 : 1;
+
+        // Update the local position of ledgeCheck based on flip
+        ledgeCheck.localPosition = new Vector2(scaleFactor * Mathf.Abs(ledgeCheck.localPosition.x), ledgeCheck.localPosition.y);
+    }
+
     private void MirrorPolygonCollider()
     {
         Vector2[] points = playerCollider.points;
@@ -259,9 +300,40 @@ public class Movement : MonoBehaviour
         }
     }
 
+    private void CheckLedgeClimb()
+    {
+        if (isTouchingLedge && player_body.velocity.y <= 0)
+        {
+            StartHanging();
+        }
+    }
+
+    private void StartHanging()
+    {
+        isHanging = true;
+        playerAnimator.SetBool("isHanging", true);
+        player_body.velocity = Vector2.zero;
+        player_body.gravityScale = 0;
+    }
+    private void CheckToStopHanging()
+    {
+        if (!isHanging) 
+        {
+            isHanging = false;
+            playerAnimator.SetBool("isHanging", false);
+            player_body.gravityScale = 3.5f;
+        }
+    }
+
+
     public void ActivateFootSteps()
     {
         // Logic to prevent the walking sound to be spammed.
         // OnWalking?.Invoke(this, EventArgs.Empty); // Activate event for all listeners.
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(ledgeCheck.position, 0.3f);
     }
 }

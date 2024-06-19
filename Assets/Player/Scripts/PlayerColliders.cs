@@ -29,7 +29,6 @@ public class PlayerColliders : MonoBehaviour
 
         if (other.CompareTag("DetectionCollider") || other.CompareTag("Potion") || other.CompareTag("BarrelCollider"))
         {
-            Debug.Log("A");
             return;
         }
         
