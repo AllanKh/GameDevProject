@@ -45,6 +45,12 @@ public class PickupCollider : MonoBehaviour
             OnAnyCoinPickUp?.Invoke(this, EventArgs.Empty); //Activate this event for all listeners.
             DestroyParentGameObject();
         }
+
+        if (c2d.CompareTag("Player") && this.CompareTag("ChestKey"))
+        {
+            PlayerManager.Instance.HasChestKey = true;
+            DestroyParentGameObject();
+        }
     }
 
     public void DestroyParentGameObject()

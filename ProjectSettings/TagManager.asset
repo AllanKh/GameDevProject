@@ -21,6 +21,8 @@ TagManager:
   - PlatformCollider
   - PlatformEdge
   - SkeletonSpawner
+  - ChestCollider
+  - ChestKey
   layers:
   - Default
   - TransparentFX

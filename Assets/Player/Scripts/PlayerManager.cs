@@ -17,7 +17,9 @@ public class PlayerManager : MonoBehaviour
     private bool isBlocking;
     private bool isChargingHeavyAttack = false;
     private bool hasBossKey = true;
+    private bool hasChestKey = false;
     private int heldPotions = 0;
+    public bool damageTaken = false;
 
     private SpriteRenderer playerSpriteRenderer;
     private Color originalColor;
@@ -81,6 +83,9 @@ public class PlayerManager : MonoBehaviour
     public void DamagePlayer(float damageAmount)
     {
         Health -= damageAmount;
+        Debug.Log("pogchamp");
+        damageTaken = true;
+        Debug.Log(damageTaken);
         OnPlayerDamageTaken?.Invoke(this, EventArgs.Empty);
         StartCoroutine(FlashRed());
     }
@@ -122,6 +127,15 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    public bool HasChestKey
+    {
+        get { return hasChestKey; }
+        set
+        {
+            hasChestKey = value;
+        }
+    }
+
     public int HeldPotions
     {
         get { return heldPotions; }
@@ -138,6 +152,20 @@ public class PlayerManager : MonoBehaviour
             playerSpriteRenderer.color = Color.red;
             yield return new WaitForSeconds(1f);
             playerSpriteRenderer.color = originalColor;
+        }
+    }
+
+    public bool DamageTaken()
+    {
+        return damageTaken;
+    }
+
+
+    public void DamageUiRedux()
+    {
+        for (float i = 0f; i < 1f; i++)
+        {
+
         }
     }
 }
