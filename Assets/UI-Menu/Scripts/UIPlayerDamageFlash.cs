@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        gameObject.GetComponent<Image>().color = new Color(1f, 1f, 1f, alpha);
+        gameObject.GetComponent<Image>().color = new Color(1f, 0f, 0f, alpha);
     }
 
     void Update()
@@ -33,6 +33,6 @@ public class Player : MonoBehaviour
                 alpha = 0f;
             }
         }
-        gameObject.GetComponent<Image>().color = new Color(1f, 1f, 1f, alpha);
+        gameObject.GetComponent<Image>().color = new Color(1f, 0f, 0f, alpha);
     }
 }

@@ -6,6 +6,7 @@ public class SpawnPickups : MonoBehaviour
 {
 
     public List<GameObject> myPrefab;
+    bool hasSpawnedItems = false;
 
     void SpawnObject(int i)
     {
@@ -34,5 +35,19 @@ public class SpawnPickups : MonoBehaviour
     {
             Instantiate(myPrefab[0],transform.position, Quaternion.identity);
             Debug.Log("Key has been dropped!");
+    }
+
+    public void SpawnChestEvent()
+    {
+        if (hasSpawnedItems == false)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                int j = Random.Range(0, myPrefab.Count);
+                Instantiate(myPrefab[j], transform.position, Quaternion.identity);
+            }
+            hasSpawnedItems = true;
+        }
+      
     }
 }

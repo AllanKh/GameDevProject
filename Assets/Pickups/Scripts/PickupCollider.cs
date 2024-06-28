@@ -24,10 +24,11 @@ public class PickupCollider : MonoBehaviour
         if (c2d.CompareTag("Player") && this.CompareTag("Potion"))
         {
             OnAnyPotionPickUp?.Invoke(this, EventArgs.Empty); //Activate this event for all listeners.
-            if  (PlayerManager.Instance.HeldPotions < 3)
+            if (PlayerManager.Instance.HeldPotions < 3)
             {
                 PlayerManager.Instance.HeldPotions += 1;
             }
+            ScoreManager.instance.AddPoint(10);
             DestroyParentGameObject();
             Debug.Log(PlayerManager.Instance.Health);
         }
@@ -37,18 +38,21 @@ public class PickupCollider : MonoBehaviour
             // TODO: Add logic for Key Pickup in a player class or a game manager.
             PlayerManager.Instance.HasBossKey = true;
             Debug.Log(PlayerManager.Instance.HasBossKey);
+            ScoreManager.instance.AddPoint(45);
             DestroyParentGameObject();
         }
 
         if (c2d.CompareTag("Player") && this.CompareTag("Coin"))
         {
             OnAnyCoinPickUp?.Invoke(this, EventArgs.Empty); //Activate this event for all listeners.
+            ScoreManager.instance.AddPoint(100);
             DestroyParentGameObject();
         }
 
         if (c2d.CompareTag("Player") && this.CompareTag("ChestKey"))
         {
             PlayerManager.Instance.HasChestKey = true;
+            ScoreManager.instance.AddPoint(10);
             DestroyParentGameObject();
         }
     }

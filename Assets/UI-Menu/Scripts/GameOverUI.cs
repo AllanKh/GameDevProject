@@ -17,6 +17,9 @@ public class GameOverUI : MonoBehaviour
         mainMenuButton.onClick.AddListener(() => //When "mainMenuButton" is pressed, do this!
         {
             PlayerManager.Instance.Health = 100;
+            PlayerManager.Instance.HasChestKey = false;
+            PlayerManager.Instance.HasBossKey = false;
+            ScoreManager.instance.RestartPoints();
             Loader.Load(Loader.Scene.MainMenuScene); //Go back to the Main Menu Scene.
             BossManager.Instance.DestroyBoss();
             SoundManager.Instance.DestroySoundManager();

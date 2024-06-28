@@ -33,6 +33,7 @@ public class FlyingEyeDamageHandler : MonoBehaviour
         flyingEyeManager.FlyingEyeIsDead = true;
         yield return new WaitForSeconds(0.51f);
         GetComponent<SpawnPickups>().SpawnNowEnemy();
+        ScoreManager.instance.AddPoint(15);
         Destroy(gameObject);
     }
 

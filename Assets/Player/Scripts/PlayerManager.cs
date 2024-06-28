@@ -83,10 +83,6 @@ public class PlayerManager : MonoBehaviour
     public void DamagePlayer(float damageAmount)
     {
         Health -= damageAmount;
-<<<<<<< Updated upstream
-        Debug.Log("pogchamp");
-=======
->>>>>>> Stashed changes
         damageTaken = true;
         Debug.Log(damageTaken);
         OnPlayerDamageTaken?.Invoke(this, EventArgs.Empty);

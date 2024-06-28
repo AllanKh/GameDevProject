@@ -26,6 +26,8 @@ public class GamePauseUI : MonoBehaviour
         {
             PlayerManager.Instance.Health = 100;
             PlayerManager.Instance.HasBossKey = false;
+            PlayerManager.Instance.HasChestKey = false;
+            ScoreManager.instance.RestartPoints();
             Loader.Load(Loader.Scene.MainMenuScene); //Go back to the Main Menu Scene.
             BossManager.Instance.DestroyBoss();
             SoundManager.Instance.DestroySoundManager();

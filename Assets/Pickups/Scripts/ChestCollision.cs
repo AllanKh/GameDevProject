@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ChestCollision : MonoBehaviour
 {
-    //public Sprite closedChest;
     public Sprite openChest;
 
 
@@ -12,13 +11,19 @@ public class ChestCollision : MonoBehaviour
     {
         if (PlayerManager.Instance.HasChestKey == true && collision.CompareTag("AttackCollider") && this.CompareTag("ChestCollider"))
         {
-            this.gameObject.GetComponent<SpriteRenderer>().sprite = openChest;
-
+            StartCoroutine(WaitBeforeDestroy());
         }
     }
-    // Update is called once per frame
-    void Update()
+
+
+    IEnumerator WaitBeforeDestroy()
     {
 
+        this.gameObject.GetComponent<SpriteRenderer>().sprite = openChest;
+        GetComponent<SpawnPickups>().SpawnChestEvent();
+        yield return new WaitForSeconds(1f);
+
+        Destroy(gameObject);
     }
+
 }

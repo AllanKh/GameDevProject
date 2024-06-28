@@ -32,6 +32,7 @@ public class SkeletonDamageHandler : MonoBehaviour
 
         yield return new WaitForSeconds(0.7f);
         GetComponent<SpawnPickups>().SpawnNowEnemy();
+        ScoreManager.instance.AddPoint(10);
         Destroy(gameObject);
     }
 
